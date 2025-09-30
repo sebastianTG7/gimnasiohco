@@ -37,7 +37,7 @@ const PlanificadorModal = ({ isOpen, onClose, schedule, onSave }) => {
   };
 
   const daysOfWeek = useMemo(() => ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'], []);
-  const muscleGroups = useMemo(() => ['pecho', 'espalda', 'hombros', 'biceps', 'triceps', 'piernas'], []);
+  const muscleGroups = useMemo(() => ['pecho', 'espalda', 'hombros', 'biceps', 'triceps', 'piernas', 'abdominales'], []);
 
   if (!isOpen) {
     return null;

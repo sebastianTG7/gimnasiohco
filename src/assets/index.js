@@ -6,6 +6,7 @@ import hombros from './images/hombros.jpg';
 import biceps from './images/biceps.jpg';
 import triceps from './images/triceps.jpg';
 import piernas from './images/piernas.jpg';
+import abdominales from './images/abdominales.jpg';
 import logo_gym from './images/logo_gym.png';
 import tik_tok from './images/tik_tok.png';
 import facebook from './images/facebook.png';
@@ -33,6 +34,7 @@ export const images = {
   biceps,
   triceps,
   piernas, 
+  abdominales,
   logo_gym,
   // Redes sociales
   tik_tok,

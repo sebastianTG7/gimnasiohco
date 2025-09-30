@@ -149,6 +149,19 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
             { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Triceps+8', nombre: 'Extensiones en Polea Alta Cruzada', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/tK2-E-p6B_c' }
         ]
     },
+    abdominales: {
+      titulo: "RUTINA DE ABDOMINALES",
+      ejercicios: ["Crunches", "Palo Press(Cable)", "Elevación de Piernas", "Caminata de Granjero", "Planchas Frontal"],
+      imagenes: [
+          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Abs+1', nombre: 'Crunches', descripcion: 'El ejercicio básico para la parte superior del abdomen.', detalles: '3 series al fallo', videoUrl: 'https://www.youtube.com/embed/Xyd_fa5zoEU' },
+          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Abs+2', nombre: 'Palo Press(Cable)', descripcion: 'Fortalece todo el core, incluyendo abdomen, espalda baja y oblicuos.', detalles: '3 series, manteniendo la posición el mayor tiempo posible', videoUrl: 'https://www.youtube.com/embed/ASdvN_XMM_g' },
+          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Abs+3', nombre: 'Elevación de Piernas', descripcion: 'Excelente para enfocar el trabajo en la parte inferior del abdomen.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/l4kQd9eWJmk' },
+          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Abs+3', nombre: 'Caminata de Granjero', descripcion: 'Excelente para enfocar el trabajo en la parte inferior del abdomen.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/l4kQd9eWJmk' },
+          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Abs+3', nombre: 'Planchas Frontal', descripcion: 'Excelente para enfocar el trabajo en la parte inferior del abdomen.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/l4kQd9eWJmk' },
+
+
+      ]
+  },
     piernas: {
         titulo: "RUTINA DE PIERNAS",
         subgrupos: [
@@ -232,7 +245,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
       : rutinaActual.imagenes;
   }, [currentSelections, grupo, rutinaActual]);
 
-  const menuItems = ['pecho', 'espalda', 'hombros', 'biceps', 'triceps', 'piernas'];
+  const menuItems = ['pecho', 'espalda', 'hombros', 'biceps', 'triceps', 'piernas', 'abdominales'];
   const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   const routineTypeOptions = ['Volumen', 'Definición', 'Fuerza'];
 

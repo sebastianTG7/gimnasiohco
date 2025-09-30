@@ -9,13 +9,19 @@ import pako from 'pako';
 
 // Componente de la Página de Inicio (fuera de App para evitar re-renders)
 const HomePage = ({ typewriterText, loopNum, toRotate }) => {
-  const grupos = [
+  const [showMore, setShowMore] = useState(false);
+
+  const mainGrupos = [
     { nombre: 'Pecho', slug: 'pecho', img: images.pecho },
     { nombre: 'Espalda', slug: 'espalda', img: images.espalda },
     { nombre: 'Hombros', slug: 'hombros', img: images.hombros },
     { nombre: 'Biceps', slug: 'biceps', img: images.biceps },
     { nombre: 'Triceps', slug: 'triceps', img: images.triceps },
     { nombre: 'Piernas', slug: 'piernas', img: images.piernas },
+  ];
+
+  const extraGrupos = [
+    { nombre: 'Abdominales', slug: 'abdominales', img: images.abdominales },
   ];
 
   return (
@@ -66,7 +72,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
       <div className="max-w-7xl mx-auto">
           <h3 className="bebas-font text-5xl md:text-6xl text-center mb-12 tracking-wider">EJERCICIOS</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {grupos.map((grupo) => (
+            {mainGrupos.map((grupo) => (
               <Link to={`/${grupo.slug}`} key={grupo.slug} className="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105 h-80">
                 <img src={grupo.img} alt={`Entrenamiento de ${grupo.nombre}`} className="w-full h-full object-cover filter grayscale" />
                 <div className="image-overlay">
@@ -75,6 +81,29 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
               </Link>
             ))}
           </div>
+
+          <div className="mt-12 text-center">
+            {!showMore ? (
+              <span 
+                onClick={() => setShowMore(true)} 
+                className="text-gray-400 hover:text-white text-lg underline cursor-pointer transition-colors"
+              >
+                Ver más...
+              </span>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                {extraGrupos.map((grupo) => (
+                  <Link to={`/${grupo.slug}`} key={grupo.slug} className="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105 h-80">
+                    <img src={grupo.img} alt={`Entrenamiento de ${grupo.nombre}`} className="w-full h-full object-cover filter grayscale" />
+                    <div className="image-overlay">
+                      <span className="bebas-font text-3xl tracking-widest text-white">{grupo.nombre.toUpperCase()}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
       </div>
   </section>
 
