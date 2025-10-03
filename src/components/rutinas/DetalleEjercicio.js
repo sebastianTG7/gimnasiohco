@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { images, videos } from '../../assets';
 import SwipeableMenu from '../SwipeableMenu';
+import ImageLoader from '../ImageLoader';
 
 const ResumenSemanal = ({ schedule, daysOfWeek }) => {
   const scheduleByDay = useMemo(() => {
@@ -100,53 +101,52 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
         titulo: "RUTINA DE ESPALDA",
         ejercicios: ["Remo Parado (barra)", "Remo a 1 mano (Mancuerna)","Remo a 1 mano (Cable)","Remo Máquina", "Dominadas", "Jalón (Agarre Abierto)", "Jalón (Agarre Cerrado)", "Remo sentado (Polea, Abierto)", "Remo sentado (Polea, Cerrado)"],
         imagenes: [
-          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Espalda+1', nombre: 'Remo Parado (barra)', descripcion: 'El rey de los ejercicios para la amplitud de la espalda.', detalles: '4 series al fallo', videoUrl: 'https://www.youtube.com/embed/eGo4IYlbE5g' },
-          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Espalda+2', nombre: 'Remo a 1 mano (Mancuerna)', descripcion: 'Ideal para añadir densidad y grosor a la espalda media.', detalles: '4 series de 8-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/l_5vkm15_p8' },
-          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Espalda+3', nombre: 'Remo a 1 mano (Cable)', descripcion: 'Ejercicio compuesto que trabaja toda la cadena posterior.', detalles: '3 series de 5-8 repeticiones', videoUrl: 'https://www.youtube.com/embed/op9kVnSso6Q' },
-          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Espalda+4', nombre: 'Remo Máquina', descripcion: 'Ejercicio compuesto que trabaja toda la cadena posterior.', detalles: '3 series de 5-8 repeticiones', videoUrl: 'https://www.youtube.com/embed/GZbfZ033f74' },
-          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Espalda+5', nombre: 'Dominadas', descripcion: 'El mejor ejercicio para construir una espalda ancha y fuerte.', detalles: '4 series al fallo', videoUrl: 'https://www.youtube.com/embed/eGo4IYlbE5g' },
-          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Espalda+6', nombre: 'Jalón (Agarre Abierto)', descripcion: 'Perfecto para trabajar la parte superior de la espalda y los dorsales.', detalles: '4 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/CAwf7n6Luuc' },
-          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Espalda+7', nombre: 'Jalón (Agarre Cerrado)', descripcion: 'Enfocado en la parte media de la espalda y los dorsales.', detalles: '4 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/4VdVhX9j6cM' },
-          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Espalda+8', nombre: 'Remo sentado (Polea, Abierto)', descripcion: 'Ideal para trabajar la espalda media y los romboides.', detalles: '4 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/GZbfZ033f74' },
-          { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Espalda+9', nombre: 'Remo sentado (Polea, Cerrado)', descripcion: 'Ideal para trabajar la espalda media y los romboides.', detalles: '4 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/GZbfZ033f74' }
+          { src: images.img_e_remo_parado_barra, nombre: 'Remo Parado (barra)', descripcion: 'El rey de los ejercicios para la amplitud de la espalda.', detalles: '4 series al fallo', videoUrl: 'https://www.youtube.com/embed/eGo4IYlbE5g' },
+          { src: images.img_e_remo_1_mano_mancuerna, nombre: 'Remo a 1 mano (Mancuerna)', descripcion: 'Ideal para añadir densidad y grosor a la espalda media.', detalles: '4 series de 8-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/l_5vkm15_p8' },
+          { src: images.img_e_remo_1_mano_polea, nombre: 'Remo a 1 mano (Cable)', descripcion: 'Ejercicio compuesto que trabaja toda la cadena posterior.', detalles: '3 series de 5-8 repeticiones', videoUrl: 'https://www.youtube.com/embed/op9kVnSso6Q' },
+          { src: images.img_e_remo_maquina, nombre: 'Remo Máquina', descripcion: 'Ejercicio compuesto que trabaja toda la cadena posterior.', detalles: '3 series de 5-8 repeticiones', videoUrl: 'https://www.youtube.com/embed/GZbfZ033f74' },
+          { src: images.img_e_dominadas, nombre: 'Dominadas', descripcion: 'El mejor ejercicio para construir una espalda ancha y fuerte.', detalles: '4 series al fallo', videoUrl: 'https://www.youtube.com/embed/eGo4IYlbE5g' },
+          { src: images.img_e_jalon_agarre_abierto, nombre: 'Jalón (Agarre Abierto)', descripcion: 'Perfecto para trabajar la parte superior de la espalda y los dorsales.', detalles: '4 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/CAwf7n6Luuc' },
+          { src: images.img_e_jalon_agarre_cerrado, nombre: 'Jalón (Agarre Cerrado)', descripcion: 'Enfocado en la parte media de la espalda y los dorsales.', detalles: '4 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/4VdVhX9j6cM' },
+          { src: images.img_e_remo_sentado_polea_abierto, nombre: 'Remo sentado (Polea, Abierto)', descripcion: 'Ideal para trabajar la espalda media y los romboides.', detalles: '4 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/GZbfZ033f74' },
+          { src: images.img_e_remo_sentado_polea_cerrado, nombre: 'Remo sentado (Polea, Cerrado)', descripcion: 'Ideal para trabajar la espalda media y los romboides.', detalles: '4 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/GZbfZ033f74' }
         ]
       },
       hombros: {
         titulo: "RUTINA DE HOMBROS",
         ejercicios: ["Press Militar (barra)", "Press Militar (mancuernas)", "Aperturas Laterales", "Elevaciones Frontales", "Elevaciones Posteriores", "Encogimientos de Hombros (Trapecios)"],
         imagenes: [
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Hombros+1', nombre: 'Press Militar (barra)', descripcion: 'Ejercicio fundamental para hombros fuertes y grandes.', detalles: '4 series de 8-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/2yjwXTZQDDI' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Hombros+2', nombre: 'Press Militar (mancuernas)', descripcion: 'Permite un rango de movimiento más natural.', detalles: '4 series de 8-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/3VcKaXpzqRo' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Hombros+3', nombre: 'Aperturas Laterales', descripcion: 'Enfocado en la parte posterior de los hombros.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/3dE_1g_e2wM' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Hombros+4', nombre: 'Elevaciones Frontales', descripcion: 'Perfecto para trabajar la parte frontal del deltoides.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/-t7fuZ0KhDA' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Hombros+5', nombre: 'Elevaciones Posteriores', descripcion: 'Enfocado en la parte posterior de los hombros.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/3dE_1g_e2wM' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Hombros+6', nombre: 'Encogimientos de Hombros (Trapecios)', descripcion: 'El mejor ejercicio para desarrollar los trapecios.', detalles: '4 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/5Z0b3n9FfXU' }
+            { src: images.img_h_press_militar_barra, nombre: 'Press Militar (barra)', descripcion: 'Ejercicio fundamental para hombros fuertes y grandes.', detalles: '4 series de 8-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/2yjwXTZQDDI' },
+            { src: images.img_h_press_militar_mancuernas, nombre: 'Press Militar (mancuernas)', descripcion: 'Permite un rango de movimiento más natural.', detalles: '4 series de 8-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/3VcKaXpzqRo' },
+            { src: images.img_h_aperturas_laterales, nombre: 'Aperturas Laterales', descripcion: 'Enfocado en la parte posterior de los hombros.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/3dE_1g_e2wM' },
+            { src: images.img_h_elevaciones_frontales, nombre: 'Elevaciones Frontales', descripcion: 'Perfecto para trabajar la parte frontal del deltoides.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/-t7fuZ0KhDA' },
+            { src: images.img_h_elevaciones_posteriores, nombre: 'Elevaciones Posteriores', descripcion: 'Enfocado en la parte posterior de los hombros.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/3dE_1g_e2wM' },
+            { src: images.img_h_trapecios, nombre: 'Encogimientos de Hombros (Trapecios)', descripcion: 'El mejor ejercicio para desarrollar los trapecios.', detalles: '4 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/5Z0b3n9FfXU' }
         ]
     },
     biceps: {
         titulo: "RUTINA DE BICEPS",
         ejercicios: ["Curl Parado (Barra)", "Curl Banco Scott", "Curl Banco Inclinado","Curl Araña","Curl Concentrado a 1 brazo", "Curl Martillo"],
         imagenes: [
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Biceps+1', nombre: 'Curl Parado (Barra)', descripcion: 'El mejor constructor de masa para los bíceps.', detalles: '4 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/kwG2Z2g4fCg' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Biceps+2', nombre: 'Curl Banco Scott', descripcion: 'Trabaja el braquial y da grosor al brazo.', detalles: '3 series de 10-12 repeticiones por brazo', videoUrl: 'https://www.youtube.com/embed/zC3nLH_b_g4' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Biceps+3', nombre: 'Curl Banco Inclinado', descripcion: 'Excelente para aislar el pico del bíceps.', detalles: '3 series de 12-15 repeticiones por brazo', videoUrl: 'https://www.youtube.com/embed/0AUGkch3tzc' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Biceps+4', nombre: 'Curl Araña', descripcion: 'Aísla el bíceps para un bombeo intenso.', detalles: '3 series de 12-15 repeticiones por brazo', videoUrl: 'https://www.youtube.com/embed/8EJ3zbKTWQ8' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Biceps+5', nombre: 'Curl Concentrado a 1 brazo', descripcion: 'Aísla el bíceps para un bombeo intenso.', detalles: '3 series de 12-15 repeticiones por brazo', videoUrl: 'https://www.youtube.com/embed/8EJ3zbKTWQ8' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Biceps+6', nombre: 'Curl Martillo', descripcion: 'Trabaja el braquiorradial y da un aspecto más completo al brazo.', detalles: '4 series de 10-12 repeticiones por brazo', videoUrl: 'https://www.youtube.com/embed/zC3nLH_b_g4' }
+            { src: images.img_b_curl_parado_barra, nombre: 'Curl Parado (Barra)', descripcion: 'El mejor constructor de masa para los bíceps.', detalles: '4 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/kwG2Z2g4fCg' },
+            { src: images.img_b_curl_banco_scott, nombre: 'Curl Banco Scott', descripcion: 'Trabaja el braquial y da grosor al brazo.', detalles: '3 series de 10-12 repeticiones por brazo', videoUrl: 'https://www.youtube.com/embed/zC3nLH_b_g4' },
+            { src: images.img_b_curl_banco_inclinado, nombre: 'Curl Banco Inclinado', descripcion: 'Excelente para aislar el pico del bíceps.', detalles: '3 series de 12-15 repeticiones por brazo', videoUrl: 'https://www.youtube.com/embed/0AUGkch3tzc' },
+            { src: images.img_b_curl_arana, nombre: 'Curl Araña', descripcion: 'Aísla el bíceps para un bombeo intenso.', detalles: '3 series de 12-15 repeticiones por brazo', videoUrl: 'https://www.youtube.com/embed/8EJ3zbKTWQ8' },
+            { src: images.img_b_curl_concentrado_1_brazo, nombre: 'Curl Concentrado a 1 brazo', descripcion: 'Aísla el bíceps para un bombeo intenso.', detalles: '3 series de 12-15 repeticiones por brazo', videoUrl: 'https://www.youtube.com/embed/8EJ3zbKTWQ8' },
+            { src: images.img_b_curl_martillo, nombre: 'Curl Martillo', descripcion: 'Trabaja el braquiorradial y da un aspecto más completo al brazo.', detalles: '4 series de 10-12 repeticiones por brazo', videoUrl: 'https://www.youtube.com/embed/zC3nLH_b_g4' }
         ]
     },
     triceps: {
         titulo: "RUTINA DE TRICEPS",
-        ejercicios: ["Press Frances", "Press para Tríceps", "Fondos para Tríceps", "Empujon Parado (Cable)", "Empujon Tras Nuca (Cable)","Empujon Tras Nuca (Mancuerna)","Patada de Tríceps", "Extensiones en Polea Alta Cruzada"],
+        ejercicios: ["Press Frances", "Fondos para Tríceps", "Empujon Parado (Cable)", "Empujon Tras Nuca (Cable)","Empujon Tras Nuca (Mancuerna)","Patada de Tríceps(Cable o Mancuernas)", "Extensiones en Polea Alta Cruzada"],
         imagenes: [
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Triceps+1', nombre: 'Press Frances', descripcion: 'Gran ejercicio compuesto para tríceps y pecho.', detalles: '4 series al fallo', videoUrl: 'https://www.youtube.com/embed/2z8JmcrW-PY' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Triceps+2', nombre: 'Press para Tríceps', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/tK2-E-p6B_c' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Triceps+3', nombre: 'Fondos para Tríceps', descripcion: 'Perfecto para un bombeo final y dar forma al tríceps.', detalles: '3 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/2-LAMcpzODs' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Triceps+4', nombre: 'Empujon Parado (Cable)', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/tK2-E-p6B_c' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Triceps+5', nombre: 'Empujon Tras Nuca (Cable)', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/tK2-E-p6B_c' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Triceps+6', nombre: 'Empujon Tras Nuca (Mancuerna)', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/tK2-E-p6B_c' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Triceps+7', nombre: 'Patada de Tríceps', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/tK2-E-p6B_c' },
-            { src: 'https://placehold.co/600x400/1e293b/ffffff?text=Triceps+8', nombre: 'Extensiones en Polea Alta Cruzada', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/tK2-E-p6B_c' }
+            { src: images.img_t_press_frances, nombre: 'Press Frances', descripcion: 'Gran ejercicio compuesto para tríceps y pecho.', detalles: '4 series al fallo', videoUrl: 'https://www.youtube.com/embed/2z8JmcrW-PY' },
+            { src: images.img_t_fondos, nombre: 'Fondos para Tríceps', descripcion: 'Perfecto para un bombeo final y dar forma al tríceps.', detalles: '3 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/2-LAMcpzODs' },
+            { src: images.img_t_empujon_parado_cable, nombre: 'Empujon Parado (Cable)', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/tK2-E-p6B_c' },
+            { src: images.img_t_empujon_tras_nuca_cable, nombre: 'Empujon Tras Nuca (Cable)', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/tK2-E-p6B_c' },
+            { src: images.img_t_empujon_tras_nuca_mancuernas, nombre: 'Empujon Tras Nuca (Mancuerna)', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/tK2-E-p6B_c' },
+            { src: images.img_t_patada, nombre: 'Patada de Tríceps', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/tK2-E-p6B_c' },
+            { src: images.img_t_extensiones_polea_alta_cruzada, nombre: 'Extensiones en Polea Alta Cruzada', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/tK2-E-p6B_c' }
         ]
     },
     abdominales: {
@@ -433,7 +433,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                         return (
                           <div key={imagen.nombre}>
                             <div onClick={() => handleToggle(`${subgrupo.nombre}-${index}`)} className="relative h-80 rounded-lg overflow-hidden shadow-xl transform transition-transform hover:scale-105 cursor-pointer">
-                                <img src={imagen.src} alt={imagen.nombre} className="w-full h-full object-cover"/>
+                                <ImageLoader src={imagen.src} alt={imagen.nombre} className="w-full h-full"/>
                                 <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/70 to-transparent">
                                     <h4 className="text-white text-xl font-bold tracking-wide">{imagen.nombre}</h4>
                                 </div>
@@ -458,7 +458,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                       return (
                           <div key={imagen.nombre}>
                               <div onClick={() => handleToggle(index)} className="relative h-80 rounded-lg overflow-hidden shadow-xl transform transition-transform hover:scale-105 cursor-pointer">
-                                  <img src={imagen.src} alt={imagen.nombre} className="w-full h-full object-cover"/>
+                                  <ImageLoader src={imagen.src} alt={imagen.nombre} className="w-full h-full"/>
                                   <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/70 to-transparent">
                                       <h4 className="text-white text-xl font-bold tracking-wide">{imagen.nombre}</h4>
                                   </div>

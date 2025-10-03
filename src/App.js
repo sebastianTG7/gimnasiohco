@@ -91,16 +91,24 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
                 Ver más...
               </span>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-                {extraGrupos.map((grupo) => (
-                  <Link to={`/${grupo.slug}`} key={grupo.slug} className="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105 h-80">
-                    <img src={grupo.img} alt={`Entrenamiento de ${grupo.nombre}`} className="w-full h-full object-cover filter grayscale" />
-                    <div className="image-overlay">
-                      <span className="bebas-font text-3xl tracking-widest text-white">{grupo.nombre.toUpperCase()}</span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                  {extraGrupos.map((grupo) => (
+                    <Link to={`/${grupo.slug}`} key={grupo.slug} className="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105 h-80">
+                      <img src={grupo.img} alt={`Entrenamiento de ${grupo.nombre}`} className="w-full h-full object-cover filter grayscale" />
+                      <div className="image-overlay">
+                        <span className="bebas-font text-3xl tracking-widest text-white">{grupo.nombre.toUpperCase()}</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+                <span 
+                  onClick={() => setShowMore(false)} 
+                  className="text-gray-400 hover:text-white text-lg underline cursor-pointer transition-colors mt-8 inline-block"
+                >
+                  Ver menos
+                </span>
+              </>
             )}
           </div>
 
