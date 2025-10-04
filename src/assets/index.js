@@ -54,6 +54,48 @@ import img_t_empujon_tras_nuca_cable from './images/img_t_empujon_tras_nuca_cabl
 import img_t_empujon_tras_nuca_mancuernas from './images/img_t_empujon_tras_nuca_mancuernas.jpg';
 import img_t_patada from './images/img_t_patada.jpg';
 import img_t_extensiones_polea_alta_cruzada from './images/img_t_extensiones_polea_alta_cruzada.jpg';
+//Piernas exercises
+  //Cuadriceps
+import img_c_sentadilla_libre from './images/img_c_sentadilla_libre.jpg';
+import img_c_sentadilla_hack from './images/img_c_sentadilla_hack.jpg';
+import img_c_sentadilla_multipower from './images/img_c_sentadilla_multipower.jpg';
+import img_c_sentadilla_squat_pendulo from './images/img_c_sentadilla_squat_pendulo.jpg';
+import img_c_prensa_45_grados from './images/img_c_prensa_45_grados.jpg';
+import img_c_extension from './images/img_c_extension.jpg';
+import img_c_bulgaras from './images/img_c_bulgaras.jpg';
+import img_c_zancadas from './images/img_c_zancadas.jpg';
+import img_c_aductores from './images/img_c_aductores.jpg';
+
+// Isquiotibiales  o femorales
+import img_f_peso_muerto_rumano from './images/img_f_peso_muerto_rumano.jpg';
+import img_f_peso_muerto_b_stand from './images/img_f_peso_muerto_b_stand.jpg';
+import img_f_curl_femoral_tumbado from './images/img_f_curl_femoral_tumbado.jpg';
+import img_f_curl_femoral_hammer from './images/img_f_curl_femoral_hammer.jpg';
+import img_f_curl_femoral_sentado from './images/img_f_curl_femoral_sentado.jpg';
+import img_f_curl_nordico from './images/img_f_curl_nordico.jpg';
+
+// Gluteos
+import img_g_hip_thrust from './images/img_g_hip_thrust.jpg';
+import img_g_puentes from './images/img_g_puentes.jpg';
+import img_g_bulgaras from './images/img_g_bulgaras.jpg';
+import img_g_peso_muerto_sumo from './images/img_g_peso_muerto_sumo.jpg';
+import img_g_sentadilla_sumo from './images/img_g_sentadilla_sumo.jpg';
+import img_g_patada_cable from './images/img_g_patada_cable.jpg';
+import img_g_patada_maquina from './images/img_g_patada_maquina.jpg';
+import img_g_buenos_dias from './images/img_g_buenos_dias.jpg';
+import img_g_step_up from './images/img_g_step_up.jpg';
+import img_g_abductores from './images/img_g_abductores.jpg';
+import img_g_hiperextension from './images/img_g_hiperextension.jpg';
+
+
+// Abdominales exercises
+import img_a_crunch from './images/img_a_crunch.jpg';
+import img_a_palo_press_cable from './images/img_a_palo_press_cable.jpg';
+import img_a_elevacion_piernas from './images/img_a_elevacion_piernas.jpg';
+import img_a_caminata_cangrejo from './images/img_a_caminata_cangrejo.jpg';
+import img_a_plancha_frontal from './images/img_a_plancha_frontal.jpg';
+
+
 
 
 // Videos
@@ -116,7 +158,47 @@ export const images = {
   img_t_empujon_tras_nuca_cable,
   img_t_empujon_tras_nuca_mancuernas,
   img_t_patada,
-  img_t_extensiones_polea_alta_cruzada
+  img_t_extensiones_polea_alta_cruzada,
+  // Ejercicios Piernas
+    // Cruadriceps
+  img_c_sentadilla_libre,
+  img_c_sentadilla_hack,
+  img_c_sentadilla_multipower,
+  img_c_sentadilla_squat_pendulo,
+  img_c_prensa_45_grados,
+  img_c_extension,
+  img_c_bulgaras,
+  img_c_zancadas,
+  img_c_aductores,
+
+    // Isquiotibiales o femorales
+  img_f_peso_muerto_rumano,
+  img_f_peso_muerto_b_stand,
+  img_f_curl_femoral_tumbado,
+  img_f_curl_femoral_hammer,
+  img_f_curl_femoral_sentado,
+  img_f_curl_nordico,
+
+    // Gluteos
+  img_g_hip_thrust,
+  img_g_puentes,
+  img_g_bulgaras,
+  img_g_peso_muerto_sumo,
+  img_g_sentadilla_sumo,
+  img_g_patada_cable,
+  img_g_patada_maquina,
+  img_g_buenos_dias,
+  img_g_step_up,
+  img_g_abductores,
+  img_g_hiperextension,
+
+
+  // Ejercicios Abdominales
+  img_a_crunch,
+  img_a_palo_press_cable,
+  img_a_elevacion_piernas,
+  img_a_caminata_cangrejo,
+  img_a_plancha_frontal
 
 };
 
