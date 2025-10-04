@@ -5,6 +5,7 @@ import { images } from './assets';
 import DetalleEjercicio from './components/rutinas/DetalleEjercicio';
 import ScrollToTop from './components/ScrollToTop';
 import PlanificadorModal from './components/PlanificadorModal';
+import ScrollToTopButton from './components/ScrollToTopButton';
 import pako from 'pako';
 
 // Componente de la Página de Inicio (fuera de App para evitar re-renders)
@@ -36,17 +37,18 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
           <div className="hidden md:flex space-x-12 text-lg">
               <Link to="/" id='inicio' className="hover:text-[#2A7A87] transition-colors">INICIO</Link>
               <a href="#ejercicios" className="hover:text-[#2A7A87] transition-colors">EJERCICIOS</a>
-              <a href="#about" className="hover:text-[#2A7A87] transition-colors">SOBRE NOSOTROS</a>
+              <a href="#about" className="hover:text-[#2A7A87] transition-colors">¿QUIÉNES SOMOS?</a>
 
               <a href="#contacto" className="hover:text-[#2A7A87] transition-colors">CONTACTOS</a>
           </div>
-          <a href="#ejercicios" className="bebas-font border-2 border-cyan-400 text-cyan-400 px-6 py-2 rounded-lg hover:bg-cyan-400 hover:text-gray-900 transition-colors">Empezar Entrenamiento</a>
+          <a href="#ejercicios" className="bebas-font border-2 border-[#379AA5] text-[#379AA5] px-6 py-2 rounded-lg hover:bg-[#379AA5] hover:text-gray-900 transition-colors">Empezar</a>
       </nav>
       
       {/* Contenido principal del Hero */}
       <div className="relative z-10 text-center md:text-left md:w-1/2 p-4">
+        {/* Letras efecto maquina de escribir */}
           <h2 className="bebas-font text-5xl md:text-7xl lg:text-8xl text-white leading-tight mb-4 tracking-wider">
-              EL <span style={{ color: '#379AA5' }}>CAMBIO</span>
+              BIENVENIDO A <span style={{ color: '#379AA5' }}>ENERGY</span>
               {
                 (loopNum % toRotate.length === 1 && typewriterText.indexOf('HOY') !== -1)
                 ? <>
@@ -58,9 +60,9 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
               <span className="cursor">|</span>
           </h2>
           <p className="text-xl md:text-2xl text-gray-200 mb-8 tracking-wide">
-              MÁS RÁPIDO, MÁS FUERTE, LUCHA HASTA EL FINAL
+              MÁS RÁPIDO, MÁS FUERTE, LUCHA HASTA EL FINAL.
           </p>
-          <a href="#ejercicios" className="bg-[#379AA5] hover:bg-[#2A7A87] text-white px-8 py-3 rounded-md shadow-lg transition-colors">Ver rutinas</a>
+          <a href="#ejercicios" className="bg-[#379AA5] hover:bg-[#2A7A87] text-white px-8 py-3 rounded-md shadow-lg transition-colors">Ver Ejercicios</a>
       </div>
       
       {/* Imagen de la persona en el Hero */}
@@ -70,7 +72,8 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
   {/* Sección de Ejercicios (Menú Principal) */}
   <section id="ejercicios" className="py-20 px-4 md:px-8 bg-gray-900">
       <div className="max-w-7xl mx-auto">
-          <h3 className="bebas-font text-5xl md:text-6xl text-center mb-12 tracking-wider">EJERCICIOS</h3>
+          <h3 className="bebas-font text-5xl md:text-6xl text-center mb-8 tracking-wider">LISTA DE EJERCICIOS</h3>
+          <p className="text-lg text-gray-400 mb-8">Selecciona un grupo muscular para comenzar y ver los ejercicios.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {mainGrupos.map((grupo) => (
               <Link to={`/${grupo.slug}`} key={grupo.slug} className="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105 h-80">
@@ -122,7 +125,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
               <img src={images.lugar_energy} alt="Grupo de personas en el gimnasio" className="w-full h-auto object-cover" />
           </div>
           <div className="text-gray-200">
-              <h3 className="bebas-font text-5xl md:text-6xl text-[#379AA5] mb-6 tracking-wider">Sobre Nosotros</h3>
+              <h3 className="bebas-font text-5xl md:text-6xl text-[#379AA5] mb-5 tracking-wider">¿QUIÉNES SOMOS?</h3>
               <p className="text-lg leading-relaxed mb-6">
                   Energy no es solo un gimnasio. Es una casa de transformación. Con más de 10 años forjando fierros y
                   formando personas, nos dedicamos a algo más que dar rutinas. Aquí no hay excusas, hay resultados, no
@@ -293,9 +296,9 @@ function App() {
       alert('Hubo un error al intentar compartir tu plan.');
     }
   };
-
-  const toRotate = useMemo(() => ["NO EMPIEZA EL LUNES", "EMPIEZA HOY"], []);
-  const period = 2000;
+// Las frases dinamicas para el efecto de máquina de escribir
+  const toRotate = useMemo(() => ["TU NUEVA DISCIPLINA", "DONDE SE ENTRENA DE VERDAD."], []);
+  const period = 3000;
 
   useEffect(() => {
     const tick = () => {
@@ -353,6 +356,7 @@ function App() {
         schedule={schedule} 
         onSave={handleSaveSchedule} 
       />
+      <ScrollToTopButton />
     </>
   );
 }

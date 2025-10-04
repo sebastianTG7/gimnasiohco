@@ -25,12 +25,12 @@ const ResumenSemanal = ({ schedule, daysOfWeek }) => {
   }, [schedule]); // La dependencia en `schedule` es correcta
 
   return (
+    // Resumen semanal
     <div className="bg-slate-800 p-4 rounded-lg shadow-lg mb-1">
-      <h2 className="bebas-font text-3xl text-white mb-1">Resumen Semanal</h2>
       <ul className="space-y-4">
         {daysOfWeek.map(day => {
           const groupsForDay = scheduleByDay[day];
-
+          // Si no hay grupos para el día, mostrar "Descanso"
           return (
             <li key={day} className="flex flex-col sm:flex-row sm:items-center text-lg p-2 rounded-md transition-colors hover:bg-gray-700">
               <span className="w-full sm:w-32 font-semibold text-[#379AA5] mb-2 sm:mb-0 flex-shrink-0">{day}:</span>
@@ -246,18 +246,20 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
 
   const menuItems = ['pecho', 'espalda', 'hombros', 'biceps', 'triceps', 'piernas', 'abdominales'];
   const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-  const routineTypeOptions = ['Volumen', 'Definición', 'Fuerza'];
+  const routineTypeOptions = ['Full Body', 'Torso-Pierna', 'Empuje-Tracción-Pierna'];
 
   return (
+    // Botón para abrir el menú de rutinas
     <>
       <button 
         onClick={() => setIsDrawerOpen(prev => !prev)}
-        className="fixed top-5 right-5 z-30 bg-red-600 text-white p-3 rounded-full shadow-lg hover:bg-red-700 transition-colors"
+        className="fixed top-5 right-5 z-30 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
         aria-label="Abrir menú de rutinas"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
       </button>
 
+      {/* Menú deslizable */}
       <SwipeableMenu isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
         <h3 className="bebas-font text-3xl text-[#379AA5] tracking-widest mb-4">RUTINAS</h3>
         <ul className="flex flex-col space-y-8">
@@ -266,7 +268,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
               <Link 
                 to={`/${item}`}
                 onClick={() => setIsDrawerOpen(false)} 
-                className={`text-lg p-2 rounded-md transition-colors ${grupo === item ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-gray-700'}`}>
+                className={`text-lg p-2 rounded-md transition-colors ${grupo === item ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-700'}`}>
                 {item.charAt(0).toUpperCase() + item.slice(1)}
               </Link>
             </li>
@@ -301,7 +303,8 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
             >
               {/* Vista Colapsada */}
               <div className="flex-grow">
-                <h2 className="bebas-font text-3xl text-white">Mi Plan Semanal:</h2>
+                <h2 className="bebas-font text-3xl text-white">Mi Rutina Semanal:</h2>
+                <p className="text-gray-400 mt-1">Aquí puedes ver un resumen de tu planificación semanal.</p>
                 {!isPlanAccordionOpen && (
                   <div className="mt-2 flex items-center">
                     <span className="font-semibold text-green-500 mr-2">Hoy ({todayName}):</span>
@@ -371,7 +374,10 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
               className="flex justify-between items-center cursor-pointer" 
               onClick={() => setIsPersonalizeAccordionOpen(!isPersonalizeAccordionOpen)}
             >
-              <h2 className="bebas-font text-3xl text-white">Personaliza tu Rutina:</h2>
+              <div>
+                <h2 className="bebas-font text-3xl text-white">Selecciona los ejercicios:</h2>
+                <p className="text-gray-400 mt-1">Selecciona o deselecciona los ejercicios que desees para poder verlos en la galería de ejercicios de abajo.</p>
+              </div>
               <svg className={`w-6 h-6 text-gray-400 transform transition-transform duration-300 ${isPersonalizeAccordionOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </div>
 
