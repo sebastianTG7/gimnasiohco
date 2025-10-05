@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { images, videos } from '../../assets';
 import SwipeableMenu from '../SwipeableMenu';
 import ImageLoader from '../ImageLoader';
+import { GridBackground } from '../GridBackground';
 
 const ResumenSemanal = ({ schedule, daysOfWeek }) => {
   const scheduleByDay = useMemo(() => {
@@ -58,7 +59,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
   const [openIndex, setOpenIndex] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isPlanAccordionOpen, setIsPlanAccordionOpen] = useState(false);
-  const [isPersonalizeAccordionOpen, setIsPersonalizeAccordionOpen] = useState(true);
+  const [isPersonalizeAccordionOpen, setIsPersonalizeAccordionOpen] = useState(false);
 
   // Logic to get today's workout
   const daysMap = useMemo(() => ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'], []);
@@ -253,7 +254,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
     <>
       <button 
         onClick={() => setIsDrawerOpen(prev => !prev)}
-        className="fixed top-5 right-5 z-30 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+        className="fixed top-5 right-5 z-[60] bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
         aria-label="Abrir menú de rutinas"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -287,8 +288,9 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
         </div>
       </SwipeableMenu>
 
-      <div className="bg-gray-900 text-white min-h-screen p-8">
-        <div className="max-w-7xl mx-auto">
+      <div className="relative text-white min-h-screen p-8 bg-gray-900">
+        <GridBackground />
+        <div className="relative z-10 max-w-7xl mx-auto">
           <Link to="/" className="bebas-font text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest">&larr; VOLVER AL INICIO</Link>
           <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider">
             <span className="text-green-600">{rutinaActual.titulo}</span>
@@ -304,6 +306,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
               {/* Vista Colapsada */}
               <div className="flex-grow">
                 <h2 className="bebas-font text-3xl text-white">Mi Rutina Semanal:</h2>
+                <p className="text-gray-400 mt-1">Toca para {isPlanAccordionOpen ? 'ocultar' : 'ver'} detalles y opciones de planificación por días.</p>
                 {!isPlanAccordionOpen && (
                   <div className="mt-2 flex items-center">
                     <span className="font-semibold text-green-500 mr-2">Hoy ({todayName}):</span>
@@ -370,14 +373,14 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
           
           <div className="bg-gray-800 p-6 rounded-lg shadow-lg mb-12">
             <div 
-              className="flex justify-between items-center cursor-pointer" 
+              className="cursor-pointer"
               onClick={() => setIsPersonalizeAccordionOpen(!isPersonalizeAccordionOpen)}
             >
-              <div>
+              <div className="flex justify-between items-center">
                 <h2 className="bebas-font text-3xl text-white">Lista de ejercicios:</h2>
-                <p className="text-gray-400 mt-1">Selecciona unicamente los ejercicios que deseas ver en la <span className="text-cyan-400">galería de ejercicios</span>.</p>
+                <svg className={`w-6 h-6 text-gray-400 transform transition-transform duration-300 ml-3 ${isPersonalizeAccordionOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
               </div>
-              <svg className={`w-6 h-6 text-gray-400 transform transition-transform duration-300 ${isPersonalizeAccordionOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+              <p className="text-gray-400 mt-1">Toca para {isPersonalizeAccordionOpen ? 'ocultar y dejar de seleccionar' : 'desplegar y seleccionar unicamente'} los ejercicios que desea ver de la <span className="text-cyan-400">galería de ejercicios</span>.</p>
             </div>
 
             <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isPersonalizeAccordionOpen ? 'max-h-full mt-4' : 'max-h-0'}`}>

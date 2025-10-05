@@ -6,6 +6,8 @@ import DetalleEjercicio from './components/rutinas/DetalleEjercicio';
 import ScrollToTop from './components/ScrollToTop';
 import PlanificadorModal from './components/PlanificadorModal';
 import ScrollToTopButton from './components/ScrollToTopButton';
+import { Spotlight } from './components/ui/Spotlight';
+import { GridBackground } from './components/GridBackground';
 import pako from 'pako';
 
 // Componente de la Página de Inicio (fuera de App para evitar re-renders)
@@ -27,7 +29,8 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
 
   return (
   <>
-    <div className="hero-bg relative w-full h-screen flex items-center justify-center p-8">
+    <div className="hero-bg relative w-full h-screen flex items-center justify-center p-8 bg-black">
+      <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="white" />
       {/* Navegación */}
       <nav className="absolute top-0 left-0 right-0 z-50 p-6 flex justify-between items-center bg-transparent">
            <div className="flex items-center space-x-3">
@@ -66,12 +69,13 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
       </div>
       
       {/* Imagen de la persona en el Hero */}
-      <img src={images.hero} alt="Persona entrenando" className="absolute top-0 right-0 h-full w-full object-cover z-0 opacity-30 md:opacity-40 md:w-2/5" />
+      <img src={images.hero} alt="Persona entrenando" className="absolute top-0 right-0 h-full w-full object-cover z-5 opacity-30 md:opacity-40 md:w-2/5" />
   </div>
 
   {/* Sección de Ejercicios (Menú Principal) */}
-  <section id="ejercicios" className="py-20 px-4 md:px-8 bg-gray-900">
-      <div className="max-w-7xl mx-auto">
+  <section id="ejercicios" className="relative py-20 px-4 md:px-8 bg-gray-900">
+      <GridBackground />
+      <div className="relative z-10 max-w-7xl mx-auto">
           <h3 className="bebas-font text-5xl md:text-6xl text-center mb-8 tracking-wider">LISTA DE EJERCICIOS</h3>
           <p className="text-lg text-gray-400 mb-8">Selecciona un grupo muscular para comenzar y ver los ejercicios.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -126,10 +130,15 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
       </div>
   </section>
 
+  {/* Separador de línea con gradiente */}
+  <div className="px-4 md:px-8">
+    <div className="h-px w-full bg-gradient-to-r from-transparent via-[#379AA5] to-transparent"></div>
+  </div>
+
   {/* Sección Sobre Nosotros */}
-  <section id="about" className="py-20 px-4 md:px-8 bg-gray-950">
+  <section id="about" className="py-20 px-4 md:px-8 bg-slate-900">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="relative rounded-xl overflow-hidden shadow-xl">
+          <div className="relative rounded-xl overflow-hidden shadow-xl image-feather-edge">
               <img src={images.lugar_energy} alt="Grupo de personas en el gimnasio" className="w-full h-auto object-cover" />
           </div>
           <div className="text-gray-200">
@@ -142,6 +151,11 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
           </div>
       </div>
   </section>
+
+  {/* Separador de línea con gradiente */}
+  <div className="px-4 md:px-8">
+    <div className="h-px w-full bg-gradient-to-r from-transparent via-[#379AA5] to-transparent"></div>
+  </div>
 
   {/* Pie de Página */}
   <footer id="contacto" className="footer-bg py-16 px-4 md:px-8 bg-gray-900">
