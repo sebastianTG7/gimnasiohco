@@ -79,7 +79,11 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
               <Link to={`/${grupo.slug}`} key={grupo.slug} className="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105 h-80">
                 <img src={grupo.img} alt={`Entrenamiento de ${grupo.nombre}`} className="w-full h-full object-cover filter grayscale" />
                 <div className="image-overlay">
-                  <span className="bebas-font text-3xl tracking-widest text-white">{grupo.nombre.toUpperCase()}</span>
+                  <div>
+                    <span className="bebas-font text-3xl tracking-widest text-white">{grupo.nombre.toUpperCase()}</span>
+                    <p className="text-base text-white/90 md:hidden">Toca para ver</p>
+                    <p className="text-base text-white/90 hidden md:block">Click para ver</p>
+                  </div>
                 </div>
               </Link>
             ))}
@@ -100,7 +104,11 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
                     <Link to={`/${grupo.slug}`} key={grupo.slug} className="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105 h-80">
                       <img src={grupo.img} alt={`Entrenamiento de ${grupo.nombre}`} className="w-full h-full object-cover filter grayscale" />
                       <div className="image-overlay">
-                        <span className="bebas-font text-3xl tracking-widest text-white">{grupo.nombre.toUpperCase()}</span>
+                        <div>
+                          <span className="bebas-font text-3xl tracking-widest text-white">{grupo.nombre.toUpperCase()}</span>
+                          <p className="text-base text-white/90 md:hidden">Toca para ver</p>
+                          <p className="text-base text-white/90 hidden md:block">Click para ver</p>
+                        </div>
                       </div>
                     </Link>
                   ))}
@@ -298,7 +306,7 @@ function App() {
   };
 // Las frases dinamicas para el efecto de máquina de escribir
   const toRotate = useMemo(() => ["TU NUEVA DISCIPLINA", "DONDE SE ENTRENA DE VERDAD."], []);
-  const period = 3000;
+  const period = 3500;
 
   useEffect(() => {
     const tick = () => {

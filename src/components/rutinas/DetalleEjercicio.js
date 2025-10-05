@@ -86,7 +86,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
       titulo: "RUTINA DE PECHO",
       ejercicios: ["Press Banca (barra)", "Press Inclinado (barra)", "Press Banca (Mancuernas)","Press Inclinado (Mancuernas)","Press Máquina", "Aperturas (Mancuernas)","Aperturas (Cable)", "Aperturas Pec Fly","Fondos"],
       imagenes: [
-        { src: images.img_press_banca_barra, nombre: 'Press Banca (barra)', descripcion: 'Activa principalmente las fibras centrales del pectoral mayor (porción esternocostal). También involucra el deltoides anterior y la cabeza larga del tríceps braquial.', detalles: '3 series de 8–12 repeticiones', videoUrl: 'https://www.youtube.com/embed/HzkHpIIo4IA' },
+        { src: images.img_press_banca_barra, nombre: 'Press Banca (barra)', descripcion: 'Activa principalmente las fibras centrales del pectoral mayor (porción esternocostal). También involucra el deltoides anterior y la cabeza larga del tríceps braquial.', detalles: '3 series de 8–12 repeticiones', videoUrl: 'https://www.youtube.com/embed/g4Ah9uYn8pI' },
         { src: images.img_press_inclinado_barra, nombre: 'Press Inclinado (barra)', descripcion: 'Enfoca el estímulo en la parte superior del pectoral mayor (porción clavicular). Secundariamente activa el deltoides anterior y el tríceps braquial.', detalles: '3 series de 8–12 repeticiones', videoUrl: 'https://www.youtube.com/embed/HImp2-LuihU' },
         { src: images.img_press_banca_mancuernas, nombre: 'Press Banca (Mancuernas)', descripcion: 'Estimula las fibras centrales del pectoral mayor (porción esternocostal), con mayor implicación de los músculos estabilizadores escapulares. También participa el deltoides anterior y el tríceps braquial.', detalles: '3 series de 10–12 repeticiones', videoUrl:"https://www.youtube.com/embed/48L0oQApm_0" },
         { src: images.img_press_inclinado_mancuernas, nombre: 'Press Inclinado (Mancuernas)', descripcion: 'Activa predominantemente la parte superior del pectoral mayor (porción clavicular). Como sinergistas intervienen el deltoides anterior y el tríceps braquial.', detalles: '3 series de 10 repeticiones', videoUrl: videos.vid_press_inclinado_mancuernas },
@@ -101,27 +101,27 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
         titulo: "RUTINA DE ESPALDA",
         ejercicios: ["Remo Parado (Barra)", "Remo a 1 mano (Mancuerna)","Remo a 1 mano (Polea)","Remo Máquina", "Dominadas", "Jalón (Agarre Abierto)", "Jalón (Agarre Cerrado)", "Remo sentado (Polea, Abierto)", "Remo sentado (Polea, Cerrado)"],
         imagenes: [
-          { src: images.img_e_remo_parado_barra, nombre: 'Remo Parado (barra)', descripcion: 'Este ejercicio fortalece la espalda alta y media al jalar la barra hacia el abdomen. Ayuda a mejorar la postura, ganar fuerza general y desarrollar volumen en la espalda superior.', detalles: '3 series de 10–12 repeticiones', videoUrl: 'https://youtube.com/embed/FWJR5Ve8bnQ?si=HITcjbHoFZR1T-td' },
+          { src: images.img_e_remo_parado_barra, nombre: 'Remo Parado (barra)', descripcion: 'Este ejercicio fortalece la espalda alta y media al jalar la barra hacia el abdomen. Ayuda a mejorar la postura, ganar fuerza general y desarrollar volumen en la espalda superior.', detalles: '3 series de 10–12 repeticiones', videoUrl: 'https://www.youtube.com/embed/sr_U0jBE89A' },
           { src: images.img_e_remo_1_mano_mancuerna, nombre: 'Remo a 1 mano (Mancuerna)', descripcion: 'Este ejercicio logra mayor enfoque en un lado de la espalda, corrigiendo desequilibrios musculares y aumentando la conexión mente-músculo. (Concentrarse en el control, no en el peso)', detalles: '3 series de 10–12 repeticiones por brazo', videoUrl: 'https://youtube.com/embed/ZRSGpBUVcNw?si=MNx4gYwQnhlYXy7O' },
-          { src: images.img_e_remo_1_mano_polea, nombre: 'Remo a 1 mano (Polea)', descripcion: 'Este ejercicio es excelente para mantener tensión constante durante todo el movimiento. Ideal para mejorar la definición y control muscular en la espalda alta.', detalles: '3 series de 12–15 repeticiones por brazo', videoUrl: 'https://youtube.com/embed/1jN6qeXdvWA?si=wGf0T3EvQCn9zjrz' },
+          { src: images.img_e_remo_1_mano_polea, nombre: 'Remo a 1 mano (Polea)', descripcion: 'Este ejercicio es excelente para mantener tensión constante durante todo el movimiento. Ideal para mejorar la definición y control muscular en la espalda alta.', detalles: '3 series de 12–15 repeticiones por brazo', videoUrl: 'https://www.youtube.com/embed/BfNyUa1io_M' },
           { src: images.img_e_remo_maquina, nombre: 'Remo Máquina', descripcion: 'Una opción segura y guiada para aprender el patrón de movimiento del remo. Reduce el riesgo de mala técnica.', detalles: '3 series de 12 repeticiones', videoUrl: 'https://www.youtube.com/embed/rPuck3iZjek' },
-          { src: images.img_e_dominadas, nombre: 'Dominadas', descripcion: 'Un ejercicio completo de tracción que fortalece toda la espalda superior. Mejora la fuerza funcional y el control corporal.', detalles: '3 series al fallo o usar banda/elástico de asistencia', videoUrl: 'https://www.youtube.com/embed/eGo4IYlbE5g' },
-          { src: images.img_e_jalon_agarre_abierto, nombre: 'Jalón (Agarre Abierto)', descripcion: 'Este ejercicio imita la dominada pero en máquina, ayudando a ganar fuerza y masa en la espalda ancha. El agarre abierto enfatiza más la expansión del dorsal.', detalles: '3 series de 10–12 repeticiones', videoUrl: 'https://www.youtube.com/embed/CAwf7n6Luuc' },
+          { src: images.img_e_dominadas, nombre: 'Dominadas', descripcion: 'Un ejercicio completo de tracción que fortalece toda la espalda superior. Mejora la fuerza funcional y el control corporal.', detalles: '3 series al fallo o usar banda/elástico de asistencia', videoUrl: 'https://www.youtube.com/embed/MPbRERVWkbg' },
+          { src: images.img_e_jalon_agarre_abierto, nombre: 'Jalón (Agarre Abierto)', descripcion: 'Este ejercicio imita la dominada pero en máquina, ayudando a ganar fuerza y masa en la espalda ancha. El agarre abierto enfatiza más la expansión del dorsal.', detalles: '3 series de 10–12 repeticiones', videoUrl: 'https://www.youtube.com/embed/RD4t94XvKsU' },
           { src: images.img_e_jalon_agarre_cerrado, nombre: 'Jalón (Agarre Cerrado)', descripcion: 'Este tipo de jalón permite mayor rango de movimiento y una contracción más fuerte en la parte media de la espalda. (Usar agarre neutro si hay molestias en hombros)', detalles: '3 series de 12 repeticiones', videoUrl: 'https://youtube.com/embed/Y2uznEZAmN0?si=kCWf1uDm6Tl_-ka1' },
           { src: images.img_e_remo_sentado_polea_abierto, nombre: 'Remo sentado (Polea, Abierto)', descripcion: 'El agarre abierto en polea ayuda a abrir la caja torácica y expandir la parte alta de la espalda. Mejora postura y definición muscular. (Evitar impulso con la espalda baja)', detalles: '3 series de 12 repeticiones', videoUrl: 'https://youtube.com/embed/Vm6E-2tq0bU?si=PpSpYM2rqOaeFSv3' },
-          { src: images.img_e_remo_sentado_polea_cerrado, nombre: 'Remo sentado (Polea, Cerrado)', descripcion: 'Este remo trabaja de forma más directa la parte media de la espalda, con mayor rango de recorrido. Muy útil para crear una espalda fuerte y estable. (Mantener postura recta, jalar con los codos)', detalles: '3 series de 10–12 repeticiones', videoUrl: 'https://www.youtube.com/embed/GZbfZ033f74' }
+          { src: images.img_e_remo_sentado_polea_cerrado, nombre: 'Remo sentado (Polea, Cerrado)', descripcion: 'Este remo trabaja de forma más directa la parte media de la espalda, con mayor rango de recorrido. Muy útil para crear una espalda fuerte y estable. (Mantener postura recta, jalar con los codos)', detalles: '3 series de 10–12 repeticiones', videoUrl: 'https://www.youtube.com/embed/D_UXjlrZIBw' }
         ]
       },
       hombros: {
         titulo: "RUTINA DE HOMBROS",
         ejercicios: ["Press Militar (barra)", "Press Militar (mancuernas)", "Aperturas Laterales", "Elevaciones Frontales", "Elevaciones Posteriores", "Encogimientos de Hombros (Trapecios)"],
         imagenes: [
-            { src: images.img_h_press_militar_barra, nombre: 'Press Militar (barra)', descripcion: 'Activa principalmente las fibras anteriores del deltoides (porción anterior). También participa el deltoides medio (porción lateral) y el tríceps braquial (cabeza larga y mediana).', detalles: '3 series de 8-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/2yjwXTZQDDI' },
+            { src: images.img_h_press_militar_barra, nombre: 'Press Militar (barra)', descripcion: 'Activa principalmente las fibras anteriores del deltoides (porción anterior). También participa el deltoides medio (porción lateral) y el tríceps braquial (cabeza larga y mediana).', detalles: '3 series de 8-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/895PvlhMpTQ' },
             { src: images.img_h_press_militar_mancuernas, nombre: 'Press Militar (mancuernas)', descripcion: 'Estimula el deltoides anterior (porción anterior del deltoides) con mayor activación del deltoides medio para estabilización. También interviene el tríceps braquial (cabeza mediana y lateral).', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://youtube.com/embed/BaONy7w34-U?si=Ekdg7RFqBcbefY--' },
-            { src: images.img_h_aperturas_laterales, nombre: 'Aperturas Laterales', descripcion: 'Focaliza la activación en el deltoides medio (porción lateral del deltoides) durante la abducción del brazo', detalles: '3 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/zBqZqAjCnR4' },
-            { src: images.img_h_elevaciones_frontales, nombre: 'Elevaciones Frontales', descripcion: 'Activa principalmente el deltoides anterior (porción clavicular / frontal del deltoides) en el movimiento de elevar el brazo hacia adelante.', detalles: '3 series de 12 repeticiones', videoUrl: 'https://www.youtube.com/embed/-t7fuZ0KhDA' },
+            { src: images.img_h_aperturas_laterales, nombre: 'Aperturas Laterales', descripcion: 'Focaliza la activación en el deltoides medio (porción lateral del deltoides) durante la abducción del brazo', detalles: '3 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/Vh_Kjw3O-DQ' },
+            { src: images.img_h_elevaciones_frontales, nombre: 'Elevaciones Frontales', descripcion: 'Activa principalmente el deltoides anterior (porción clavicular / frontal del deltoides) en el movimiento de elevar el brazo hacia adelante.', detalles: '3 series de 12 repeticiones', videoUrl: 'https://www.youtube.com/embed/HciAFZSN2Qo' },
             { src: images.img_h_elevaciones_posteriores, nombre: 'Elevaciones Posteriores', descripcion: 'Estimulan la porción posterior del deltoides (deltoides posterior) durante la extensión / abducción horizontal inversa del brazo.', detalles: '3 series de 12-15 repeticiones', videoUrl: 'https://youtube.com/embed/BDYAo6xAO9w?si=8ZPnWy0-xSm7vNu9' },
-            { src: images.img_h_trapecios, nombre: 'Encogimientos de Hombros (Trapecios)', descripcion: 'Activa principalmente el trapecio superior (porción superior del trapecio). También se activa el elevador de la escápula como estabilizador.', detalles: '3 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/jdPzNNfj_kg' }
+            { src: images.img_h_trapecios, nombre: 'Encogimientos de Hombros (Trapecios)', descripcion: 'Activa principalmente el trapecio superior (porción superior del trapecio). También se activa el elevador de la escápula como estabilizador.', detalles: '3 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/KMFhLLp5jnU' }
         ]
     },
     biceps: {
@@ -146,18 +146,18 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
             { src: images.img_t_empujon_tras_nuca_cable, nombre: 'Empujon Tras Nuca (Cable)', descripcion: '', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/8GkV8XvGev4' },
             { src: images.img_t_empujon_tras_nuca_mancuernas, nombre: 'Empujon Tras Nuca (Mancuerna)', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/51u8_hHx5UI' },
             { src: images.img_t_patada, nombre: 'Patada de Tríceps', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/g95kR_X9kZM' },
-            { src: images.img_t_extensiones_polea_alta_cruzada, nombre: 'Extensiones en Polea Alta Cruzada', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/GvGlCLBdkaQ' }
+            { src: images.img_t_extensiones_polea_alta_cruzada, nombre: 'Extensiones en Polea Alta Cruzada', descripcion: 'Aísla la cabeza larga del tríceps.', detalles: '3 series de 10-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/TpxGMOLtfWk' }
         ]
     },
     abdominales: {
       titulo: "RUTINA DE ABDOMINALES",
       ejercicios: ["Crunches", "Palo Press (Cable)", "Elevación de Piernas", "Caminata de Granjero", "Plancha Frontal"],
       imagenes: [
-          { src: images.img_a_crunch, nombre: 'Crunches', descripcion: 'El ejercicio básico para la parte superior del abdomen.', detalles: '3 series al fallo', videoUrl: 'https://www.youtube.com/embed/Xyd_fa5zoEU' },
-          { src: images.img_a_palo_press_cable, nombre: 'Palo Press(Cable)', descripcion: 'Fortalece todo el core, incluyendo abdomen, espalda baja y oblicuos.', detalles: '3 series, manteniendo la posición el mayor tiempo posible', videoUrl: 'https://www.youtube.com/embed/ASdvN_XMM_g' },
-          { src: images.img_a_elevacion_piernas, nombre: 'Elevación de Piernas', descripcion: 'Excelente para enfocar el trabajo en la parte inferior del abdomen.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/l4kQd9eWJmk' },
-          { src: images.img_a_caminata_cangrejo, nombre: 'Caminata de Granjero', descripcion: 'Excelente para enfocar el trabajo en la parte inferior del abdomen.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/l4kQd9eWJmk' },
-          { src: images.img_a_plancha_frontal, nombre: 'Planchas Frontal', descripcion: 'Excelente para enfocar el trabajo en la parte inferior del abdomen.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/l4kQd9eWJmk' },
+          { src: images.img_a_crunch, nombre: 'Crunches', descripcion: 'El ejercicio básico para la parte superior del abdomen.', detalles: '3 series al fallo', videoUrl: 'https://www.youtube.com/embed/U2Pxw_PLfXc' },
+          { src: images.img_a_palo_press_cable, nombre: 'Palo Press(Cable)', descripcion: 'Fortalece todo el core, incluyendo abdomen, espalda baja y oblicuos.', detalles: '3 series, manteniendo la posición el mayor tiempo posible', videoUrl: 'https://www.youtube.com/embed/Jio_SzqlNUk' },
+          { src: images.img_a_elevacion_piernas, nombre: 'Elevación de Piernas', descripcion: 'Excelente para enfocar el trabajo en la parte inferior del abdomen.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/PfXQJ1-s9A8' },
+          { src: images.img_a_caminata_cangrejo, nombre: 'Caminata de Granjero', descripcion: 'Excelente para enfocar el trabajo en la parte inferior del abdomen.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://youtube.com/embed/bnnlfhic4r0?si=uy1z3d1HK2RkUkoi' },
+          { src: images.img_a_plancha_frontal, nombre: 'Planchas Frontal', descripcion: 'Excelente para enfocar el trabajo en la parte inferior del abdomen.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/KC-DK0qydqw' },
 
 
       ]
@@ -168,12 +168,12 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
           {
             nombre: "Cuádriceps",
             ejercicios: [
-              { src: images.img_c_sentadilla_libre, nombre: 'Sentadillas Libre', descripcion: 'Activa principalmente el cuádriceps junto con los glúteos y la zona estabilizadora del core.', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://youtube.com/embed/dsCuiccYNGs?si=NdKTQealxD9SXaiZ' },
-              { src: images.img_c_sentadilla_hack, nombre: 'Sentadilla Hack', descripcion: 'Enfoca la tensión sobre el cuádriceps (vastos) manteniendo el tronco más erguido, reduciendo la carga en la espalda baja.', detalles: '3 series de 10 repeticiones', videoUrl: 'https://youtube.com/embed/0tn5K9NlCfo?si=FDZf6MEr9Dd9DN5v' },
-              { src: images.img_c_sentadilla_multipower, nombre: 'Sentadillas Multipower', descripcion: 'Trabaja el cuádriceps (vasto lateral/medial/intermedio) con trayectoria guiada, disminuyendo la necesidad de estabilización.', detalles: '3 series de 12 repeticiones', videoUrl: 'https://youtube.com/embed/4r9o_rqFZX4?si=aEcs2AsJPuQlBQ9Z' },
+              { src: images.img_c_sentadilla_libre, nombre: 'Sentadillas Libre', descripcion: 'Activa principalmente el cuádriceps junto con los glúteos y la zona estabilizadora del core.', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/NHD0vH7XXgw' },
+              { src: images.img_c_sentadilla_hack, nombre: 'Sentadilla Hack', descripcion: 'Enfoca la tensión sobre el cuádriceps (vastos) manteniendo el tronco más erguido, reduciendo la carga en la espalda baja.', detalles: '3 series de 10 repeticiones', videoUrl: 'https://www.youtube.com/embed/8Gk8snrY8u4' },
+              { src: images.img_c_sentadilla_multipower, nombre: 'Sentadillas Multipower', descripcion: 'Trabaja el cuádriceps (vasto lateral/medial/intermedio) con trayectoria guiada, disminuyendo la necesidad de estabilización.', detalles: '3 series de 12 repeticiones', videoUrl: 'https://www.youtube.com/embed/me2mBRugU7c' },
               { src: images.img_c_sentadilla_squat_pendulo, nombre: 'Sentadilla Squat Péndulo', descripcion: 'Desplaza la carga de forma pendular, activando el cuádriceps (vastos) con énfasis en el recorrido vertical.', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/6dzuSSQiY48' },
               { src: images.img_c_prensa_45_grados, nombre: 'Prensa 45 grados', descripcion: 'Pone gran tensión sobre el cuádriceps (vastos) con menor exigencia del core, especialmente en la fase de empuje.', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/OT7gKslX6pA' },
-              { src: images.img_c_extension, nombre: 'Extensiones de Cuádriceps', descripcion: 'Aíslan el cuádriceps (vasto intermedio, lateral, medial) en su función de extensión de rodilla, con mínima participación de otros músculos.', detalles: '3 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/B9kGULV8jrc' },
+              { src: images.img_c_extension, nombre: 'Extensiones de Cuádriceps', descripcion: 'Aíslan el cuádriceps (vasto intermedio, lateral, medial) en su función de extensión de rodilla, con mínima participación de otros músculos.', detalles: '3 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/FtXooCm3wdQ' },
               { src: images.img_c_bulgaras, nombre: 'Búlgaras para Cuádriceps', descripcion: 'Activa el cuádriceps (vastos) de la pierna delantera con estabilización adicional desde glúteos y core.', detalles: '3 series de 10 repeticiones por pierna', videoUrl: 'https://www.youtube.com/embed/73Wnj4XvqDY' },
               { src: images.img_c_zancadas, nombre: 'Zancadas', descripcion: 'Estimula el cuádriceps (vastos) con contribución del glúteo y del stabilizador de cadera en cada paso.', detalles: '3 series de 12 repeticiones por pierna', videoUrl: 'https://www.youtube.com/embed/ArHjLGYmE5k' },
               { src: images.img_c_aductores, nombre: 'Aductores', descripcion: 'Este ejercicio no trabaja el cuádriceps principal, sino los músculos aductores del muslo para estabilizar la rodilla y la cadera.', detalles: '3 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/76uNT_VMhPI' },
@@ -184,11 +184,11 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
             nombre: "Isquiotibiales o Femorales",
             ejercicios: [
               { src: images.img_f_peso_muerto_rumano, nombre: 'Peso Muerto Rumano', descripcion: 'Activa principalmente los músculos femorales (bíceps femoral, semitendinoso, semimembranoso) durante la extensión de cadera y control excéntrico. También involucra glúteos y erectores de la columna.', detalles: '3 series de 8-12 repeticiones', videoUrl: 'https://youtube.com/embed/0XL4cZR2Ink?si=O0sngq6ZZh1uhxWt' },
-              { src: images.img_f_peso_muerto_b_stand, nombre: 'Peso Muerto B-Stand', descripcion: 'Apunta al femoral de la pierna de apoyo (bíceps femoral, semitendinoso) con estabilización adicional de glúteo e isquiotibiales del lado opuesto', detalles: '3 series de 8-12 repeticiones', videoUrl: 'https://youtube.com/embed/Px9rVZjwXsk?si=gTtuHo3m8X63oHsH' },
-              { src: images.img_f_curl_femoral_tumbado, nombre: 'Curl Femoral Tumbado', descripcion: 'Activa específicamente los músculos femorales (bíceps femoral, semitendinoso, semimembranoso) en flexión de rodilla en posición reclinada.', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/f9OnW-UkkFk' },
-              { src: images.img_f_curl_femoral_hammer, nombre: 'Curl Femoral Hammer', descripcion: 'Enfoca tensión en las fibras del bíceps femoral, con mayor implicación del músculo semitendinoso, manteniendo estabilidad articular.', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/A4PRr8CFiaw' },
+              { src: images.img_f_peso_muerto_b_stand, nombre: 'Peso Muerto B-Stand', descripcion: 'Apunta al femoral de la pierna de apoyo (bíceps femoral, semitendinoso) con estabilización adicional de glúteo e isquiotibiales del lado opuesto', detalles: '3 series de 8-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/_k7MmWlHMPo' },
+              { src: images.img_f_curl_femoral_tumbado, nombre: 'Curl Femoral Tumbado', descripcion: 'Activa específicamente los músculos femorales (bíceps femoral, semitendinoso, semimembranoso) en flexión de rodilla en posición reclinada.', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/ENDnSAkatcw' },
+              { src: images.img_f_curl_femoral_hammer, nombre: 'Curl Femoral Hammer', descripcion: 'Enfoca tensión en las fibras del bíceps femoral, con mayor implicación del músculo semitendinoso, manteniendo estabilidad articular.', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/K4moYGBfNmo' },
               { src: images.img_f_curl_femoral_sentado, nombre: 'Curl Femoral Sentado', descripcion: 'Activa los femorales (bíceps femoral, semitendinoso) con tensión constante desde la posición de rodilla flexionada, limitando el apoyo de la cadera.', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/VFIONXq3LGw' },
-              { src: images.img_f_curl_nordico, nombre: 'Curl Nórdico', descripcion: 'Estimula fuertemente los músculos femorales (bíceps femoral, semitendinoso) en un movimiento excéntrico donde se resiste la caída hacia adelante, con control.', detalles: '3 series de 6-10 repeticiones', videoUrl: 'https://www.youtube.com/embed/7NYAaiWRkcE?si=yOy4l6TfjQF6HeY8' },
+              { src: images.img_f_curl_nordico, nombre: 'Curl Nórdico', descripcion: 'Estimula fuertemente los músculos femorales (bíceps femoral, semitendinoso) en un movimiento excéntrico donde se resiste la caída hacia adelante, con control.', detalles: '3 series de 6-10 repeticiones', videoUrl: 'https://www.youtube.com/embed/QZdcn8POwbw' },
 
             ]
           },
@@ -200,12 +200,12 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
               { src: images.img_g_bulgaras, nombre: 'Búlgaras para Glúteos', descripcion: 'Trabaja el glúteo mayor (principalmente en la pierna delantera) con apoyo del glúteo medio para estabilización.', detalles: '3 series de 10 repeticiones por pierna', videoUrl: 'https://www.youtube.com/embed/OqHQuEBm-Ik' },
               { src: images.img_g_peso_muerto_sumo, nombre: 'Peso Muerto Sumo', descripcion: 'Activa el glúteo mayor (junto con aductores) al extender la cadera con piernas separadas.', detalles: '3 series de 8-10 repeticiones', videoUrl: 'https://www.youtube.com/embed/YE7rtn57tP4' },
               { src: images.img_g_sentadilla_sumo, nombre: 'Sentadilla Sumo', descripcion: 'Focaliza el estímulo en el glúteo mayor y los aductores durante la extensión de cadera + rodilla.', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/PFh39yoRSes' },
-              { src: images.img_g_patada_cable, nombre: 'Patadas con Cable', descripcion: 'Estimula el glúteo mayor (porción superior) de forma aislada al extender la cadera.', detalles: '3 series de 12-15 repeticiones por pierna', videoUrl: 'https://www.youtube.com/embed/B9Fqo0KqeWc' },
+              { src: images.img_g_patada_cable, nombre: 'Patadas con Cable', descripcion: 'Estimula el glúteo mayor (porción superior) de forma aislada al extender la cadera.', detalles: '3 series de 12-15 repeticiones por pierna', videoUrl: 'https://www.youtube.com/embed/GvgL2NbOaKE' },
               { src: images.img_g_patada_maquina, nombre: 'Patadas en Máquina', descripcion: 'Trabaja el glúteo mayor (porción alta) con tensión guiada en extensión de cadera.', detalles: '3 series de 12 repeticiones por pierna', videoUrl: 'https://www.youtube.com/embed/sKyhNSbHqNQ' },
               { src: images.img_g_buenos_dias, nombre: 'Buenos Días', descripcion: 'Activa el glúteo mayor (junto con isquiotibiales) durante el movimiento de flexión de cadera hacia adelante y la extensión.', detalles: '3 series de 10 repeticiones por pierna', videoUrl: 'https://youtube.com/embed/u9700ghVPgE?si=qz1fOHzgDoy7U675' },
               { src: images.img_g_step_up, nombre: 'Step-ups', descripcion: 'Produce alta activación del glúteo mayor (fuerza unilateral) al elevar el cuerpo sobre una plataforma.', detalles: '3 series de 10 repeticiones por pierna', videoUrl: 'https://www.youtube.com/embed/mw6iqu9K8DY' },
-              { src: images.img_g_abductores, nombre: 'Abductores', descripcion: 'Activa principalmente el glúteo medio (parte lateral de la cadera) al separar la pierna hacia afuera.', detalles: '3 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/cQv9I1-pVBQ'},
-              { src: images.img_g_hiperextension, nombre: 'Hiper extensión para Glúteos', descripcion: 'Estimula el glúteo mayor (junto con erectores espinales) cuando haces extensión de cadera desde el tronco.', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/cffBuDsjxU8'},
+              { src: images.img_g_abductores, nombre: 'Abductores', descripcion: 'Activa principalmente el glúteo medio (parte lateral de la cadera) al separar la pierna hacia afuera.', detalles: '3 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/6ZU_WuhMoIM'},
+              { src: images.img_g_hiperextension, nombre: 'Hiper extensión para Glúteos', descripcion: 'Estimula el glúteo mayor (junto con erectores espinales) cuando haces extensión de cadera desde el tronco.', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/neoUfYkJVwM'},
 
             ]
           }
@@ -289,9 +289,9 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
 
       <div className="bg-gray-900 text-white min-h-screen p-8">
         <div className="max-w-7xl mx-auto">
-          <Link to="/" className="bebas-font text-2xl text-[#379AA5] hover:text-cyan-300 transition-colors tracking-widest">&larr; VOLVER AL INICIO</Link>
+          <Link to="/" className="bebas-font text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest">&larr; VOLVER AL INICIO</Link>
           <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider">
-            <span className="text-[#379AA5]">{rutinaActual.titulo}</span>
+            <span className="text-green-600">{rutinaActual.titulo}</span>
           </h1>
 
           <div 
@@ -304,7 +304,6 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
               {/* Vista Colapsada */}
               <div className="flex-grow">
                 <h2 className="bebas-font text-3xl text-white">Mi Rutina Semanal:</h2>
-                <p className="text-gray-400 mt-1">Aquí puedes ver un resumen de tu planificación semanal.</p>
                 {!isPlanAccordionOpen && (
                   <div className="mt-2 flex items-center">
                     <span className="font-semibold text-green-500 mr-2">Hoy ({todayName}):</span>
@@ -375,8 +374,8 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
               onClick={() => setIsPersonalizeAccordionOpen(!isPersonalizeAccordionOpen)}
             >
               <div>
-                <h2 className="bebas-font text-3xl text-white">Selecciona los ejercicios:</h2>
-                <p className="text-gray-400 mt-1">Selecciona o deselecciona los ejercicios que desees para poder verlos en la galería de ejercicios de abajo.</p>
+                <h2 className="bebas-font text-3xl text-white">Lista de ejercicios:</h2>
+                <p className="text-gray-400 mt-1">Selecciona unicamente los ejercicios que deseas ver en la <span className="text-cyan-400">galería de ejercicios</span>.</p>
               </div>
               <svg className={`w-6 h-6 text-gray-400 transform transition-transform duration-300 ${isPersonalizeAccordionOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </div>
@@ -441,6 +440,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                                 <ImageLoader src={imagen.src} alt={imagen.nombre} className="w-full h-full"/>
                                 <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/70 to-transparent">
                                     <h4 className="text-white text-xl font-bold tracking-wide">{imagen.nombre}</h4>
+                                    <p className="text-cyan-400 text-sm font-semibold mt-1">Ver Ejecución ▸</p>
                                 </div>
                             </div>
                             <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[1000px] mt-4' : 'max-h-0'}`}>
@@ -466,6 +466,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                                   <ImageLoader src={imagen.src} alt={imagen.nombre} className="w-full h-full"/>
                                   <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/70 to-transparent">
                                       <h4 className="text-white text-xl font-bold tracking-wide">{imagen.nombre}</h4>
+                                      <p className="text-cyan-400 text-sm font-semibold mt-1">Ver Ejecución ▸</p>
                                   </div>
                               </div>
                               <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[1000px] mt-4' : 'max-h-0'}`}>
