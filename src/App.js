@@ -3,6 +3,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import { images } from './assets';
 import DetalleEjercicio from './components/rutinas/DetalleEjercicio';
+import SwipeableMenu from './components/SwipeableMenu';
 import ScrollToTop from './components/ScrollToTop';
 import PlanificadorModal from './components/PlanificadorModal';
 import ScrollToTopButton from './components/ScrollToTopButton';
@@ -13,6 +14,20 @@ import pako from 'pako';
 // Componente de la Página de Inicio (fuera de App para evitar re-renders)
 const HomePage = ({ typewriterText, loopNum, toRotate }) => {
   const [showMore, setShowMore] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navLinks = [
+    { href: '#', text: 'INICIO' },
+    { href: '#ejercicios', text: 'EJERCICIOS' },
+    { href: '#about', text: '¿QUIÉNES SOMOS?' },
+    { href: '#contacto', text: 'CONTACTOS' },
+  ];
+
+  const socialLinks = [
+    { href: 'https://www.tiktok.com/@energyhco', icon: images.tik_tok, name: 'TikTok' },
+    { href: 'https://www.facebook.com/energy.huanuco', icon: images.facebook, name: 'Facebook' },
+    { href: 'https://www.instagram.com/energyhuanuco/', icon: images.instagram, name: 'Instagram' },
+  ];
 
   const mainGrupos = [
     { nombre: 'Pecho', slug: 'pecho', img: images.pecho },
@@ -29,8 +44,58 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
 
   return (
   <>
+    <SwipeableMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)}>
+      <ul className="flex flex-col space-y-8 text-center mt-24">
+        {navLinks.map(link => (
+          <li key={link.href}>
+            <a 
+              href={link.href} 
+              onClick={() => setIsMenuOpen(false)} 
+              className="bebas-font text-2xl text-gray-300 hover:text-white tracking-widest transition-colors"
+            >
+              {link.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div className="border-t border-gray-700 mt-auto pt-6">
+        <div className="flex justify-center space-x-6">
+          {socialLinks.map(social => (
+            <a href={social.href} key={social.name} target="_blank" className="group flex flex-col items-center space-y-2">
+              <img src={social.icon} alt={social.name} className="h-8 w-8 transition-transform group-hover:scale-110" />
+              <span 
+                className="text-xs tracking-wider bg-clip-text text-gray-500 group-hover:animate-shine group-hover:text-gray-400"
+                style={{
+                  backgroundImage: 'linear-gradient(120deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 70%)',
+                  backgroundSize: '200% 100%',
+                  WebkitBackgroundClip: 'text',
+                }}
+              >
+                {social.name}
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </SwipeableMenu>
+
     <div className="hero-bg relative w-full h-screen flex items-center justify-center p-8 bg-black">
       <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="white" />
+      
+      <button
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        className="md:hidden fixed top-6 right-6 z-[100] flex items-center gap-2 text-white"
+        aria-label="Toggle menu"
+      >
+        <span className="bebas-font text-xl tracking-wider">
+          {isMenuOpen ? 'CERRAR' : 'MENU'}
+        </span>
+        <div className={`menu-icon-container ${isMenuOpen ? 'open' : ''}`}>
+          <div className="menu-icon-bar bar1 bg-white"></div>
+          <div className="menu-icon-bar bar2 bg-white"></div>
+        </div>
+      </button>
+
       {/* Navegación */}
       <nav className="absolute top-0 left-0 right-0 z-50 p-6 flex justify-between items-center bg-transparent">
            <div className="flex items-center space-x-3">
@@ -38,13 +103,13 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
               <h1 className="bebas-font text-3x2 md:text-4x2 text-white tracking-widest">ENERGY</h1>
           </div>
           <div className="hidden md:flex space-x-12 text-lg">
-              <Link to="/" id='inicio' className="hover:text-[#2A7A87] transition-colors">INICIO</Link>
-              <a href="#ejercicios" className="hover:text-[#2A7A87] transition-colors">EJERCICIOS</a>
-              <a href="#about" className="hover:text-[#2A7A87] transition-colors">¿QUIÉNES SOMOS?</a>
-
-              <a href="#contacto" className="hover:text-[#2A7A87] transition-colors">CONTACTOS</a>
+            {navLinks.map(link => (
+              <a key={link.href} href={link.href} className="hover:text-[#2A7A87] transition-colors">{link.text}</a>
+            ))}
           </div>
-          <a href="#ejercicios" className="bebas-font border-2 border-[#379AA5] text-[#379AA5] px-6 py-2 rounded-lg hover:bg-[#379AA5] hover:text-gray-900 transition-colors">Empezar</a>
+          <a href="#ejercicios" className="hidden md:block bebas-font border-2 border-[#379AA5] text-[#379AA5] px-6 py-2 rounded-lg hover:bg-[#379AA5] hover:text-gray-900 transition-colors">
+            Empezar
+          </a>
       </nav>
       
       {/* Contenido principal del Hero */}
@@ -62,11 +127,25 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
               }
               <span className="cursor">|</span>
           </h2>
-          <p className="text-xl md:text-2xl text-gray-200 mb-8 tracking-wide">
-              MÁS RÁPIDO, MÁS FUERTE, LUCHA HASTA EL FINAL.
-          </p>
-          <a href="#ejercicios" className="bg-[#379AA5] hover:bg-[#2A7A87] text-white px-8 py-3 rounded-md shadow-lg transition-colors">Ver Ejercicios</a>
-      </div>
+                  <div
+                    className="animate-shine text-xl md:text-2xl mb-8 tracking-wide bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: 'linear-gradient(120deg, #9CA3AF 30%, #FFFFFF 50%, #9CA3AF 70%)',
+                      backgroundSize: '200% 100%',
+                      WebkitBackgroundClip: 'text',
+                    }}
+                  >
+                    Ideal para quienes están empezando en el gimnasio
+                  </div>
+                  <a href="#ejercicios" className="bg-[#379AA5] hover:bg-[#2A7A87] text-white px-8 py-3 rounded-md shadow-lg transition-colors">Ver Ejercicios</a>
+              </div>
+
+              {/* Animated Scroll Down Indicator */}
+              <a href="#ejercicios" aria-label="Scroll down" className="absolute z-30 bottom-8 md:left-1/2 md:-translate-x-1/2 text-white animate-bounce" style={{ bottom: 'calc(3rem + env(safe-area-inset-bottom))' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+              </a>
       
       {/* Imagen de la persona en el Hero */}
       <img src={images.hero} alt="Persona entrenando" className="absolute top-0 right-0 h-full w-full object-cover z-5 opacity-30 md:opacity-40 md:w-2/5" />
@@ -158,7 +237,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
   </div>
 
   {/* Pie de Página */}
-  <footer id="contacto" className="footer-bg py-16 px-4 md:px-8 bg-gray-900">
+  <footer id="contacto" className="bg-black py-16 px-4 md:px-8">
       <div className="max-w-7xl mx-auto text-center">
           <h3 className="bebas-font text-5xl md:text-6xl text-white mb-8 tracking-wider">CONTACTOS</h3>
           <div className="flex flex-col md:flex-row justify-between items-center mb-12 border-b-2 border-gray-800 pb-8">
@@ -169,10 +248,10 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
               </div>
              
               <div className="flex space-x-6 text-2xl">
-                  <a href="https://www.tiktok.com/@energyhco" aria-label="Facebook"><img src={images.tik_tok} alt="Facebook" className="h-10 w-10  transition-colors" /></a>
-                  <a href="#" aria-label="Instagram"><img src={images.facebook} alt="facebook" className="h-10 w-10 text-white hover:text-cyan-400 transition-colors" /></a>
-                  <a href="#" aria-label="YouTube"><img src={images.instagram} alt="instagram" className="h-10 w-10 text-white hover:text-cyan-400 transition-colors" /></a>
-                  
+                  <a href="https://www.tiktok.com/@energyhco" target="_blank" aria-label="TikTok"><img src={images.tik_tok} alt="TikTok" className="h-10 w-10  transition-colors" /></a>
+                  <a href="https://www.facebook.com/energy.huanuco" target="_blank" aria-label="Facebook"><img src={images.facebook} alt="facebook" className="h-10 w-10 text-white hover:text-cyan-400 transition-colors" /></a>
+                  <a href="https://www.instagram.com/energyhuanuco/" target="_blank" aria-label="Instagram"><img src={images.instagram} alt="instagram" className="h-10 w-10 text-white hover:text-cyan-400 transition-colors" /></a>
+
               </div>
               
           </div>
@@ -187,7 +266,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
       </div>
   </footer>
   </>
-)};
+);};
 
 // Lee el estado desde la URL o devuelve un estado por defecto
 const getInitialState = () => {
@@ -319,8 +398,8 @@ function App() {
     }
   };
 // Las frases dinamicas para el efecto de máquina de escribir
-  const toRotate = useMemo(() => ["TU NUEVA DISCIPLINA", "DONDE SE ENTRENA DE VERDAD."], []);
-  const period = 3500;
+  const toRotate = useMemo(() => ["DONDE EMPIEZA TODO", "TU NUEVA DISCIPLINA."], []);
+  const period = 3000;
 
   useEffect(() => {
     const tick = () => {

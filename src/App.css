@@ -81,3 +81,43 @@ body {
 .animate-spotlight {
   animation: spotlight 2s ease 0.75s 1 forwards;
 }
+
+.animate-shine {
+  animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+  from {
+    background-position: 200% center;
+  }
+  to {
+    background-position: -200% center;
+  }
+}
+
+.menu-icon-container {
+  width: 1.5rem; /* 24px */
+  height: 1.5rem; /* 24px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-icon-bar {
+  position: absolute;
+  width: 1.25rem; /* 20px */
+  height: 2px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.bar2 {
+  transform: rotate(90deg);
+}
+
+.open .bar1 {
+  transform: rotate(45deg);
+}
+
+.open .bar2 {
+  transform: rotate(-45deg);
+}
