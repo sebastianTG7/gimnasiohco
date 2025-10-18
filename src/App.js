@@ -272,7 +272,8 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
 const getInitialState = () => {
   const defaultState = { 
     schedule: { days: {}, types: [] }, 
-    selectedExercises: {} 
+    selectedExercises: {},
+    customDetails: {} 
   };
 
   try {
@@ -296,7 +297,8 @@ const getInitialState = () => {
       if (parsedState.schedule && parsedState.selectedExercises) {
         return {
           schedule: { ...defaultState.schedule, ...parsedState.schedule },
-          selectedExercises: { ...defaultState.selectedExercises, ...parsedState.selectedExercises }
+          selectedExercises: { ...defaultState.selectedExercises, ...parsedState.selectedExercises },
+          customDetails: { ...defaultState.customDetails, ...parsedState.customDetails }
         };
       }
     }
@@ -318,6 +320,7 @@ function App() {
   const initialState = useMemo(() => getInitialState(), []);
   const [selectedExercises, setSelectedExercises] = useState(initialState.selectedExercises);
   const [schedule, setSchedule] = useState(initialState.schedule);
+  const [customDetails, setCustomDetails] = useState(initialState.customDetails);
 
   const [isPlannerOpen, setIsPlannerOpen] = useState(false);
 
@@ -353,6 +356,19 @@ function App() {
     });
   };
 
+  const handleDetailsChange = (group, exerciseName, detail, value) => {
+    setCustomDetails(prev => ({
+      ...prev,
+      [group]: {
+        ...prev[group],
+        [exerciseName]: {
+          ...prev[group]?.[exerciseName],
+          [detail]: value
+        }
+      }
+    }));
+  };
+
   const handleClearGroupSelection = (groupToClear) => {
     setSelectedExercises(prev => ({
       ...prev,
@@ -365,6 +381,7 @@ function App() {
       const stateToShare = {
         schedule,
         selectedExercises,
+        customDetails,
       };
       const jsonString = JSON.stringify(stateToShare);
       
@@ -442,12 +459,14 @@ function App() {
           element={<DetalleEjercicio 
             selectedExercises={selectedExercises} 
             onSelectExercise={handleExerciseSelection} 
-            onClearGroup={handleClearGroupSelection} 
+            onClearGroup={handleClearGroupSelection}
             schedule={schedule} 
             routineTypes={schedule.types} // Pasar el array de tipos global
             onRoutineTypeChange={handleRoutineTypeChange} // Pasar el nuevo manejador
             onOpenPlanner={() => setIsPlannerOpen(true)}
             onShare={handleShare} // Pasar la función de compartir
+            customDetails={customDetails}
+            onDetailsChange={handleDetailsChange}
           />} 
         />
       </Routes>

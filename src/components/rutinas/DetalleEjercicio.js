@@ -54,7 +54,7 @@ const ResumenSemanal = ({ schedule, daysOfWeek }) => {
   );
 };
 
-const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, schedule, routineTypes, onRoutineTypeChange, onOpenPlanner, onShare }) => {
+const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, schedule, routineTypes, onRoutineTypeChange, onOpenPlanner, onShare, customDetails, onDetailsChange }) => {
   let { grupo } = useParams();
   const [openIndex, setOpenIndex] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -100,7 +100,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
     },
     espalda: {
         titulo: "RUTINA DE ESPALDA",
-        ejercicios: ["Remo Parado (Barra)", "Remo a 1 mano (Mancuerna)","Remo a 1 mano (Polea)","Remo Máquina", "Dominadas", "Jalón (Agarre Abierto)", "Jalón (Agarre Cerrado)", "Remo sentado (Polea, Abierto)", "Remo sentado (Polea, Cerrado)"],
+        ejercicios: ["Remo Parado (barra)", "Remo a 1 mano (Mancuerna)","Remo a 1 mano (Polea)","Remo Máquina", "Dominadas", "Jalón (Agarre Abierto)", "Jalón (Agarre Cerrado)", "Remo sentado (Polea, Abierto)", "Remo sentado (Polea, Cerrado)"],
         imagenes: [
           { src: images.img_e_remo_parado_barra, nombre: 'Remo Parado (barra)', descripcion: 'Este ejercicio fortalece la espalda alta y media al jalar la barra hacia el abdomen. Ayuda a mejorar la postura, ganar fuerza general y desarrollar volumen en la espalda superior.', detalles: '3 series de 10–12 repeticiones', videoUrl: 'https://www.youtube.com/embed/sr_U0jBE89A' },
           { src: images.img_e_remo_1_mano_mancuerna, nombre: 'Remo a 1 mano (Mancuerna)', descripcion: 'Este ejercicio logra mayor enfoque en un lado de la espalda, corrigiendo desequilibrios musculares y aumentando la conexión mente-músculo. (Concentrarse en el control, no en el peso)', detalles: '3 series de 10–12 repeticiones por brazo', videoUrl: 'https://youtube.com/embed/ZRSGpBUVcNw?si=MNx4gYwQnhlYXy7O' },
@@ -139,7 +139,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
     },
     triceps: {
         titulo: "RUTINA DE TRICEPS",
-        ejercicios: ["Press Frances", "Fondos para Tríceps", "Empujon Parado (Cable)", "Empujon Tras Nuca (Cable)","Empujon Tras Nuca (Mancuerna)","Patada de Tríceps(Cable o Mancuernas)", "Extensiones en Polea Alta Cruzada"],
+        ejercicios: ["Press Frances", "Fondos para Tríceps", "Empujon Parado (Cable)", "Empujon Tras Nuca (Cable)","Empujon Tras Nuca (Mancuerna)","Patada de Tríceps", "Extensiones en Polea Alta Cruzada"],
         imagenes: [
             { src: images.img_t_press_frances, nombre: 'Press Frances', descripcion: 'Gran ejercicio compuesto para tríceps y pecho.', detalles: '4 series al fallo', videoUrl: 'https://www.youtube.com/embed/emnTk9VixDA' },
             { src: images.img_t_fondos, nombre: 'Fondos para Tríceps', descripcion: 'Perfecto para un bombeo final y dar forma al tríceps.', detalles: '3 series de 12-15 repeticiones', videoUrl: 'https://www.youtube.com/embed/cI6HMipOva4' },
@@ -155,10 +155,10 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
       ejercicios: ["Crunches", "Palo Press (Cable)", "Elevación de Piernas", "Caminata de Granjero", "Plancha Frontal"],
       imagenes: [
           { src: images.img_a_crunch, nombre: 'Crunches', descripcion: 'El ejercicio básico para la parte superior del abdomen.', detalles: '3 series al fallo', videoUrl: 'https://www.youtube.com/embed/U2Pxw_PLfXc' },
-          { src: images.img_a_palo_press_cable, nombre: 'Palo Press(Cable)', descripcion: 'Fortalece todo el core, incluyendo abdomen, espalda baja y oblicuos.', detalles: '3 series, manteniendo la posición el mayor tiempo posible', videoUrl: 'https://www.youtube.com/embed/Jio_SzqlNUk' },
+          { src: images.img_a_palo_press_cable, nombre: 'Palo Press (Cable)', descripcion: 'Fortalece todo el core, incluyendo abdomen, espalda baja y oblicuos.', detalles: '3 series, manteniendo la posición el mayor tiempo posible', videoUrl: 'https://www.youtube.com/embed/Jio_SzqlNUk' },
           { src: images.img_a_elevacion_piernas, nombre: 'Elevación de Piernas', descripcion: 'Excelente para enfocar el trabajo en la parte inferior del abdomen.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/PfXQJ1-s9A8' },
           { src: images.img_a_caminata_cangrejo, nombre: 'Caminata de Granjero', descripcion: 'Excelente para enfocar el trabajo en la parte inferior del abdomen.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://youtube.com/embed/bnnlfhic4r0?si=uy1z3d1HK2RkUkoi' },
-          { src: images.img_a_plancha_frontal, nombre: 'Planchas Frontal', descripcion: 'Excelente para enfocar el trabajo en la parte inferior del abdomen.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/KC-DK0qydqw' },
+          { src: images.img_a_plancha_frontal, nombre: 'Plancha Frontal', descripcion: 'Excelente para enfocar el trabajo en la parte inferior del abdomen.', detalles: '3 series de 15-20 repeticiones', videoUrl: 'https://www.youtube.com/embed/KC-DK0qydqw' },
 
 
       ]
@@ -392,11 +392,35 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                       {subgrupo.ejercicios.map((ejercicio, index) => {
                         const isChecked = currentSelections.includes(ejercicio.nombre);
                         return (
-                          <li key={index} onClick={() => onSelectExercise(grupo, ejercicio.nombre)} className="cursor-pointer flex items-center p-3 rounded-lg transition-colors hover:bg-gray-700">
-                            <div className={`w-6 h-6 flex justify-center items-center border-2 ${isChecked ? 'border-cyan-500 bg-cyan-500' : 'border-gray-500'} rounded-md mr-4 transition-all`}>
-                                {isChecked && <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>}
+                          <li key={index} className="p-3 rounded-lg transition-colors hover:bg-gray-700">
+                            <div className="flex items-center">
+                              <div onClick={() => onSelectExercise(grupo, ejercicio.nombre)} className="flex-grow flex items-center cursor-pointer">
+                                <div className={`w-6 h-6 flex justify-center items-center border-2 ${isChecked ? 'border-cyan-500 bg-cyan-500' : 'border-gray-500'} rounded-md mr-4 transition-all`}>
+                                    {isChecked && <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>}
+                                </div>
+                                <span className={`text-lg ${isChecked ? 'text-white' : 'text-gray-300'}`}>{ejercicio.nombre}</span>
+                              </div>
+                              {isChecked && (
+                                <div className="flex items-center gap-2 ml-4">
+                                  <input 
+                                    type="text" 
+                                    placeholder="Series" 
+                                    value={customDetails[grupo]?.[ejercicio.nombre]?.series || ''}
+                                    onChange={(e) => onDetailsChange(grupo, ejercicio.nombre, 'series', e.target.value)}
+                                    onClick={(e) => e.stopPropagation()} // Evita que el click en el input deseleccione el ejercicio
+                                    className="w-20 bg-gray-700 text-white text-center rounded-md p-1 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                  />
+                                  <input 
+                                    type="text" 
+                                    placeholder="Reps" 
+                                    value={customDetails[grupo]?.[ejercicio.nombre]?.reps || ''}
+                                    onChange={(e) => onDetailsChange(grupo, ejercicio.nombre, 'reps', e.target.value)}
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="w-20 bg-gray-700 text-white text-center rounded-md p-1 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                  />
+                                </div>
+                              )}
                             </div>
-                            <span className={`text-lg ${isChecked ? 'text-white' : 'text-gray-300'}`}>{ejercicio.nombre}</span>
                           </li>
                         )
                       })}
@@ -406,11 +430,35 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                   rutinaActual.ejercicios.map((ejercicio, index) => {
                       const isChecked = currentSelections.includes(ejercicio);
                       return (
-                        <li key={index} onClick={() => onSelectExercise(grupo, ejercicio)} className="cursor-pointer flex items-center p-3 rounded-lg transition-colors hover:bg-gray-700">
-                            <div className={`w-6 h-6 flex justify-center items-center border-2 ${isChecked ? 'border-cyan-500 bg-cyan-500' : 'border-gray-500'} rounded-md mr-4 transition-all`}>
-                                {isChecked && <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>}
+                        <li key={index} className="p-3 rounded-lg transition-colors hover:bg-gray-700">
+                          <div className="flex items-center">
+                            <div onClick={() => onSelectExercise(grupo, ejercicio)} className="flex-grow flex items-center cursor-pointer">
+                              <div className={`w-6 h-6 flex justify-center items-center border-2 ${isChecked ? 'border-cyan-500 bg-cyan-500' : 'border-gray-500'} rounded-md mr-4 transition-all`}>
+                                  {isChecked && <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>}
+                              </div>
+                              <span className={`text-lg ${isChecked ? 'text-white' : 'text-gray-300'}`}>{ejercicio}</span>
                             </div>
-                            <span className={`text-lg ${isChecked ? 'text-white' : 'text-gray-300'}`}>{ejercicio}</span>
+                            {isChecked && (
+                              <div className="flex items-center gap-2 ml-4">
+                                <input 
+                                  type="text" 
+                                  placeholder="Series" 
+                                  value={customDetails[grupo]?.[ejercicio]?.series || ''}
+                                  onChange={(e) => onDetailsChange(grupo, ejercicio, 'series', e.target.value)}
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="w-20 bg-gray-700 text-white text-center rounded-md p-1 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                />
+                                <input 
+                                  type="text" 
+                                  placeholder="Reps" 
+                                  value={customDetails[grupo]?.[ejercicio]?.reps || ''}
+                                  onChange={(e) => onDetailsChange(grupo, ejercicio, 'reps', e.target.value)}
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="w-20 bg-gray-700 text-white text-center rounded-md p-1 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                />
+                              </div>
+                            )}
+                          </div>
                         </li>
                       )
                   })
@@ -449,7 +497,15 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                             <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[1000px] mt-4' : 'max-h-0'}`}>
                                 <div className="bg-gray-800 p-6 rounded-lg">
                                     <p className="text-gray-300 mb-4">{imagen.descripcion}</p>
-                                    <p className="font-bold text-cyan-400 mb-4">{imagen.detalles}</p>
+                                    <p className="font-bold text-cyan-400 mb-4">
+                                      {(() => {
+                                        const details = customDetails[grupo]?.[imagen.nombre];
+                                        if (details && (details.series || details.reps)) {
+                                          return `${details.series || '?'} series de ${details.reps || '?'} repeticiones`;
+                                        }
+                                        return imagen.detalles;
+                                      })()}
+                                    </p>
                                     <VideoPlayer videoUrl={isOpen ? imagen.videoUrl : ''} title={imagen.nombre} />
                                 </div>
                             </div>
@@ -472,14 +528,21 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                                       <p className="text-cyan-400 text-sm font-semibold mt-1">Ver Ejecución ▸</p>
                                   </div>
                               </div>
-                              <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[1000px] mt-4' : 'max-h-0'}`}>
-                                  <div className="bg-gray-800 p-6 rounded-lg">
-                                      <p className="text-gray-300 mb-4">{imagen.descripcion}</p>
-                                      <p className="font-bold text-cyan-400 mb-4">{imagen.detalles}</p>
-                                      <VideoPlayer videoUrl={isOpen ? imagen.videoUrl : ''} title={imagen.nombre} />
-                                  </div>
-                              </div>
-                          </div>
+                                                          <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[1000px] mt-4' : 'max-h-0'}`}>
+                                                              <div className="bg-gray-800 p-6 rounded-lg">
+                                                                  <p className="text-gray-300 mb-4">{imagen.descripcion}</p>
+                                                                  <p className="font-bold text-cyan-400 mb-4">
+                                                                    {(() => {
+                                                                      const details = customDetails[grupo]?.[imagen.nombre];
+                                                                      if (details && (details.series || details.reps)) {
+                                                                        return `${details.series || '?'} series de ${details.reps || '?'} repeticiones`;
+                                                                      }
+                                                                      return imagen.detalles;
+                                                                    })()}
+                                                                  </p>
+                                                                  <VideoPlayer videoUrl={isOpen ? imagen.videoUrl : ''} title={imagen.nombre} />
+                                                              </div>
+                                                          </div>                          </div>
                       )
                   })}
                 </div>
