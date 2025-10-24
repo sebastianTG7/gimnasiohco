@@ -152,6 +152,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
         className="fixed top-5 right-5 z-[60] bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
         aria-label="Abrir menú de rutinas"
       >
+        
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
       </button>
 
@@ -195,21 +196,52 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
             className="bg-gray-800 rounded-lg shadow-lg mb-10 transition-all duration-300"
           >
             <div 
-              className="flex justify-between items-center p-4 sm:p-6"
+              className="p-4 sm:p-6"
             >
-              <div className="flex-grow cursor-pointer" onClick={() => setIsPlanAccordionOpen(!isPlanAccordionOpen)}>
-                <h2 className="bebas-font text-3xl text-white">Mi Rutina Semanal:</h2>
-                <p className="text-gray-400 mt-1">Toca para {isPlanAccordionOpen ? 'ocultar' : 'ver'} detalles y opciones de planificación por días.</p>
-              </div>
-              
-              <div className="flex items-center gap-4 ml-4">
+              <div className="flex flex-col gap-4">
+                <div className="flex justify-between items-start">
+                  <div className="flex-grow cursor-pointer" onClick={() => setIsPlanAccordionOpen(!isPlanAccordionOpen)}>
+                    <div className="flex justify-between items-center">
+                      <h2 className="bebas-font text-3xl text-white">Mi Rutina Semanal:</h2>
+                      <svg className={`w-6 h-6 text-gray-400 transform transition-transform duration-300 cursor-pointer flex-shrink-0 ml-2 ${isPlanAccordionOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    {!isPlanAccordionOpen ? (
+                      <>
+                        <p className="text-gray-400 mt-1 text-sm">Toca para ver detalles y opciones de planificación por días.</p>
+                        <div className="mt-3 flex flex-col sm:flex-row sm:items-center text-lg">
+                          <span className="w-full sm:w-32 font-semibold text-[#379AA5] mb-2 sm:mb-0 flex-shrink-0">{todayName}:</span>
+                          <div className="flex flex-wrap gap-2">
+                            {todaysGroups.length > 0 ? (
+                              todaysGroups.map(group => (
+                                <span key={group} className="bg-gray-700 text-white text-sm font-medium px-3 py-1 rounded-full shadow-md">
+                                  {group}
+                                </span>
+                              ))
+                            ) : (
+                              <span className="text-gray-400">Descanso</span>
+                            )}
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <p className="text-gray-400 mt-1">Toca para ocultar detalles y opciones de planificación por días.</p>
+                    )}
+                  </div>
+                  
+                  <button 
+                    onClick={handleStartWorkoutClick}
+                    className="hidden sm:block bebas-font text-base tracking-wider px-4 py-2 rounded-lg text-gray-900 bg-green-500 hover:bg-green-600 transition-colors shadow-lg flex-shrink-0 ml-4"
+                  >
+                    Empezar Entrenamiento
+                  </button>
+                </div>
+                
                 <button 
                   onClick={handleStartWorkoutClick}
-                  className="bebas-font text-base tracking-wider px-4 py-2 rounded-lg text-gray-900 bg-green-500 hover:bg-green-600 transition-colors shadow-lg"
+                  className="sm:hidden bebas-font text-base tracking-wider px-4 py-2 rounded-lg text-gray-900 bg-green-500 hover:bg-green-600 transition-colors shadow-lg w-full"
                 >
                   Empezar Entrenamiento
                 </button>
-                <svg onClick={() => setIsPlanAccordionOpen(!isPlanAccordionOpen)} className={`w-6 h-6 text-gray-400 transform transition-transform duration-300 cursor-pointer ${isPlanAccordionOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
               </div>
             </div>
 

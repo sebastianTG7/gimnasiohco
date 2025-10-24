@@ -16,6 +16,30 @@ import pako from 'pako';
 const HomePage = ({ typewriterText, loopNum, toRotate }) => {
   const [showMore, setShowMore] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showNav, setShowNav] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const controlNavbar = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY < 50) {
+        // Siempre mostrar el nav en la parte superior
+        setShowNav(true);
+      } else if (currentScrollY > lastScrollY) {
+        // Scrolling hacia abajo - ocultar nav
+        setShowNav(false);
+      } else {
+        // Scrolling hacia arriba - mostrar nav
+        setShowNav(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', controlNavbar);
+    return () => window.removeEventListener('scroll', controlNavbar);
+  }, [lastScrollY]);
 
   const navLinks = [
     { href: '#', text: 'INICIO' },
@@ -98,7 +122,9 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
       </button>
 
       {/* Navegación */}
-      <nav className="absolute top-0 left-0 right-0 z-50 p-6 flex justify-between items-center bg-transparent">
+      <nav className={`fixed top-0 left-0 right-0 z-50 p-6 flex justify-between items-center transition-all duration-300 ${
+        showNav ? 'translate-y-0' : '-translate-y-full'
+      } ${lastScrollY > 50 ? 'bg-black/80 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}>
            <div className="flex items-center space-x-3">
               <img src={images.logo_gym} alt="Logo de Energy" className="h-10 opacity-70 ml-2" />
               <h1 className="bebas-font text-3x2 md:text-4x2 text-white tracking-widest">ENERGY</h1>

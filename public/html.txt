@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENERGYM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+        .bebas-font {
+            font-family: 'Bebas Neue', sans-serif;
+        }
+        .hero-bg {
+            background-image: url('https://placehold.co/1920x800/000000/000000?text=');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.0));
+        }
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+            transition: background 0.3s ease;
+        }
+        .image-grid-item:hover .image-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .energym-title {
+            position: relative;
+            font-size: 8rem;
+            letter-spacing: 0.1em;
+            text-shadow: 
+                -0.1rem -0.1rem 0 #33A1F4,
+                0.1rem -0.1rem 0 #33A1F4,
+                -0.1rem 0.1rem 0 #33A1F4,
+                0.1rem 0.1rem 0 #33A1F4,
+                -0.2rem -0.2rem 0 #00E0FF,
+                0.2rem -0.2rem 0 #00E0FF,
+                -0.2rem 0.2rem 0 #00E0FF,
+                0.2rem 0.2rem 0 #00E0FF;
+            -webkit-text-stroke: 1px #000;
+        }
+        .footer-bg {
+            background-image: url('https://placehold.co/1920x800/000000/000000?text=');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-white font-sans">
+    <div class="hero-bg relative w-full h-screen flex items-center justify-center p-8">
+        <!-- Navegación -->
+        <nav class="absolute top-0 left-0 right-0 z-50 p-6 flex justify-between items-center bg-transparent">
+            <h1 class="bebas-font text-3xl md:text-4xl text-white tracking-widest">ENERGYM</h1>
+            <div class="hidden md:flex space-x-8 text-lg">
+                <a href="#inicio" class="hover:text-cyan-400 transition-colors">INICIO</a>
+                <a href="#ejercicios" class="hover:text-cyan-400 transition-colors">EJERCICIOS</a>
+                <a href="#about" class="hover:text-cyan-400 transition-colors">ACERCA DE NOSOTROS</a>
+                <a href="#contacto" class="hover:text-cyan-400 transition-colors">CONTACTOS</a>
+            </div>
+            <a href="#" class="bebas-font border-2 border-cyan-400 text-cyan-400 px-6 py-2 rounded-lg hover:bg-cyan-400 hover:text-gray-900 transition-colors">Empezar Entrenamiento</a>
+        </nav>
+        
+        <!-- Contenido principal del Hero -->
+        <div class="relative z-10 text-center md:text-left md:w-1/2 p-4">
+            <h2 class="bebas-font text-5xl md:text-7xl lg:text-8xl text-white leading-tight mb-4 tracking-wider">
+                EL CAMBIO NO EMPIEZA <br> EL LUNES EMPIEZA HOY
+            </h2>
+            <p class="text-xl md:text-2xl text-gray-200 mb-8 tracking-wide">
+                MÁS RÁPIDO, MÁS FUERTE, LUCHA HASTA EL FINAL
+            </p>
+            <a href="#ejercicios" class="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 rounded-md shadow-lg transition-colors">
+                Más detalles
+            </a>
+        </div>
+        
+        <!-- Imagen de la persona en el Hero -->
+        <img src="https://placehold.co/1920x800/1e293b/ffffff?text=Imagen+Principal" alt="Persona entrenando" class="absolute top-0 right-0 h-full w-full object-cover z-0 opacity-30 md:opacity-100 md:w-1/2">
+    </div>
+
+    <!-- Sección de Ejercicios -->
+    <section id="ejercicios" class="py-20 px-4 md:px-8 bg-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <h3 class="bebas-font text-5xl md:text-6xl text-center mb-12 tracking-wider">EJERCICIOS</h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Bloque de Ejercicio 1 -->
+                <div class="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105">
+                    <img src="https://placehold.co/600x400/1a202c/ffffff?text=PECHO" alt="Entrenamiento de pecho" class="w-full h-full object-cover filter grayscale">
+                    <div class="image-overlay">
+                        <span class="bebas-font text-3xl tracking-widest text-white">PECHO</span>
+                    </div>
+                </div>
+                <!-- Bloque de Ejercicio 2 -->
+                <div class="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105">
+                    <img src="https://placehold.co/600x400/1a202c/ffffff?text=ESPALDA" alt="Entrenamiento de espalda" class="w-full h-full object-cover filter grayscale">
+                    <div class="image-overlay">
+                        <span class="bebas-font text-3xl tracking-widest text-white">ESPALDA</span>
+                    </div>
+                </div>
+                <!-- Bloque de Ejercicio 3 -->
+                <div class="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105">
+                    <img src="https://placehold.co/600x400/1a202c/ffffff?text=HOMBROS" alt="Entrenamiento de hombros" class="w-full h-full object-cover filter grayscale">
+                    <div class="image-overlay">
+                        <span class="bebas-font text-3xl tracking-widest text-white">HOMBROS</span>
+                    </div>
+                </div>
+                <!-- Bloque de Ejercicio 4 -->
+                <div class="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105">
+                    <img src="https://placehold.co/600x400/1a202c/ffffff?text=BICEPS" alt="Entrenamiento de biceps" class="w-full h-full object-cover filter grayscale">
+                    <div class="image-overlay">
+                        <span class="bebas-font text-3xl tracking-widest text-white">BICEPS</span>
+                    </div>
+                </div>
+                <!-- Bloque de Ejercicio 5 -->
+                <div class="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105">
+                    <img src="https://placehold.co/600x400/1a202c/ffffff?text=TRICEPS" alt="Entrenamiento de triceps" class="w-full h-full object-cover filter grayscale">
+                    <div class="image-overlay">
+                        <span class="bebas-font text-3xl tracking-widest text-white">TRICEPS</span>
+                    </div>
+                </div>
+                <!-- Bloque de Ejercicio 6 -->
+                <div class="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105">
+                    <img src="https://placehold.co/600x400/1a202c/ffffff?text=PIERNAS" alt="Entrenamiento de piernas" class="w-full h-full object-cover filter grayscale">
+                    <div class="image-overlay">
+                        <span class="bebas-font text-3xl tracking-widest text-white">PIERNAS</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="bebas-font border-2 border-cyan-400 text-cyan-400 px-8 py-3 rounded-lg hover:bg-cyan-400 hover:text-gray-900 transition-colors tracking-widest text-xl">
+                    Ver todos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Sobre Nosotros -->
+    <section id="about" class="py-20 px-4 md:px-8 bg-gray-950">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="relative rounded-xl overflow-hidden shadow-xl">
+                <img src="https://placehold.co/800x600/1e293b/ffffff?text=Imagen+Sobre+Nosotros" alt="Grupo de personas en el gimnasio" class="w-full h-auto object-cover">
+            </div>
+            <div class="text-gray-200">
+                <h3 class="bebas-font text-5xl md:text-6xl text-cyan-400 mb-6 tracking-wider">Sobre Nosotros</h3>
+                <p class="text-lg leading-relaxed mb-6">
+                    Energym no es solo un gimnasio. Es una casa de transformación. Con más de 10 años forjando fierros y
+                    formando personas, nos dedicamos a algo más que dar rutinas. Aquí no hay excusas, hay resultados, no
+                    creemos en atajos, creemos en constancia, disciplina y sudor del bueno.
+                </p>
+                <p class="text-lg leading-relaxed mb-6">
+                    A lo largo de estos años hemos acompañado a cientos de personas principiantes, reincidentes, soñadores y
+                    guerreros a pasar de "no puedo" a "mírame ahora".
+                </p>
+                <h4 class="bebas-font text-3xl mt-8 mb-4 tracking-wider">¿Por qué elegir Energym?</h4>
+                <ul class="space-y-2 text-lg">
+                    <li><span class="text-cyan-400 mr-2">✔</span> Porque aquí no entrenas solo</li>
+                    <li><span class="text-cyan-400 mr-2">✔</span> Porque no improvisamos</li>
+                    <li><span class="text-cyan-400 mr-2">✔</span> Porque entrenar no debería ser un castigo</li>
+                    <li><span class="text-cyan-400 mr-2">✔</span> Porque te enseñamos a entrenar de verdad</li>
+                    <li><span class="text-cyan-400 mr-2">✔</span> Porque los resultados hablan</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de Página -->
+    <footer id="contacto" class="footer-bg py-16 px-4 md:px-8 bg-gray-900">
+        <div class="max-w-7xl mx-auto text-center">
+            <h3 class="bebas-font text-5xl md:text-6xl text-white mb-8 tracking-wider">CONTACTOS</h3>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12 border-b-2 border-gray-800 pb-8">
+                <!-- Información de Contacto -->
+                <div class="text-center md:text-left mb-8 md:mb-0">
+                    <p class="text-lg mb-2">📞 +1 234 567 890</p>
+                    <p class="text-lg mb-2">📧 info@energym.com</p>
+                    <p class="text-lg">📍 Av. del Deporte 123, Ciudad Deportiva</p>
+                </div>
+
+                <!-- Redes Sociales -->
+                <div class="flex space-x-6 text-2xl">
+                    <a href="#" aria-label="Facebook"><img src="https://www.svgrepo.com/show/303114/facebook-1-logo.svg" alt="Facebook" class="h-8 w-8 text-white hover:text-cyan-400 transition-colors"></a>
+                    <a href="#" aria-label="Instagram"><img src="https://www.svgrepo.com/show/303144/instagram-2-1-logo.svg" alt="Instagram" class="h-8 w-8 text-white hover:text-cyan-400 transition-colors"></a>
+                    <a href="#" aria-label="YouTube"><img src="https://www.svgrepo.com/show/303164/youtube-logo.svg" alt="YouTube" class="h-8 w-8 text-white hover:text-cyan-400 transition-colors"></a>
+                </div>
+            </div>
+            
+            <!-- Formulario de Contacto -->
+            <form action="#" method="POST" class="max-w-xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <input type="text" name="name" placeholder="Nombre" class="bg-gray-800 text-white rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                    <input type="email" name="email" placeholder="Correo Electrónico" class="bg-gray-800 text-white rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                </div>
+                <textarea name="message" rows="4" placeholder="Mensaje" class="bg-gray-800 text-white rounded-md p-3 w-full focus:outline-none focus:ring-2 focus:ring-cyan-400 mb-6"></textarea>
+                <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 rounded-md shadow-lg transition-colors w-full md:w-auto">
+                    Enviar Mensaje
+                </button>
+            </form>
+
+            <!-- Derechos de Autor -->
+            <p class="text-center text-sm text-gray-500 mt-12">
+                &copy; 2024 Energym. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
