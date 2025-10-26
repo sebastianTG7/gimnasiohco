@@ -4,81 +4,43 @@ import { images, videos } from '../../assets';
 import SwipeableMenu from '../SwipeableMenu';
 import ImageLoader from '../ImageLoader';
 import { GridBackground } from '../GridBackground';
+import VideoPlayer from '../VideoPlayer';
 
 const RestDayModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-black bg-opacity-70 z-[101] flex justify-center items-center p-4" onClick={onClose}>
       <div className="bg-gray-800 rounded-xl shadow-2xl p-8 w-full max-w-sm text-center" onClick={(e) => e.stopPropagation()}>
         <h2 className="bebas-font text-4xl text-cyan-400 tracking-wider mb-4">Día de Descanso</h2>
-        <p className="text-gray-300 mb-6">Hoy no tienes una rutina planificada. ¡Aprovecha para recargar energías!</p>
-        <button 
-          onClick={onClose}
-          className="bebas-font text-lg tracking-wider px-8 py-2 rounded-lg text-white bg-[#379AA5] hover:bg-[#2A7A87] transition-colors"
-        >
-          Entendido
-        </button>
+        <p className="text-gray-300 mb-8">Hoy no tienes una rutina planificada. ¡Aprovecha para recargar energías o crea un nuevo plan!</p>
+        <div className="flex justify-center gap-4">
+          <button 
+            onClick={onClose}
+            className="bebas-font text-lg tracking-wider px-6 py-2 rounded-lg text-gray-300 bg-gray-700 hover:bg-gray-600 transition-colors"
+          >
+            Entendido
+          </button>
+          <Link 
+            to="/mi-plan"
+            onClick={onClose} // Cierra el modal al navegar
+            className="bebas-font text-lg tracking-wider px-6 py-2 rounded-lg text-white bg-[#379AA5] hover:bg-[#2A7A87] transition-colors"
+          >
+            Crear Plan
+          </Link>
+        </div>
       </div>
     </div>
   );
 };
 
-const ResumenSemanal = ({ schedule, daysOfWeek }) => {
-  const scheduleByDay = useMemo(() => {
-    const byDay = {};
-    const scheduleDays = schedule.days || {}; // Acceder al objeto de días
 
-    // Llenar el objeto byDay con los grupos musculares por día
-    for (const group in scheduleDays) {
-      if (scheduleDays[group] && Array.isArray(scheduleDays[group])) {
-        scheduleDays[group].forEach(day => {
-          if (!byDay[day]) {
-            byDay[day] = [];
-          }
-          // Capitalizar el nombre del grupo antes de añadirlo
-          byDay[day].push(group.charAt(0).toUpperCase() + group.slice(1));
-        });
-      }
-    }
-    return byDay;
-  }, [schedule]); // La dependencia en `schedule` es correcta
-
-  return (
-    // Resumen semanal
-    <div className="bg-slate-800 p-4 rounded-lg shadow-lg mb-1">
-      <ul className="space-y-4">
-        {daysOfWeek.map(day => {
-          const groupsForDay = scheduleByDay[day];
-          // Si no hay grupos para el día, mostrar "Descanso"
-          return (
-            <li key={day} className="flex flex-col sm:flex-row sm:items-center text-lg p-2 rounded-md transition-colors hover:bg-gray-700">
-              <span className="w-full sm:w-32 font-semibold text-[#379AA5] mb-2 sm:mb-0 flex-shrink-0">{day}:</span>
-              <div className="flex flex-wrap gap-2">
-                {groupsForDay && groupsForDay.length > 0 ? (
-                  groupsForDay.map(group => (
-                    <span key={group} className="bg-gray-700 text-white text-sm font-medium px-3 py-1 rounded-full shadow-md">
-                      {group}
-                    </span>
-                  ))
-                ) : (
-                  <span className="text-gray-400">Descanso</span>
-                )}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-};
 
 const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, schedule, routineTypes, onRoutineTypeChange, onOpenPlanner, onShare, customDetails, onDetailsChange, datosEjercicios }) => {
   let { grupo } = useParams();
   const navigate = useNavigate();
   const [openIndex, setOpenIndex] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isPlanAccordionOpen, setIsPlanAccordionOpen] = useState(false);
   const [isPersonalizeAccordionOpen, setIsPersonalizeAccordionOpen] = useState(false);
   const [showRestDayModal, setShowRestDayModal] = useState(false);
 
@@ -149,11 +111,11 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
     <>
       <button 
         onClick={() => setIsDrawerOpen(prev => !prev)}
-        className="fixed top-5 right-5 z-[60] bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+        className={`fixed top-8 right-8 z-[60] bg-cyan-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-cyan-700 transition-all duration-300 flex items-center gap-2 ${isDrawerOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
         aria-label="Abrir menú de rutinas"
       >
-        
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        <span className="font-semibold text-sm">RUTINAS</span>
       </button>
 
       {/* Menú deslizable */}
@@ -200,32 +162,27 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
             >
               <div className="flex flex-col gap-4">
                 <div className="flex justify-between items-start">
-                  <div className="flex-grow cursor-pointer" onClick={() => setIsPlanAccordionOpen(!isPlanAccordionOpen)}>
+                  <div className="flex-grow">
                     <div className="flex justify-between items-center">
                       <h2 className="bebas-font text-3xl text-white">Mi Rutina Semanal:</h2>
-                      <svg className={`w-6 h-6 text-gray-400 transform transition-transform duration-300 cursor-pointer flex-shrink-0 ml-2 ${isPlanAccordionOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                      <Link to="/mi-plan" className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors underline">
+                        Editar Plan
+                      </Link>
                     </div>
-                    {!isPlanAccordionOpen ? (
-                      <>
-                        <p className="text-gray-400 mt-1 text-sm">Toca para ver detalles y opciones de planificación por días.</p>
-                        <div className="mt-3 flex flex-col sm:flex-row sm:items-center text-lg">
-                          <span className="w-full sm:w-32 font-semibold text-[#379AA5] mb-2 sm:mb-0 flex-shrink-0">{todayName}:</span>
-                          <div className="flex flex-wrap gap-2">
-                            {todaysGroups.length > 0 ? (
-                              todaysGroups.map(group => (
-                                <span key={group} className="bg-gray-700 text-white text-sm font-medium px-3 py-1 rounded-full shadow-md">
-                                  {group}
-                                </span>
-                              ))
-                            ) : (
-                              <span className="text-gray-400">Descanso</span>
-                            )}
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <p className="text-gray-400 mt-1">Toca para ocultar detalles y opciones de planificación por días.</p>
-                    )}
+                    <div className="mt-3 flex flex-col sm:flex-row sm:items-center text-lg">
+                      <span className="w-full sm:w-32 font-semibold text-[#379AA5] mb-2 sm:mb-0 flex-shrink-0">{todayName}:</span>
+                      <div className="flex flex-wrap gap-2">
+                        {todaysGroups.length > 0 ? (
+                          todaysGroups.map(group => (
+                            <span key={group} className="bg-gray-700 text-white text-sm font-medium px-3 py-1 rounded-full shadow-md">
+                              {group}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="text-gray-400">Descanso</span>
+                        )}
+                      </div>
+                    </div>
                   </div>
                   
                   <button 
@@ -244,46 +201,6 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                 </button>
               </div>
             </div>
-
-            {/* Contenido Expandible */}
-            {isPlanAccordionOpen && (
-              <div className="px-4 sm:px-6 pb-6" onClick={(e) => e.stopPropagation()}>
-                {/* Resumen Semanal */}
-                <div className="mb-6">
-                  <ResumenSemanal schedule={schedule} daysOfWeek={daysOfWeek} />
-                </div>
-                
-                <div className="border-t border-gray-700 pt-6">
-                  {/* Herramientas */}
-                  <div className="flex justify-end items-center mb-6">
-                    <button 
-                      onClick={onOpenPlanner}
-                      className="bebas-font text-base sm:text-lg tracking-wider px-4 sm:px-6 py-2 rounded-lg text-white bg-[#379AA5] hover:bg-[#2A7A87] transition-colors shadow-lg"
-                    >
-                      Planificar Semana
-                    </button>
-                  </div>
-                  
-                  {/* Tipo de Rutina */}
-                  <div>
-                    <h3 className="bebas-font text-xl sm:text-2xl text-white mb-4">Tipo de Rutina</h3>
-                    <div className="flex flex-wrap gap-x-6 gap-y-4">
-                        {routineTypeOptions.map(type => {
-                            const isChecked = routineTypes.includes(type);
-                            return (
-                                <div key={type} onClick={() => onRoutineTypeChange(type)} className="cursor-pointer flex items-center">
-                                    <div className={`w-6 h-6 flex justify-center items-center border-2 ${isChecked ? 'border-cyan-500 bg-cyan-500' : 'border-gray-500'} rounded-md mr-2 transition-all`}>
-                                        {isChecked && <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>}
-                                    </div>
-                                    <span className={`text-lg ${isChecked ? 'text-white' : 'text-gray-300'}`}>{type}</span>
-                                </div>
-                            );
-                        })}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
 
           
@@ -317,25 +234,25 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                                 <span className={`text-lg ${isChecked ? 'text-white' : 'text-gray-300'}`}>{ejercicio.nombre}</span>
                               </div>
                               {isChecked && (
-                                <div className="flex items-center gap-4 ml-4">
+                                <div className="flex items-center gap-2 md:gap-4 ml-auto md:ml-4">
                                   <div className="flex flex-col items-center">
-                                    <label className="text-xs text-gray-400 mb-1">Series</label>
+                                    <label className="text-[10px] md:text-xs text-gray-400 mb-1">Series</label>
                                     <input 
                                       type="text" 
                                       value={customDetails[grupo]?.[ejercicio.nombre]?.series || ''}
                                       onChange={(e) => onDetailsChange(grupo, ejercicio.nombre, 'series', e.target.value)}
                                       onClick={(e) => e.stopPropagation()} // Evita que el click en el input deseleccione el ejercicio
-                                      className="w-16 bg-gray-700 text-white text-center rounded-md p-1 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                      className="w-14 md:w-16 bg-gray-700 text-white text-center rounded-md p-1 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                     />
                                   </div>
                                   <div className="flex flex-col items-center">
-                                    <label className="text-xs text-gray-400 mb-1">Reps</label>
+                                    <label className="text-[10px] md:text-xs text-gray-400 mb-1">Reps</label>
                                     <input 
                                       type="text" 
                                       value={customDetails[grupo]?.[ejercicio.nombre]?.reps || ''}
                                       onChange={(e) => onDetailsChange(grupo, ejercicio.nombre, 'reps', e.target.value)}
                                       onClick={(e) => e.stopPropagation()}
-                                      className="w-16 bg-gray-700 text-white text-center rounded-md p-1 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                      className="w-14 md:w-16 bg-gray-700 text-white text-center rounded-md p-1 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                     />
                                   </div>
                                 </div>
@@ -359,25 +276,25 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                               <span className={`text-lg ${isChecked ? 'text-white' : 'text-gray-300'}`}>{ejercicio}</span>
                             </div>
                             {isChecked && (
-                              <div className="flex items-center gap-4 ml-4">
+                              <div className="flex items-center gap-2 md:gap-4 ml-auto md:ml-4">
                                 <div className="flex flex-col items-center">
-                                  <label className="text-xs text-gray-400 mb-1">Series</label>
+                                  <label className="text-[10px] md:text-xs text-gray-400 mb-1">Series</label>
                                   <input 
                                     type="text" 
                                     value={customDetails[grupo]?.[ejercicio]?.series || ''}
                                     onChange={(e) => onDetailsChange(grupo, ejercicio, 'series', e.target.value)}
                                     onClick={(e) => e.stopPropagation()}
-                                    className="w-16 bg-gray-700 text-white text-center rounded-md p-1 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                    className="w-14 md:w-16 bg-gray-700 text-white text-center rounded-md p-1 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                   />
                                 </div>
                                 <div className="flex flex-col items-center">
-                                  <label className="text-xs text-gray-400 mb-1">Reps</label>
+                                  <label className="text-[10px] md:text-xs text-gray-400 mb-1">Reps</label>
                                   <input 
                                     type="text" 
                                     value={customDetails[grupo]?.[ejercicio]?.reps || ''}
                                     onChange={(e) => onDetailsChange(grupo, ejercicio, 'reps', e.target.value)}
                                     onClick={(e) => e.stopPropagation()}
-                                    className="w-16 bg-gray-700 text-white text-center rounded-md p-1 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                    className="w-14 md:w-16 bg-gray-700 text-white text-center rounded-md p-1 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                   />
                                 </div>
                               </div>
@@ -480,38 +397,6 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
   );
 };
 
-const VideoPlayer = ({ videoUrl, title }) => {
-  if (!videoUrl) return null;
 
-  // Check if the URL is a YouTube embed link
-  const isYouTube = typeof videoUrl === 'string' && videoUrl.includes('youtube.com/embed');
-
-  return (
-    <div className="relative pt-[56.25%] w-full h-full">
-      {isYouTube ? (
-        <iframe
-          className="absolute top-0 left-0 w-full h-full rounded-lg"
-          src={videoUrl}
-          title={title}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      ) : (
-        <video
-          className="absolute top-0 left-0 w-full h-full rounded-lg"
-          src={videoUrl}
-          title={title}
-          controls
-          autoPlay
-          muted // Autoplay on browsers often requires the video to be muted
-          loop
-        >
-          Tu navegador no soporta el elemento de video.
-        </video>
-      )}
-    </div>
-  );
-};
 
 export default DetalleEjercicio;

@@ -3,6 +3,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import { images, videos } from './assets';
 import DetalleEjercicio from './components/rutinas/DetalleEjercicio';
+import MiPlan from './components/MiPlan';
 import WorkoutMode from './components/WorkoutMode'; // Importar el nuevo componente
 import SwipeableMenu from './components/SwipeableMenu';
 import ScrollToTop from './components/ScrollToTop';
@@ -11,6 +12,7 @@ import ScrollToTopButton from './components/ScrollToTopButton';
 import { Spotlight } from './components/ui/Spotlight';
 import { GridBackground } from './components/GridBackground';
 import pako from 'pako';
+
 
 // Componente de la Página de Inicio (fuera de App para evitar re-renders)
 const HomePage = ({ typewriterText, loopNum, toRotate }) => {
@@ -162,9 +164,9 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
                       WebkitBackgroundClip: 'text',
                     }}
                   >
-                    Ideal para quienes están empezando en el gimnasio
+                   Tu punto de partida está aquí  
                   </div>
-                  <a href="#ejercicios" className="bg-[#379AA5] hover:bg-[#2A7A87] text-white px-8 py-3 rounded-md shadow-lg transition-colors">Ver Ejercicios</a>
+                  <a href="#ejercicios" className="bg-[#379AA5] hover:bg-[#2A7A87] text-white px-8 py-3 rounded-md shadow-lg transition-colors">Comenzar Ahora!</a>
               </div>
 
               {/* Animated Scroll Down Indicator */}
@@ -250,7 +252,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
           <div className="text-gray-200">
               <h3 className="bebas-font text-5xl md:text-6xl text-[#379AA5] mb-5 tracking-wider">¿QUIÉNES SOMOS?</h3>
               <p className="text-lg leading-relaxed mb-6">
-                  Energy no es solo un gimnasio. Es una casa de transformación. Con más de 10 años forjando fierros y
+                  Energy no es solo un gimnasio. Es una casa de transformación. Con más de 15 años forjando fierros y
                   formando personas, nos dedicamos a algo más que dar rutinas. Aquí no hay excusas, hay resultados, no
                   creemos en atajos, creemos en constancia, disciplina y sudor del bueno.
               </p>
@@ -350,10 +352,10 @@ function App() {
       imagenes: [
         { src: images.img_press_banca_barra, nombre: 'Press Banca (barra)', descripcion: 'Activa principalmente las fibras centrales del pectoral mayor (porción esternocostal). También involucra el deltoides anterior y la cabeza larga del tríceps braquial.', detalles: '3 series de 8–12 repeticiones', videoUrl: 'https://www.youtube.com/embed/g4Ah9uYn8pI' },
         { src: images.img_press_inclinado_barra, nombre: 'Press Inclinado (barra)', descripcion: 'Enfoca el estímulo en la parte superior del pectoral mayor (porción clavicular). Secundariamente activa el deltoides anterior y el tríceps braquial.', detalles: '3 series de 8–12 repeticiones', videoUrl: 'https://www.youtube.com/embed/HImp2-LuihU' },
-        { src: images.img_press_banca_mancuernas, nombre: 'Press Banca (Mancuernas)', descripcion: 'Estimula las fibras centrales del pectoral mayor (porción esternocostal), con mayor implicación de los músculos estabilizadores escapulares. También participa el deltoides anterior y el tríceps braquial.', detalles: '3 series de 10–12 repeticiones', videoUrl:"https://www.youtube.com/embed/48L0oQApm_0" },
+        { src: images.img_press_banca_mancuernas, nombre: 'Press Banca (Mancuernas)', descripcion: 'Estimula las fibras centrales del pectoral mayor (porción esternocostal), con mayor implicación de los músculos estabilizadores escapulares. También participa el deltoides anterior y el tríceps braquial.', detalles: '3 series de 10–12 repeticiones', videoUrl:videos.vid_pecho_press_banca_mancuerna },
         { src: images.img_press_inclinado_mancuernas, nombre: 'Press Inclinado (Mancuernas)', descripcion: 'Activa predominantemente la parte superior del pectoral mayor (porción clavicular). Como sinergistas intervienen el deltoides anterior y el tríceps braquial.', detalles: '3 series de 10 repeticiones', videoUrl: videos.vid_press_inclinado_mancuernas },
         { src: images.img_press_maquina, nombre: 'Press Máquina', descripcion: 'Focaliza la tensión sobre las fibras medias del pectoral mayor (porción esternocostal), reduciendo la participación de estabilizadores. Secundariamente se activa el deltoides anterior y el tríceps braquial.', detalles: '3 series de 12–15 repeticiones', videoUrl: 'https://www.youtube.com/embed/JXJmPXlqwh0' },
-        { src: images.img_aperturas_mancuernas, nombre: 'Aperturas (Mancuernas)', descripcion: 'Aíslan las fibras externas del pectoral mayor (porción lateral y esternal) durante la aducción horizontal del brazo. Participa también el deltoides anterior como sinergista leve.',detalles: '3 series de 12 repeticiones', videoUrl: 'https://www.youtube.com/embed/C7Nq4DgV9Mg' },
+        { src: images.img_aperturas_mancuernas, nombre: 'Aperturas (Mancuernas)', descripcion: 'Aíslan las fibras externas del pectoral mayor (porción lateral y esternal) durante la aducción horizontal del brazo. Participa también el deltoides anterior como sinergista leve.',detalles: '3 series de 12 repeticiones', videoUrl: videos.vid_pecho_aperturas_mancuernas },
         { src: images.img_aperturas_cable, nombre: 'Aperturas (Cable)', descripcion: 'Mantienen tensión continua sobre las fibras laterales del pectoral mayor (porción esternocostal y clavicular) en todo el rango de aducción. Actúan los músculos estabilizadores escapulares y el deltoides anterior',detalles: '3 series de 12–15 repeticiones', videoUrl: 'https://www.youtube.com/embed/5oX3KUSiqy4' },
         { src: images.img_aperturas_pecfly, nombre: 'Aperturas Pec Fly', descripcion: 'Concentran la activación en las fibras internas del pectoral mayor (porción esternal medial), con mínima exigencia para los músculos estabilizadores.', detalles: '3 series de 10-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/-9JbjkG5f0Q' },
         { src: images.img_pecho_fondos, nombre: 'Fondos', descripcion:  'Activan principalmente las fibras inferiores del pectoral mayor. También se involucran el tríceps braquial y el deltoides anterior.', detalles: '3 series de 6–10 repeticiones (con asistencia si es necesario)', videoUrl: 'https://www.youtube.com/embed/1fR3Ss8OFug'}
@@ -574,7 +576,7 @@ function App() {
     }
   };
 // Las frases dinamicas para el efecto de máquina de escribir
-  const toRotate = useMemo(() => ["DONDE EMPIEZA TODO", "TU NUEVA DISCIPLINA."], []);
+  const toRotate = useMemo(() => ["MÁQUINA", "CUERPO, MENTE Y HIERRO"], []);
   const period = 3000;
 
   useEffect(() => {
@@ -628,6 +630,14 @@ function App() {
             customDetails={customDetails}
             onDetailsChange={handleDetailsChange}
           />} 
+        />
+        <Route 
+          path="/mi-plan"
+          element={<MiPlan 
+            schedule={schedule} 
+            onOpenPlanner={() => setIsPlannerOpen(true)} 
+            setSchedule={setSchedule} // Pasar la función para actualizar el horario 
+          />}
         />
         <Route 
           path="/entrenamiento"

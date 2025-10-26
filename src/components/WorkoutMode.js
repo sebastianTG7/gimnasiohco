@@ -1,8 +1,30 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { GridBackground } from './GridBackground';
+import VideoPlayer from './VideoPlayer'; // Importar VideoPlayer
+
+// Componente para el Modal de Video
+const VideoModal = ({ videoUrl, title, onClose }) => {
+  if (!videoUrl) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-80 z-[100] flex justify-center items-center p-4" onClick={onClose}>
+      <div className="bg-gray-900 rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col p-4" onClick={(e) => e.stopPropagation()}>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-bold text-white">{title}</h3>
+          <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors text-3xl">&times;</button>
+        </div>
+        <div className="flex-grow">
+          <VideoPlayer videoUrl={videoUrl} title={title} />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercicios }) => {
+  const [selectedVideoUrl, setSelectedVideoUrl] = useState(null);
+  const [selectedVideoTitle, setSelectedVideoTitle] = useState('');
   const daysMap = useMemo(() => ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'], []);
   const todayName = daysMap[new Date().getDay()];
 
@@ -62,12 +84,29 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
                         : ejercicio.detalles;
 
                       return (
-                        <div key={index} className="bg-gray-800 p-6 rounded-lg shadow-lg flex items-center justify-between">
-                          <div>
-                            <h3 className="text-2xl font-bold">{ejercicio.nombre}</h3>
-                            <p className="text-cyan-400 mt-1">{displayDetails}</p>
+                        <div 
+                          key={index} 
+                          className="bg-gray-800 p-3 md:p-4 rounded-lg shadow-lg flex items-center gap-3 md:gap-4 cursor-pointer hover:bg-gray-700 transition-colors duration-200"
+                          onClick={() => {
+                            setSelectedVideoUrl(ejercicio.videoUrl);
+                            setSelectedVideoTitle(ejercicio.nombre);
+                          }}
+                        >
+                          {/* Contenedor de la Imagen */}
+                          <div className="w-16 h-16 md:w-24 md:h-24 flex-shrink-0">
+                            <img src={ejercicio.src} alt={ejercicio.nombre} className="w-full h-full object-cover rounded-md" />
                           </div>
-                          <input type="checkbox" className="w-6 h-6 accent-green-500" />
+
+                          {/* Contenido del Ejercicio */}
+                          <div className="flex-grow">
+                            <h3 className="text-base md:text-xl font-bold">{ejercicio.nombre}</h3>
+                            <p className="text-cyan-400 mt-1 text-xs md:text-sm">{displayDetails}</p>
+                          </div>
+
+                          {/* Checkbox */}
+                          <div className="pl-2 md:pl-4" onClick={(e) => e.stopPropagation()}>
+                            <input type="checkbox" className="w-7 h-7 md:w-8 md:h-8 accent-green-500 rounded-md" />
+                          </div>
                         </div>
                       );
                     })}
@@ -85,6 +124,11 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
           </div>
         )}
       </div>
+      <VideoModal 
+        videoUrl={selectedVideoUrl} 
+        title={selectedVideoTitle} 
+        onClose={() => setSelectedVideoUrl(null)} 
+      />
     </div>
   );
 };

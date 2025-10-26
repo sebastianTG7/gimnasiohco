@@ -1,0 +1,273 @@
+import React, { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { GridBackground } from './GridBackground';
+
+// Objeto para mapear grupos musculares a colores de Tailwind CSS
+const groupColors = {
+  Pecho: 'bg-red-500/20 border border-red-500/30 text-red-300',
+  Espalda: 'bg-blue-500/20 border border-blue-500/30 text-blue-300',
+  Hombros: 'bg-purple-500/20 border border-purple-500/30 text-purple-300',
+  Biceps: 'bg-pink-500/20 border border-pink-500/30 text-pink-300',
+  Triceps: 'bg-indigo-500/20 border border-indigo-500/30 text-indigo-300',
+  Piernas: 'bg-orange-500/20 border border-orange-500/30 text-orange-300',
+  Abdominales: 'bg-green-500/20 border border-green-500/30 text-green-300',
+};
+
+const ResumenSemanal = ({ schedule, daysOfWeek }) => {
+  const scheduleByDay = useMemo(() => {
+    const byDay = {};
+    const scheduleDays = schedule.days || {};
+    for (const group in scheduleDays) {
+      if (scheduleDays[group] && Array.isArray(scheduleDays[group])) {
+        scheduleDays[group].forEach(day => {
+          if (!byDay[day]) {
+            byDay[day] = [];
+          }
+          byDay[day].push(group.charAt(0).toUpperCase() + group.slice(1));
+        });
+      }
+    }
+    return byDay;
+  }, [schedule]);
+
+  const todayName = useMemo(() => {
+    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    return days[new Date().getDay()];
+  }, []);
+
+  return (
+    <div className="border border-slate-700/80 rounded-xl shadow-lg">
+      <ul className="divide-y divide-slate-700/80">
+        {daysOfWeek.map(day => {
+          const groupsForDay = scheduleByDay[day];
+          const isToday = day === todayName;
+
+          return (
+            <li key={day} className={`flex flex-col sm:flex-row sm:items-center text-lg p-4 transition-colors ${isToday ? 'bg-slate-700/50' : 'hover:bg-slate-800/50'}`}>
+              <div className="w-full sm:w-36 font-bold text-slate-300 mb-2 sm:mb-0 flex-shrink-0 flex items-center gap-3">
+                <span>{day}:</span>
+                {isToday && <span className="text-xs font-medium text-cyan-300 bg-cyan-500/20 px-2 py-0.5 rounded-full">Hoy</span>}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {groupsForDay && groupsForDay.length > 0 ? (
+                  groupsForDay.map(group => (
+                    <span key={group} className={`text-sm font-semibold px-3 py-1 rounded-full shadow-md ${groupColors[group] || 'bg-gray-700 text-white'}`}>
+                      {group}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-slate-500 italic text-sm">Descanso</span>
+                )}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+
+const MiPlan = ({ schedule, onOpenPlanner, setSchedule }) => {
+  const navigate = useNavigate();
+  const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
+  const [isWizardActive, setIsWizardActive] = useState(false);
+  const [wizardStep, setWizardStep] = useState(1);
+  const [daysPerWeek, setDaysPerWeek] = useState(null);
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [recommendation, setRecommendation] = useState(null);
+
+  const handleStartWizard = () => {
+    setIsWizardActive(true);
+    setWizardStep(1);
+  };
+
+  const handleSelectDaysPerWeek = (days) => {
+    setDaysPerWeek(days);
+    setSelectedDays([]); // Limpiar selección anterior
+    setWizardStep(2);
+  };
+
+  const handleDayToggle = (day) => {
+    setSelectedDays(prev => 
+      prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day]
+    );
+  };
+
+  const handleShowRecommendation = () => {
+    // Lógica de recomendación
+    if (daysPerWeek <= 3) {
+      setRecommendation('Full Body');
+    } else if (daysPerWeek === 4) {
+      setRecommendation('Torso-Pierna');
+    } else {
+      setRecommendation('Push-Pull-Legs');
+    }
+    setWizardStep(3);
+  };
+
+  const handleSavePlan = () => {
+    const newSchedule = {};
+    const muscleGroups = {
+      'Full Body': ['Pecho', 'Espalda', 'Piernas'],
+      'Torso-Pierna': {
+        Torso: ['Pecho', 'Espalda', 'Hombros', 'Biceps', 'Triceps'],
+        Pierna: ['Piernas', 'Abdominales'],
+      },
+      'Push-Pull-Legs': {
+        Push: ['Pecho', 'Hombros', 'Triceps'],
+        Pull: ['Espalda', 'Biceps'],
+        Legs: ['Piernas', 'Abdominales'],
+      },
+    };
+
+    if (recommendation === 'Full Body') {
+      selectedDays.forEach(day => {
+        muscleGroups['Full Body'].forEach(group => {
+          if (!newSchedule[group.toLowerCase()]) newSchedule[group.toLowerCase()] = [];
+          newSchedule[group.toLowerCase()].push(day);
+        });
+      });
+    } else if (recommendation === 'Torso-Pierna') {
+      selectedDays.forEach((day, index) => {
+        const type = index % 2 === 0 ? 'Torso' : 'Pierna';
+        muscleGroups['Torso-Pierna'][type].forEach(group => {
+          if (!newSchedule[group.toLowerCase()]) newSchedule[group.toLowerCase()] = [];
+          newSchedule[group.toLowerCase()].push(day);
+        });
+      });
+    } else if (recommendation === 'Push-Pull-Legs') {
+      const pplOrder = ['Push', 'Pull', 'Legs'];
+      selectedDays.forEach((day, index) => {
+        const type = pplOrder[index % 3];
+        muscleGroups['Push-Pull-Legs'][type].forEach(group => {
+          if (!newSchedule[group.toLowerCase()]) newSchedule[group.toLowerCase()] = [];
+          newSchedule[group.toLowerCase()].push(day);
+        });
+      });
+    }
+
+    setSchedule(prev => ({ ...prev, days: newSchedule }));
+    handleCancel(); // Reset wizard
+  };
+
+  const handleCancel = () => {
+    setIsWizardActive(false);
+    setWizardStep(1);
+    setDaysPerWeek(null);
+    setSelectedDays([]);
+    setRecommendation(null);
+  };
+
+  return (
+    <div className="relative text-white min-h-screen p-4 sm:p-8 bg-gray-900">
+      <GridBackground />
+      <div className="relative z-20 max-w-4xl mx-auto">
+        <button onClick={() => navigate(-1)} className="bebas-font text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest">
+          &larr; VOLVER
+        </button>
+        
+        <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider text-green-500">
+          Mi Plan Semanal
+        </h1>
+
+        {/* Asistente de Planificación */}
+        <div className="bg-gradient-to-b from-slate-800 to-gray-900/50 border border-slate-700/80 rounded-xl shadow-2xl p-4 sm:p-6 mb-10">
+          <h2 className="bebas-font text-3xl text-white mb-4">RECOMENDACION DE PLAN:</h2>
+          {!isWizardActive ? (
+            <div className="text-center">
+              <p className="text-slate-400 mb-4">¿No sabes por dónde empezar? Deja que te ayudemos a crear un plan basado en tu disponibilidad.</p>
+              <button 
+                onClick={handleStartWizard}
+                className="bebas-font text-lg tracking-wider px-8 py-3 rounded-lg text-gray-900 bg-green-500 hover:bg-green-600 transition-colors shadow-lg"
+              >
+                Generar Plan Recomendado
+              </button>
+            </div>
+          ) : (
+            <div>
+              {wizardStep === 1 && (
+                <div>
+                  <h3 className="text-xl font-semibold text-slate-300 mb-4">Paso 1: ¿Cuántos días a la semana puedes entrenar?</h3>
+                  <div className="flex flex-wrap justify-center gap-3">
+                    {[2, 3, 4, 5, 6].map(day => (
+                      <button key={day} onClick={() => handleSelectDaysPerWeek(day)} className="bebas-font text-lg tracking-wider w-24 py-2 rounded-lg text-white bg-slate-700 hover:bg-slate-600 transition-colors">
+                        {day} {day === 1 ? 'día' : 'días'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {wizardStep === 2 && (
+                <div>
+                  <h3 className="text-xl font-semibold text-slate-300 mb-4">Paso 2: Selecciona los {daysPerWeek} días que entrenarás.</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-3 mb-6">
+                    {daysOfWeek.map(day => {
+                      const isChecked = selectedDays.includes(day);
+                      const isDisabled = !isChecked && selectedDays.length >= daysPerWeek;
+                      return (
+                        <div 
+                          key={day} 
+                          onClick={() => !isDisabled && handleDayToggle(day)}
+                          className={`cursor-pointer flex items-center p-3 rounded-lg transition-colors ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-slate-700'} ${isChecked ? 'bg-slate-600' : 'bg-slate-900/50'}`}>
+                          <div className={`w-5 h-5 flex justify-center items-center border-2 ${isChecked ? 'border-cyan-500 bg-cyan-500' : 'border-gray-500'} rounded-md mr-3 transition-all`}>
+                            {isChecked && <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M5 13l4 4L19 7"></path></svg>}
+                          </div>
+                          <span className={`font-semibold ${isChecked ? 'text-white' : 'text-slate-300'}`}>{day}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="flex justify-end">
+                    <button onClick={handleShowRecommendation} disabled={selectedDays.length !== daysPerWeek} className="bebas-font text-lg tracking-wider px-6 py-2 rounded-lg text-white bg-[#379AA5] hover:bg-[#2A7A87] transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed">
+                      Ver Recomendación
+                    </button>
+                  </div>
+                </div>
+              )}
+              {wizardStep === 3 && (
+                <div>
+                  <h3 className="text-xl font-semibold text-slate-300 mb-2">Paso 3: ¡Aquí tienes tu plan!</h3>
+                  <p className="text-slate-400 mb-4">Basado en los <span className="font-bold text-white">{daysPerWeek} días</span> que seleccionaste, te recomendamos una rutina <span className="font-bold text-cyan-400">{recommendation}</span>.</p>
+                  
+                  <div className="border border-slate-700/80 rounded-xl p-4 mb-6">
+                    <h4 className="font-bold text-lg text-slate-300 mb-2">Así se verá tu horario:</h4>
+                    <ul className="list-disc list-inside text-slate-400">
+                      {selectedDays.map(day => <li key={day}>{day}: {recommendation}</li>)}
+                    </ul>
+                  </div>
+
+                  <div className="flex justify-end gap-4">
+                     <button onClick={handleCancel} className="bebas-font text-lg tracking-wider px-6 py-2 rounded-lg text-gray-300 bg-gray-700 hover:bg-gray-600 transition-colors">
+                      Cancelar
+                    </button>
+                    <button onClick={handleSavePlan} className="bebas-font text-lg tracking-wider px-6 py-2 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-colors">
+                      Aceptar y Guardar Plan
+                    </button>
+                  </div>
+                </div>
+              )}
+              {/* Los pasos 2 y 3 se añadirán aquí */}
+            </div>
+          )}
+        </div>
+
+        {/* Horario Semanal */}
+        <div className="bg-gradient-to-b from-slate-800 to-gray-900/50 border border-slate-700/80 rounded-xl shadow-2xl p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left mb-6 gap-4 sm:gap-0">
+            <h2 className="bebas-font text-3xl text-white">Mi Horario</h2>
+            <button 
+              onClick={onOpenPlanner}
+              className="bebas-font text-base sm:text-lg tracking-wider px-4 sm:px-6 py-2 rounded-lg text-white bg-[#379AA5] hover:bg-[#2A7A87] transition-colors shadow-lg"
+            >
+              Planificar Semana
+            </button>
+          </div>
+          <ResumenSemanal schedule={schedule} daysOfWeek={daysOfWeek} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MiPlan;

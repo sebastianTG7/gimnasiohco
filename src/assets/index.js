@@ -100,6 +100,8 @@ import img_a_plancha_frontal from './images/img_a_plancha_frontal.jpg';
 
 // Videos
 import vid_press_inclinado_mancuernas from './videos/vid_press_inclinado_mancuernas.mp4';
+import vid_pecho_press_banca_mancuerna from './videos/vid_pecho_press_banca_mancuerna.mp4';
+import vid_pecho_aperturas_mancuernas from './videos/vid_pecho_aperturas_mancuernas.mp4';
 
 export const images = {
   hero: heroImage,
@@ -204,4 +206,6 @@ export const images = {
 
 export const videos = {
   vid_press_inclinado_mancuernas,
+  vid_pecho_press_banca_mancuerna,
+  vid_pecho_aperturas_mancuernas
 };
