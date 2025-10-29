@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GridBackground } from './GridBackground';
 
@@ -69,6 +69,7 @@ const ResumenSemanal = ({ schedule, daysOfWeek }) => {
 
 const MiPlan = ({ schedule, onOpenPlanner, setSchedule }) => {
   const navigate = useNavigate();
+  const scheduleRef = useRef(null);
   const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
   const [isWizardActive, setIsWizardActive] = useState(false);
@@ -96,9 +97,9 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule }) => {
 
   const handleShowRecommendation = () => {
     // Lógica de recomendación
-    if (daysPerWeek <= 3) {
+    if (daysPerWeek <= 2) {
       setRecommendation('Full Body');
-    } else if (daysPerWeek === 4) {
+    } else if (daysPerWeek === 3) {
       setRecommendation('Torso-Pierna');
     } else {
       setRecommendation('Push-Pull-Legs');
@@ -109,7 +110,7 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule }) => {
   const handleSavePlan = () => {
     const newSchedule = {};
     const muscleGroups = {
-      'Full Body': ['Pecho', 'Espalda', 'Piernas'],
+      'Full Body': ['Pecho', 'Espalda', 'Hombros', 'Biceps', 'Triceps', 'Piernas'],
       'Torso-Pierna': {
         Torso: ['Pecho', 'Espalda', 'Hombros', 'Biceps', 'Triceps'],
         Pierna: ['Piernas', 'Abdominales'],
@@ -149,6 +150,9 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule }) => {
 
     setSchedule(prev => ({ ...prev, days: newSchedule }));
     handleCancel(); // Reset wizard
+    setTimeout(() => {
+      scheduleRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
   };
 
   const handleCancel = () => {
@@ -253,7 +257,7 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule }) => {
         </div>
 
         {/* Horario Semanal */}
-        <div className="bg-gradient-to-b from-slate-800 to-gray-900/50 border border-slate-700/80 rounded-xl shadow-2xl p-4 sm:p-6">
+        <div ref={scheduleRef} className="bg-gradient-to-b from-slate-800 to-gray-900/50 border border-slate-700/80 rounded-xl shadow-2xl p-4 sm:p-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left mb-6 gap-4 sm:gap-0">
             <h2 className="bebas-font text-3xl text-white">Mi Horario</h2>
             <button 
@@ -264,6 +268,14 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule }) => {
             </button>
           </div>
           <ResumenSemanal schedule={schedule} daysOfWeek={daysOfWeek} />
+          <div className="mt-8 text-center">
+            <button
+              onClick={() => navigate('/entrenamiento')}
+              className="bebas-font text-xl tracking-wider px-8 py-4 rounded-lg text-gray-900 bg-green-500 hover:bg-green-600 transition-all duration-300 shadow-lg transform hover:scale-105"
+            >
+              Empezar Entrenamiento
+            </button>
+          </div>
         </div>
       </div>
     </div>

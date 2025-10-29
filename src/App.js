@@ -576,7 +576,7 @@ function App() {
     }
   };
 // Las frases dinamicas para el efecto de máquina de escribir
-  const toRotate = useMemo(() => ["MÁQUINA", "CUERPO, MENTE Y HIERRO"], []);
+  const toRotate = useMemo(() => ["", "CUERPO, MENTE Y HIERRO"], []);
   const period = 3000;
 
   useEffect(() => {
