@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { images, videos } from '../../assets';
 import SwipeableMenu from '../SwipeableMenu';
 import ImageLoader from '../ImageLoader';
@@ -39,10 +39,18 @@ const RestDayModal = ({ isOpen, onClose }) => {
 const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, schedule, routineTypes, onRoutineTypeChange, onOpenPlanner, onShare, customDetails, onDetailsChange, datosEjercicios }) => {
   let { grupo } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [openIndex, setOpenIndex] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isPersonalizeAccordionOpen, setIsPersonalizeAccordionOpen] = useState(false);
   const [showRestDayModal, setShowRestDayModal] = useState(false);
+
+  // Abrir acordeón automáticamente si viene desde "Personalizar Ejercicios"
+  useEffect(() => {
+    if (location.state?.openAccordion) {
+      setIsPersonalizeAccordionOpen(true);
+    }
+  }, [location]);
 
   // Logic to get today's workout
   const daysMap = useMemo(() => ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'], []);
@@ -213,7 +221,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                 <h2 className="bebas-font text-3xl text-white">Lista de ejercicios:</h2>
                 <svg className={`w-6 h-6 text-gray-400 transform transition-transform duration-300 ml-3 ${isPersonalizeAccordionOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
               </div>
-              <p className="text-gray-400 mt-1">Toca para {isPersonalizeAccordionOpen ? 'ocultar y dejar de seleccionar' : 'desplegar y seleccionar unicamente'} los ejercicios que desea ver de la <span className="text-cyan-400">galería de ejercicios</span>.</p>
+              <p className="text-gray-400 mt-1">Toca para {isPersonalizeAccordionOpen ? 'ocultar ' : 'desplegar, seleccionar y editar '} los ejercicios  </p>
             </div>
 
             <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isPersonalizeAccordionOpen ? 'max-h-full mt-4' : 'max-h-0'}`}>

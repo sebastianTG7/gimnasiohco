@@ -25,10 +25,12 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
   const [showNav, setShowNav] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [shouldOpenAccordions, setShouldOpenAccordions] = useState(false);
 
   // Scroll automático a ejercicios cuando se navega con el state
   useEffect(() => {
     if (location.state?.scrollToExercises) {
+      setShouldOpenAccordions(true); // Activar flag para abrir acordeones
       setTimeout(() => {
         const ejerciciosSection = document.getElementById('ejercicios');
         if (ejerciciosSection) {
@@ -265,7 +267,12 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
           <p className="text-lg text-gray-400 mb-8">Selecciona un grupo muscular para comenzar y ver los ejercicios.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {mainGrupos.map((grupo) => (
-              <Link to={`/${grupo.slug}`} key={grupo.slug} className="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105 h-80">
+              <Link 
+                to={`/${grupo.slug}`} 
+                state={shouldOpenAccordions ? { openAccordion: true } : undefined}
+                key={grupo.slug} 
+                className="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105 h-80"
+              >
                 <img src={grupo.img} alt={`Entrenamiento de ${grupo.nombre}`} className="w-full h-full object-cover filter grayscale" />
                 <div className="image-overlay">
                   <div>
@@ -290,12 +297,23 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                   {extraGrupos.map((grupo) => (
-                    <Link to={`/${grupo.slug}`} key={grupo.slug} className="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105 h-80">
+                    <Link 
+                      to={`/${grupo.slug}`} 
+                      state={shouldOpenAccordions ? { openAccordion: true } : undefined}
+                      key={grupo.slug} 
+                      className="relative image-grid-item group rounded-xl overflow-hidden shadow-lg transform transition-transform hover:scale-105 h-80"
+                    >
                       <img src={grupo.img} alt={`Entrenamiento de ${grupo.nombre}`} className="w-full h-full object-cover filter grayscale" />
                       <div className="image-overlay">
                         <div>
                           <span className="bebas-font text-3xl tracking-widest text-white">{grupo.nombre.toUpperCase()}</span>
                           <p className="text-base text-white/90 md:hidden">Toca para ver</p>
+                          <p className="text-base text-white/90 hidden md:block">Click para ver</p>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
                           <p className="text-base text-white/90 hidden md:block">Click para ver</p>
                         </div>
                       </div>

@@ -305,14 +305,20 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
               onClick={onOpenPlanner}
               className="bebas-font text-base sm:text-lg tracking-wider px-4 sm:px-6 py-2 rounded-lg text-white bg-[#379AA5] hover:bg-[#2A7A87] transition-colors shadow-lg"
             >
-              Planificar Semana
+              Editar Horario
             </button>
           </div>
           <ResumenSemanal schedule={schedule} daysOfWeek={daysOfWeek} />
-          <div className="mt-8 text-center">
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <button
+              onClick={() => navigate('/', { state: { scrollToExercises: true } })}
+              className="bebas-font text-xl tracking-wider px-6 py-3 rounded-lg text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 shadow-lg transform hover:scale-105 w-full sm:w-auto"
+            >
+              Personalizar Ejercicios
+            </button>
             <button
               onClick={() => navigate('/entrenamiento')}
-              className="bebas-font text-xl tracking-wider px-8 py-4 rounded-lg text-gray-900 bg-green-500 hover:bg-green-600 transition-all duration-300 shadow-lg transform hover:scale-105"
+              className="bebas-font text-xl tracking-wider px-6 py-3 rounded-lg text-gray-900 bg-green-500 hover:bg-green-600 transition-all duration-300 shadow-lg transform hover:scale-105 w-full sm:w-auto"
             >
               Empezar Entrenamiento
             </button>
@@ -326,7 +332,7 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
           <div className="bg-gray-900 border-2 border-green-500 rounded-xl shadow-2xl p-8 w-full max-w-lg text-center relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent"></div>
             
-            <div className="mb-6">
+            <div className="mb-4">
               <div className="w-20 h-20 mx-auto bg-green-500/20 rounded-full flex items-center justify-center mb-4">
                 <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -375,13 +381,13 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
                   setShowSuccessModal(false);
                   navigate('/', { state: { scrollToExercises: true } });
                 }}
-                className="bebas-font flex-1 bg-cyan-600 text-white px-6 py-3 rounded-lg hover:bg-cyan-700 transition-all shadow-lg text-lg tracking-wider"
+                className="bebas-font flex-1 bg-cyan-600 text-white px-5 py-2 rounded-lg hover:bg-cyan-700 transition-all shadow-lg text-lg tracking-wider"
               >
                 Personalizar Ahora
               </button>
               <button 
                 onClick={() => setShowSuccessModal(false)}
-                className="bebas-font flex-1 bg-gray-700 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-all shadow-lg text-lg tracking-wider"
+                className="bebas-font flex-1 bg-gray-700 text-white px-5 py-2 rounded-lg hover:bg-gray-600 transition-all shadow-lg text-lg tracking-wider"
               >
                 Entendido
               </button>
