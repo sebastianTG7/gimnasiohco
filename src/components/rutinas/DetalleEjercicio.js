@@ -10,21 +10,31 @@ const RestDayModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 z-[101] flex justify-center items-center p-4" onClick={onClose}>
-      <div className="bg-gray-800 rounded-xl shadow-2xl p-8 w-full max-w-sm text-center" onClick={(e) => e.stopPropagation()}>
-        <h2 className="bebas-font text-4xl text-cyan-400 tracking-wider mb-4">Día de Descanso</h2>
-        <p className="text-gray-300 mb-8">Hoy no tienes una rutina planificada. ¡Aprovecha para recargar energías o crea un nuevo plan!</p>
-        <div className="flex justify-center gap-4">
+    <div className="fixed inset-0 bg-black/70 z-[101] flex justify-center items-center p-4" onClick={onClose}>
+      <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-xl p-6 w-full max-w-sm text-center" onClick={(e) => e.stopPropagation()}>
+        <div className="mb-4">
+          <div className="w-12 h-12 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center mb-3">
+            <svg className="w-6 h-6 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 className="text-xl font-semibold text-white mb-2">Día de Descanso</h3>
+          <p className="text-gray-400 text-sm">
+            Hoy no tienes una rutina planificada. ¡Aprovecha para recargar energías o crea un nuevo plan!
+          </p>
+        </div>
+        
+        <div className="flex gap-3">
           <button 
             onClick={onClose}
-            className="bebas-font text-lg tracking-wider px-6 py-2 rounded-lg text-gray-300 bg-gray-700 hover:bg-gray-600 transition-colors"
+            className="flex-1 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all text-sm"
           >
             Entendido
           </button>
           <Link 
             to="/mi-plan"
-            onClick={onClose} // Cierra el modal al navegar
-            className="bebas-font text-lg tracking-wider px-6 py-2 rounded-lg text-white bg-[#379AA5] hover:bg-[#2A7A87] transition-colors"
+            onClick={onClose}
+            className="flex-1 bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700 transition-all text-sm text-center"
           >
             Crear Plan
           </Link>
