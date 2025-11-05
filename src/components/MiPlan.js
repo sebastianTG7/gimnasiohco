@@ -93,6 +93,9 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showRenameModal, setShowRenameModal] = useState(false);
   const [newRoutineName, setNewRoutineName] = useState('');
+  const [showSuccessCreateModal, setShowSuccessCreateModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [newlyCreatedRoutineName, setNewlyCreatedRoutineName] = useState('');
 
   // Cargar rutina actual SOLO la primera vez que se monta (refresh de página)
   useEffect(() => {
@@ -284,8 +287,26 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
 
   const handleSaveRoutine = () => {
     if (!currentRoutineId) {
-      // Si no hay rutina seleccionada, crear una nueva
-      handleCreateRoutine();
+      // Si no hay rutina seleccionada, crear una nueva Y guardar los datos actuales
+      const newRoutineNumber = savedRoutines.length + 1;
+      const newRoutine = {
+        id: Date.now(),
+        name: `Rutina Personalizada ${newRoutineNumber}`,
+        schedule: schedule, // Guardar el horario actual
+        selectedExercises: selectedExercises, // Guardar ejercicios actuales
+        customDetails: customDetails // Guardar detalles actuales
+      };
+      
+      const updatedRoutines = [...savedRoutines, newRoutine];
+      setSavedRoutines(updatedRoutines);
+      localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
+      setCurrentRoutineId(newRoutine.id);
+      localStorage.setItem('currentRoutineId', newRoutine.id.toString());
+      sessionStorage.setItem('routineLoaded', 'true');
+      
+      // Mostrar modal de éxito
+      setNewlyCreatedRoutineName(newRoutine.name);
+      setShowSuccessCreateModal(true);
       return;
     }
     
@@ -336,19 +357,21 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
 
   const handleDeleteRoutine = () => {
     if (!currentRoutineId) return;
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteRoutine = () => {
+    const updatedRoutines = savedRoutines.filter(r => r.id !== currentRoutineId);
+    setSavedRoutines(updatedRoutines);
+    localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
+    setCurrentRoutineId(null);
+    localStorage.removeItem('currentRoutineId');
     
-    if (window.confirm('¿Estás seguro de que quieres eliminar esta rutina?')) {
-      const updatedRoutines = savedRoutines.filter(r => r.id !== currentRoutineId);
-      setSavedRoutines(updatedRoutines);
-      localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
-      setCurrentRoutineId(null);
-      localStorage.removeItem('currentRoutineId');
-      
-      // Limpiar el plan actual
-      setSchedule({ days: {}, types: [] });
-      setSelectedExercises({});
-      setCustomDetails({});
-    }
+    // Limpiar el plan actual
+    setSchedule({ days: {}, types: [] });
+    setSelectedExercises({});
+    setCustomDetails({});
+    setShowDeleteModal(false);
   };
 
   const getCurrentRoutineName = () => {
@@ -694,6 +717,67 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
                 className="bebas-font flex-1 bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 transition-all shadow-lg text-lg tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Renombrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Éxito al Crear/Guardar Nueva Rutina */}
+      {showSuccessCreateModal && (
+        <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowSuccessCreateModal(false)}>
+          <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-xl p-6 w-full max-w-sm text-center" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-4">
+              <div className="w-12 h-12 mx-auto bg-green-500/20 rounded-full flex items-center justify-center mb-3">
+                <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">Rutina Guardada</h3>
+              <p className="text-gray-400 text-sm">
+                Se guardó como <span className="text-white font-medium">"{newlyCreatedRoutineName}"</span>
+              </p>
+            </div>
+            
+            <button 
+              onClick={() => setShowSuccessCreateModal(false)}
+              className="w-full bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all text-sm"
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Confirmación para Eliminar */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowDeleteModal(false)}>
+          <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-xl p-6 w-full max-w-sm text-center" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-4">
+              <div className="w-12 h-12 mx-auto bg-red-500/20 rounded-full flex items-center justify-center mb-3">
+                <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">Eliminar Rutina</h3>
+              <p className="text-gray-400 text-sm">
+                ¿Eliminar <span className="text-white font-medium">"{getCurrentRoutineName()}"</span>?<br/>
+                Esta acción no se puede deshacer.
+              </p>
+            </div>
+            
+            <div className="flex gap-3">
+              <button 
+                onClick={() => setShowDeleteModal(false)}
+                className="flex-1 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all text-sm"
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={confirmDeleteRoutine}
+                className="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all text-sm"
+              >
+                Eliminar
               </button>
             </div>
           </div>
