@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useRef } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GridBackground } from './GridBackground';
 import predefinedRoutines from '../data/predefinedRoutines.json';
@@ -68,7 +68,7 @@ const ResumenSemanal = ({ schedule, daysOfWeek }) => {
   );
 };
 
-const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) => {
+const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSelectedExercises, customDetails, setCustomDetails }) => {
   const navigate = useNavigate();
   const scheduleRef = useRef(null);
   const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -86,10 +86,30 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
     const saved = localStorage.getItem('savedRoutines');
     return saved ? JSON.parse(saved) : [];
   });
-  const [currentRoutineId, setCurrentRoutineId] = useState(null);
+  const [currentRoutineId, setCurrentRoutineId] = useState(() => {
+    const saved = localStorage.getItem('currentRoutineId');
+    return saved ? parseInt(saved) : null;
+  });
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showRenameModal, setShowRenameModal] = useState(false);
   const [newRoutineName, setNewRoutineName] = useState('');
+
+  // Cargar rutina actual SOLO la primera vez que se monta (refresh de página)
+  useEffect(() => {
+    // Verificar si ya cargamos en esta sesión
+    const hasLoaded = sessionStorage.getItem('routineLoaded');
+    
+    if (!hasLoaded && currentRoutineId) {
+      const routine = savedRoutines.find(r => r.id === currentRoutineId);
+      if (routine) {
+        setSchedule(routine.schedule);
+        setSelectedExercises(routine.selectedExercises);
+        setCustomDetails(routine.customDetails || {});
+      }
+      // Marcar como cargado para esta sesión
+      sessionStorage.setItem('routineLoaded', 'true');
+    }
+  }, []); // Dependencias vacías - solo se ejecuta al montar
 
   const handleStartWizard = () => {
     setIsWizardActive(true);
@@ -230,23 +250,35 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
     setSavedRoutines(updatedRoutines);
     localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
     setCurrentRoutineId(newRoutine.id);
+    localStorage.setItem('currentRoutineId', newRoutine.id.toString());
     
     // Limpiar el plan actual
     setSchedule({ days: {}, types: [] });
     setSelectedExercises({});
+    setCustomDetails({});
+    sessionStorage.setItem('routineLoaded', 'true'); // Marcar como cargado
   };
 
   const handleLoadRoutine = (routineId) => {
     if (!routineId) {
       setCurrentRoutineId(null);
+      localStorage.removeItem('currentRoutineId');
+      // Limpiar todo cuando es "Sin Rutina"
+      setSchedule({ days: {}, types: [] });
+      setSelectedExercises({});
+      setCustomDetails({});
+      sessionStorage.setItem('routineLoaded', 'true'); // Marcar como cargado
       return;
     }
     
     const routine = savedRoutines.find(r => r.id === parseInt(routineId));
     if (routine) {
       setCurrentRoutineId(routine.id);
+      localStorage.setItem('currentRoutineId', routine.id.toString());
       setSchedule(routine.schedule);
       setSelectedExercises(routine.selectedExercises);
+      setCustomDetails(routine.customDetails || {});
+      sessionStorage.setItem('routineLoaded', 'true'); // Marcar como cargado
     }
   };
 
@@ -267,7 +299,7 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
           ...routine,
           schedule,
           selectedExercises,
-          customDetails: {}
+          customDetails // Guardar customDetails también
         };
       }
       return routine;
@@ -310,10 +342,12 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
       setSavedRoutines(updatedRoutines);
       localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
       setCurrentRoutineId(null);
+      localStorage.removeItem('currentRoutineId');
       
       // Limpiar el plan actual
       setSchedule({ days: {}, types: [] });
       setSelectedExercises({});
+      setCustomDetails({});
     }
   };
 

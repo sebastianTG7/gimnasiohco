@@ -314,12 +314,6 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
                     </Link>
                   ))}
                 </div>
-                          <p className="text-base text-white/90 hidden md:block">Click para ver</p>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
                 <span 
                   onClick={() => setShowMore(false)} 
                   className="text-gray-400 hover:text-white text-lg underline cursor-pointer transition-colors mt-8 inline-block"
@@ -733,7 +727,10 @@ function App() {
             schedule={schedule} 
             onOpenPlanner={() => setIsPlannerOpen(true)} 
             setSchedule={setSchedule} // Pasar la función para actualizar el horario
+            selectedExercises={selectedExercises} // Pasar ejercicios seleccionados
             setSelectedExercises={setSelectedExercises} // Pasar la función para actualizar ejercicios
+            customDetails={customDetails} // Pasar detalles personalizados
+            setCustomDetails={setCustomDetails} // Pasar función para actualizar detalles
           />}
         />
         <Route 
