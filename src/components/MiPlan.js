@@ -73,12 +73,23 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
   const scheduleRef = useRef(null);
   const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
+  // Estados del wizard
   const [isWizardActive, setIsWizardActive] = useState(false);
   const [wizardStep, setWizardStep] = useState(1);
   const [daysPerWeek, setDaysPerWeek] = useState(null);
   const [selectedDays, setSelectedDays] = useState([]);
   const [recommendation, setRecommendation] = useState(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  // Estados del sistema de rutinas guardadas
+  const [savedRoutines, setSavedRoutines] = useState(() => {
+    const saved = localStorage.getItem('savedRoutines');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [currentRoutineId, setCurrentRoutineId] = useState(null);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showRenameModal, setShowRenameModal] = useState(false);
+  const [newRoutineName, setNewRoutineName] = useState('');
 
   const handleStartWizard = () => {
     setIsWizardActive(true);
@@ -204,6 +215,114 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
     setRecommendation(null);
   };
 
+  // Funciones del sistema de rutinas
+  const handleCreateRoutine = () => {
+    const newRoutineNumber = savedRoutines.length + 1;
+    const newRoutine = {
+      id: Date.now(),
+      name: `Rutina Personalizada ${newRoutineNumber}`,
+      schedule: { days: {}, types: [] },
+      selectedExercises: {},
+      customDetails: {}
+    };
+    
+    const updatedRoutines = [...savedRoutines, newRoutine];
+    setSavedRoutines(updatedRoutines);
+    localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
+    setCurrentRoutineId(newRoutine.id);
+    
+    // Limpiar el plan actual
+    setSchedule({ days: {}, types: [] });
+    setSelectedExercises({});
+  };
+
+  const handleLoadRoutine = (routineId) => {
+    if (!routineId) {
+      setCurrentRoutineId(null);
+      return;
+    }
+    
+    const routine = savedRoutines.find(r => r.id === parseInt(routineId));
+    if (routine) {
+      setCurrentRoutineId(routine.id);
+      setSchedule(routine.schedule);
+      setSelectedExercises(routine.selectedExercises);
+    }
+  };
+
+  const handleSaveRoutine = () => {
+    if (!currentRoutineId) {
+      // Si no hay rutina seleccionada, crear una nueva
+      handleCreateRoutine();
+      return;
+    }
+    
+    setShowSaveModal(true);
+  };
+
+  const confirmSaveRoutine = () => {
+    const updatedRoutines = savedRoutines.map(routine => {
+      if (routine.id === currentRoutineId) {
+        return {
+          ...routine,
+          schedule,
+          selectedExercises,
+          customDetails: {}
+        };
+      }
+      return routine;
+    });
+    
+    setSavedRoutines(updatedRoutines);
+    localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
+    setShowSaveModal(false);
+  };
+
+  const handleRenameRoutine = () => {
+    const currentRoutine = savedRoutines.find(r => r.id === currentRoutineId);
+    if (currentRoutine) {
+      setNewRoutineName(currentRoutine.name);
+      setShowRenameModal(true);
+    }
+  };
+
+  const confirmRenameRoutine = () => {
+    if (!newRoutineName.trim()) return;
+    
+    const updatedRoutines = savedRoutines.map(routine => {
+      if (routine.id === currentRoutineId) {
+        return { ...routine, name: newRoutineName.trim() };
+      }
+      return routine;
+    });
+    
+    setSavedRoutines(updatedRoutines);
+    localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
+    setShowRenameModal(false);
+    setNewRoutineName('');
+  };
+
+  const handleDeleteRoutine = () => {
+    if (!currentRoutineId) return;
+    
+    if (window.confirm('¿Estás seguro de que quieres eliminar esta rutina?')) {
+      const updatedRoutines = savedRoutines.filter(r => r.id !== currentRoutineId);
+      setSavedRoutines(updatedRoutines);
+      localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
+      setCurrentRoutineId(null);
+      
+      // Limpiar el plan actual
+      setSchedule({ days: {}, types: [] });
+      setSelectedExercises({});
+    }
+  };
+
+  const getCurrentRoutineName = () => {
+    if (!currentRoutineId) return 'Sin Rutina';
+    const routine = savedRoutines.find(r => r.id === currentRoutineId);
+    return routine ? routine.name : 'Sin Rutina';
+  };
+
   return (
     <div className="relative text-white min-h-screen p-4 sm:p-8 bg-gray-900">
       <GridBackground />
@@ -215,6 +334,76 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
         <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider text-green-500">
           Mi Plan Semanal
         </h1>
+
+        {/* Sistema de Rutinas Guardadas */}
+        <div className="bg-gradient-to-b from-slate-800 to-gray-900/50 border border-slate-700/80 rounded-xl shadow-2xl p-4 sm:p-6 mb-10">
+          <h2 className="bebas-font text-3xl text-white mb-4">MIS RUTINAS</h2>
+          
+          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+            {/* Selector de Rutina */}
+            <div className="flex-1 w-full sm:w-auto">
+              <label className="block text-sm text-gray-400 mb-2">Rutina actual:</label>
+              <select
+                value={currentRoutineId || ''}
+                onChange={(e) => handleLoadRoutine(e.target.value)}
+                className="w-full bg-gray-800 border border-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:border-cyan-500 transition-all"
+              >
+                <option value="">Sin Rutina</option>
+                {savedRoutines.map(routine => (
+                  <option key={routine.id} value={routine.id}>
+                    {routine.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Botones de Acción */}
+            <div className="flex gap-2 mt-6 sm:mt-0">
+              <button
+                onClick={handleSaveRoutine}
+                className="bebas-font flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all shadow-md tracking-wider"
+                title="Guardar rutina"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                </svg>
+                <span className="hidden sm:inline">Guardar</span>
+              </button>
+              
+              <button
+                onClick={handleCreateRoutine}
+                className="bg-cyan-600 text-white p-2 rounded-lg hover:bg-cyan-700 transition-all shadow-md"
+                title="Crear nueva rutina"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+              </button>
+              
+              <button
+                onClick={handleRenameRoutine}
+                disabled={!currentRoutineId}
+                className="bg-orange-600 text-white p-2 rounded-lg hover:bg-orange-700 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                title="Renombrar rutina"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+              </button>
+              
+              <button
+                onClick={handleDeleteRoutine}
+                disabled={!currentRoutineId}
+                className="bg-red-600 text-white p-2 rounded-lg hover:bg-red-700 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                title="Eliminar rutina"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
 
         {/* Asistente de Planificación */}
         <div className="bg-gradient-to-b from-slate-800 to-gray-900/50 border border-slate-700/80 rounded-xl shadow-2xl p-4 sm:p-6 mb-10">
@@ -287,7 +476,7 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
                       Cancelar
                     </button>
                     <button onClick={handleSavePlan} className="bebas-font text-lg tracking-wider px-6 py-2 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-colors">
-                      Aceptar y Guardar Plan
+                      Aceptar Plan
                     </button>
                   </div>
                 </div>
@@ -390,6 +579,87 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
                 className="bebas-font flex-1 bg-gray-700 text-white px-5 py-2 rounded-lg hover:bg-gray-600 transition-all shadow-lg text-lg tracking-wider"
               >
                 Entendido
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Guardar Rutina */}
+      {showSaveModal && (
+        <div className="fixed inset-0 bg-black/80 z-[200] flex justify-center items-center p-4" onClick={() => setShowSaveModal(false)}>
+          <div className="bg-gray-900 border-2 border-cyan-500 rounded-xl shadow-2xl p-8 w-full max-w-md text-center relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
+            
+            <div className="mb-6">
+              <div className="w-16 h-16 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                </svg>
+              </div>
+              <h2 className="bebas-font text-3xl text-cyan-500 tracking-wider mb-2">Guardar Rutina</h2>
+              <p className="text-gray-300">Se guardará en <span className="font-bold text-white">{getCurrentRoutineName()}</span></p>
+            </div>
+            
+            <div className="flex gap-3">
+              <button 
+                onClick={() => setShowSaveModal(false)}
+                className="bebas-font flex-1 bg-gray-700 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-all text-lg tracking-wider"
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={confirmSaveRoutine}
+                className="bebas-font flex-1 bg-cyan-600 text-white px-6 py-2 rounded-lg hover:bg-cyan-700 transition-all shadow-lg text-lg tracking-wider"
+              >
+                Aceptar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Renombrar Rutina */}
+      {showRenameModal && (
+        <div className="fixed inset-0 bg-black/80 z-[200] flex justify-center items-center p-4" onClick={() => setShowRenameModal(false)}>
+          <div className="bg-gray-900 border-2 border-orange-500 rounded-xl shadow-2xl p-8 w-full max-w-md text-center relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent"></div>
+            
+            <div className="mb-6">
+              <div className="w-16 h-16 mx-auto bg-orange-500/20 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+              </div>
+              <h2 className="bebas-font text-3xl text-orange-500 tracking-wider mb-4">Renombrar Rutina</h2>
+              
+              <input
+                type="text"
+                value={newRoutineName}
+                onChange={(e) => setNewRoutineName(e.target.value)}
+                placeholder="Nuevo nombre"
+                className="w-full bg-gray-800 border border-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-orange-500 transition-all"
+                autoFocus
+                onKeyPress={(e) => e.key === 'Enter' && confirmRenameRoutine()}
+              />
+            </div>
+            
+            <div className="flex gap-3">
+              <button 
+                onClick={() => {
+                  setShowRenameModal(false);
+                  setNewRoutineName('');
+                }}
+                className="bebas-font flex-1 bg-gray-700 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-all text-lg tracking-wider"
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={confirmRenameRoutine}
+                disabled={!newRoutineName.trim()}
+                className="bebas-font flex-1 bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 transition-all shadow-lg text-lg tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Renombrar
               </button>
             </div>
           </div>
