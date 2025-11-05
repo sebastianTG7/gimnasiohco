@@ -4,12 +4,15 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import ScrollToTop from './components/ScrollToTop';
+import { AuthProvider } from './contexts/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <ScrollToTop />
-    <App />
+    <AuthProvider>
+      <ScrollToTop />
+      <App />
+    </AuthProvider>
   </BrowserRouter>
 );
 

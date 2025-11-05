@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GridBackground } from './GridBackground';
 import { Spotlight } from './ui/Spotlight';
+import { useAuth } from '../contexts/AuthContext';
 
 const SuccessModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -35,8 +36,12 @@ const SuccessModal = ({ isOpen, onClose }) => {
 };
 
 const Login = () => {
-  const [mode, setMode] = useState('login'); // 'login', 'register', 'forgot'
+  const navigate = useNavigate();
+  const { signup, login, resetPassword } = useAuth();
+  const [mode, setMode] = useState('login');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -51,28 +56,92 @@ const Login = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+    setError('');
   };
 
-  const handleSubmit = (e) => {
+  const getErrorMessage = (errorCode) => {
+    const errorMessages = {
+      'auth/email-already-in-use': 'Este correo ya está registrado',
+      'auth/invalid-email': 'Correo electrónico inválido',
+      'auth/weak-password': 'La contraseña es muy débil',
+      'auth/user-not-found': 'Usuario no encontrado',
+      'auth/wrong-password': 'Contraseña incorrecta',
+      'auth/too-many-requests': 'Demasiados intentos. Intenta más tarde',
+      'auth/network-request-failed': 'Error de conexión. Verifica tu internet',
+    };
+
+    for (const [code, message] of Object.entries(errorMessages)) {
+      if (errorCode.includes(code)) {
+        return message;
+      }
+    }
+
+    return 'Error al procesar la solicitud';
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
     
-    if (mode === 'register') {
-      // Simular registro exitoso
-      setShowSuccessModal(true);
-      // Resetear formulario
-      setFormData({
-        email: '',
-        password: '',
-        confirmPassword: '',
-        username: '',
-        acceptTerms: false
-      });
-    } else if (mode === 'login') {
-      // Simular login
-      console.log('Login:', formData.email);
-    } else if (mode === 'forgot') {
-      // Simular recuperación
-      console.log('Recuperar:', formData.email);
+    try {
+      if (mode === 'register') {
+        if (formData.password !== formData.confirmPassword) {
+          setError('Las contraseñas no coinciden');
+          setLoading(false);
+          return;
+        }
+
+        if (formData.password.length < 6) {
+          setError('La contraseña debe tener al menos 6 caracteres');
+          setLoading(false);
+          return;
+        }
+
+        if (!formData.acceptTerms) {
+          setError('Debes aceptar los términos y condiciones');
+          setLoading(false);
+          return;
+        }
+
+        const result = await signup(formData.email, formData.password, formData.username);
+        
+        if (result.success) {
+          setShowSuccessModal(true);
+          setFormData({
+            email: '',
+            password: '',
+            confirmPassword: '',
+            username: '',
+            acceptTerms: false
+          });
+        } else {
+          setError(getErrorMessage(result.error));
+        }
+      } else if (mode === 'login') {
+        const result = await login(formData.email, formData.password);
+        
+        if (result.success) {
+          navigate('/');
+        } else {
+          setError(getErrorMessage(result.error));
+        }
+      } else if (mode === 'forgot') {
+        const result = await resetPassword(formData.email);
+        
+        if (result.success) {
+          setError('');
+          alert('Se ha enviado un enlace de recuperación a tu correo electrónico');
+          setMode('login');
+        } else {
+          setError(getErrorMessage(result.error));
+        }
+      }
+    } catch (err) {
+      setError('Ocurrió un error inesperado. Intenta de nuevo.');
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -88,7 +157,6 @@ const Login = () => {
       
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-md">
-          {/* Logo y volver */}
           <div className="mb-8 flex items-center justify-between">
             <Link to="/" className="bebas-font text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest flex items-center gap-2">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,9 +166,7 @@ const Login = () => {
             </Link>
           </div>
 
-          {/* Card principal */}
           <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-2xl shadow-2xl overflow-hidden">
-            {/* Header con borde superior animado */}
             <div className="relative">
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#379AA5] to-transparent"></div>
               <div className="p-8 pb-6">
@@ -117,7 +183,12 @@ const Login = () => {
               </div>
             </div>
 
-            {/* Formulario */}
+            {error && (
+              <div className="mx-8 mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg">
+                <p className="text-red-300 text-sm text-center">{error}</p>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="p-8 pt-4 space-y-5">
               {mode === 'register' && (
                 <div>
@@ -223,15 +294,19 @@ const Login = () => {
 
               <button
                 type="submit"
-                className="w-full bebas-font bg-gradient-to-r from-[#379AA5] to-[#2A7A87] text-white px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-[#379AA5]/50 transition-all text-xl tracking-wider transform hover:scale-[1.02]"
+                disabled={loading}
+                className="w-full bebas-font bg-gradient-to-r from-[#379AA5] to-[#2A7A87] text-white px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-[#379AA5]/50 transition-all text-xl tracking-wider transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {mode === 'login' && 'INICIAR SESIÓN'}
-                {mode === 'register' && 'CREAR CUENTA'}
-                {mode === 'forgot' && 'ENVIAR ENLACE'}
+                {loading ? 'PROCESANDO...' : (
+                  <>
+                    {mode === 'login' && 'INICIAR SESIÓN'}
+                    {mode === 'register' && 'CREAR CUENTA'}
+                    {mode === 'forgot' && 'ENVIAR ENLACE'}
+                  </>
+                )}
               </button>
             </form>
 
-            {/* Footer */}
             <div className="px-8 pb-8">
               <div className="border-t border-gray-800 pt-6 text-center">
                 {mode === 'login' && (
@@ -260,7 +335,6 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Texto adicional */}
           <p className="text-center text-gray-500 mt-6 text-sm">
             Energy Gym © {new Date().getFullYear()} - Todos los derechos reservados
           </p>
