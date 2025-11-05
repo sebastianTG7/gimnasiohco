@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import './App.css';
 import { images, videos } from './assets';
 import DetalleEjercicio from './components/rutinas/DetalleEjercicio';
@@ -19,11 +19,24 @@ import pako from 'pako';
 // Componente de la Página de Inicio (fuera de App para evitar re-renders)
 const HomePage = ({ typewriterText, loopNum, toRotate }) => {
   const { currentUser, logout } = useAuth();
+  const location = useLocation();
   const [showMore, setShowMore] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showNav, setShowNav] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [showUserMenu, setShowUserMenu] = useState(false);
+
+  // Scroll automático a ejercicios cuando se navega con el state
+  useEffect(() => {
+    if (location.state?.scrollToExercises) {
+      setTimeout(() => {
+        const ejerciciosSection = document.getElementById('ejercicios');
+        if (ejerciciosSection) {
+          ejerciciosSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  }, [location]);
 
   useEffect(() => {
     const controlNavbar = () => {

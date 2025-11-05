@@ -78,6 +78,7 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
   const [daysPerWeek, setDaysPerWeek] = useState(null);
   const [selectedDays, setSelectedDays] = useState([]);
   const [recommendation, setRecommendation] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleStartWizard = () => {
     setIsWizardActive(true);
@@ -189,6 +190,7 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
     setSchedule(prev => ({ ...prev, days: newSchedule }));
     setSelectedExercises(newSelectedExercises); // Aplicar ejercicios predefinidos
     handleCancel(); // Reset wizard
+    setShowSuccessModal(true); // Mostrar modal de éxito
     setTimeout(() => {
       scheduleRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
@@ -317,6 +319,76 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) 
           </div>
         </div>
       </div>
+
+      {/* Modal de Éxito */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black/80 z-[200] flex justify-center items-center p-4" onClick={() => setShowSuccessModal(false)}>
+          <div className="bg-gray-900 border-2 border-green-500 rounded-xl shadow-2xl p-8 w-full max-w-lg text-center relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent"></div>
+            
+            <div className="mb-6">
+              <div className="w-20 h-20 mx-auto bg-green-500/20 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h2 className="bebas-font text-4xl text-green-500 tracking-wider mb-2">¡PLAN GENERADO!</h2>
+              <p className="text-gray-300 text-lg">Tu rutina incluye ejercicios predefinidos listos para entrenar.</p>
+            </div>
+            
+            <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-6 mb-6 text-left">
+              <p className="text-white mb-3 flex items-start gap-2">
+                <span className="text-2xl">💡</span>
+                <span>
+                  Puedes personalizar en{' '}
+                  <button
+                    onClick={() => {
+                      setShowSuccessModal(false);
+                      navigate('/', { state: { scrollToExercises: true } });
+                    }}
+                    className="text-cyan-400 hover:text-cyan-300 underline font-semibold"
+                  >
+                    Lista de Ejercicios
+                  </button>
+                  :
+                </span>
+              </p>
+              <ul className="space-y-2 ml-8 text-gray-300">
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400 mt-1">•</span>
+                  <span>Agregar/quitar ejercicios</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400 mt-1">•</span>
+                  <span>Cambiar series y repeticiones</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400 mt-1">•</span>
+                  <span>Ver videos instructivos</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div className="flex gap-3">
+              <button 
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  navigate('/', { state: { scrollToExercises: true } });
+                }}
+                className="bebas-font flex-1 bg-cyan-600 text-white px-6 py-3 rounded-lg hover:bg-cyan-700 transition-all shadow-lg text-lg tracking-wider"
+              >
+                Personalizar Ahora
+              </button>
+              <button 
+                onClick={() => setShowSuccessModal(false)}
+                className="bebas-font flex-1 bg-gray-700 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-all shadow-lg text-lg tracking-wider"
+              >
+                Entendido
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

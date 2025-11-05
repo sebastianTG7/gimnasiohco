@@ -44,19 +44,42 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
   const todaysRoutine = useMemo(() => {
     return todaysMuscleGroups.map(grupo => {
       const selections = selectedExercises[grupo] || [];
-      const allExercisesForGroup = datosEjercicios[grupo]?.subgrupos
-        ? datosEjercicios[grupo].subgrupos.flatMap(sg => sg.ejercicios.map(e => ({...e, grupo})))
-        : datosEjercicios[grupo]?.imagenes.map(e => ({...e, grupo})) || [];
+      const grupoData = datosEjercicios[grupo];
+      
+      // Verificar si tiene subgrupos (como piernas)
+      const hasSubgroups = grupoData?.subgrupos && Array.isArray(grupoData.subgrupos);
+      
+      if (hasSubgroups) {
+        // Para grupos con subgrupos (piernas), mantener la estructura de subgrupos
+        const exercisesBySubgroup = grupoData.subgrupos.map(subgrupo => {
+          const subgroupExercises = subgrupo.ejercicios
+            .filter(ej => selections.includes(ej.nombre))
+            .map(ej => ({...ej, grupo}));
+          
+          return {
+            subgroupName: subgrupo.nombre,
+            exercises: subgroupExercises
+          };
+        }).filter(sg => sg.exercises.length > 0); // Solo incluir subgrupos con ejercicios seleccionados
 
-      let exercisesForThisGroup = [];
-      if (selections.length > 0) {
-        exercisesForThisGroup = allExercisesForGroup.filter(ej => selections.includes(ej.nombre));
-      } 
+        return {
+          groupName: grupo.charAt(0).toUpperCase() + grupo.slice(1),
+          hasSubgroups: true,
+          subgroups: exercisesBySubgroup
+        };
+      } else {
+        // Para grupos sin subgrupos
+        const allExercisesForGroup = grupoData?.imagenes?.map(e => ({...e, grupo})) || [];
+        const exercisesForThisGroup = selections.length > 0
+          ? allExercisesForGroup.filter(ej => selections.includes(ej.nombre))
+          : [];
 
-      return {
-        groupName: grupo.charAt(0).toUpperCase() + grupo.slice(1),
-        exercises: exercisesForThisGroup,
-      };
+        return {
+          groupName: grupo.charAt(0).toUpperCase() + grupo.slice(1),
+          hasSubgroups: false,
+          exercises: exercisesForThisGroup
+        };
+      }
     });
   }, [todaysMuscleGroups, selectedExercises, datosEjercicios]);
 
@@ -75,7 +98,55 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
             {todaysRoutine.map(groupData => (
               <div key={groupData.groupName}>
                 <h2 className="bebas-font text-4xl text-cyan-400 tracking-wider border-b-2 border-cyan-400/30 pb-2 mb-6">{groupData.groupName}</h2>
-                {groupData.exercises.length > 0 ? (
+                
+                {groupData.hasSubgroups ? (
+                  // Renderizar grupos con subgrupos (piernas)
+                  <div className="space-y-8">
+                    {groupData.subgroups.map(subgroupData => (
+                      <div key={subgroupData.subgroupName}>
+                        <h3 className="bebas-font text-2xl text-orange-400 tracking-wider mb-4 pl-4 border-l-4 border-orange-400">
+                          {subgroupData.subgroupName}
+                        </h3>
+                        <div className="space-y-6">
+                          {subgroupData.exercises.map((ejercicio, index) => {
+                            const details = customDetails[groupData.groupName.toLowerCase()]?.[ejercicio.nombre];
+                            const displayDetails = (details && (details.series || details.reps))
+                              ? `${details.series || '?'} series de ${details.reps || '?'} repeticiones`
+                              : ejercicio.detalles;
+
+                            return (
+                              <div 
+                                key={index} 
+                                className="bg-gray-800 p-3 md:p-4 rounded-lg shadow-lg flex items-center gap-3 md:gap-4 cursor-pointer hover:bg-gray-700 transition-colors duration-200"
+                                onClick={() => {
+                                  setSelectedVideoUrl(ejercicio.videoUrl);
+                                  setSelectedVideoTitle(ejercicio.nombre);
+                                }}
+                              >
+                                {/* Contenedor de la Imagen */}
+                                <div className="w-16 h-16 md:w-24 md:h-24 flex-shrink-0">
+                                  <img src={ejercicio.src} alt={ejercicio.nombre} className="w-full h-full object-cover rounded-md" />
+                                </div>
+
+                                {/* Contenido del Ejercicio */}
+                                <div className="flex-grow">
+                                  <h3 className="text-base md:text-xl font-bold">{ejercicio.nombre}</h3>
+                                  <p className="text-cyan-400 mt-1 text-xs md:text-sm">{displayDetails}</p>
+                                </div>
+
+                                {/* Checkbox */}
+                                <div className="pl-2 md:pl-4" onClick={(e) => e.stopPropagation()}>
+                                  <input type="checkbox" className="w-5 h-5 md:w-6 md:h-6 cursor-pointer accent-green-500" />
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : groupData.exercises.length > 0 ? (
+                  // Renderizar grupos sin subgrupos
                   <div className="space-y-6">
                     {groupData.exercises.map((ejercicio, index) => {
                       const details = customDetails[groupData.groupName.toLowerCase()]?.[ejercicio.nombre];
@@ -105,7 +176,7 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
 
                           {/* Checkbox */}
                           <div className="pl-2 md:pl-4" onClick={(e) => e.stopPropagation()}>
-                            <input type="checkbox" className="w-7 h-7 md:w-8 md:h-8 accent-green-500 rounded-md" />
+                            <input type="checkbox" className="w-5 h-5 md:w-6 md:h-6 cursor-pointer accent-green-500" />
                           </div>
                         </div>
                       );
