@@ -572,25 +572,25 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
         </div>
       </div>
 
-      {/* Modal de Éxito */}
+      {/* Modal de Éxito - Plan Generado */}
       {showSuccessModal && (
-        <div className="fixed inset-0 bg-black/80 z-[200] flex justify-center items-center p-4" onClick={() => setShowSuccessModal(false)}>
-          <div className="bg-gray-900 border-2 border-green-500 rounded-xl shadow-2xl p-8 w-full max-w-lg text-center relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent"></div>
-            
+        <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowSuccessModal(false)}>
+          <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-xl p-6 w-full max-w-sm text-center" onClick={(e) => e.stopPropagation()}>
             <div className="mb-4">
-              <div className="w-20 h-20 mx-auto bg-green-500/20 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-12 h-12 mx-auto bg-green-500/20 rounded-full flex items-center justify-center mb-3">
+                <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h2 className="bebas-font text-4xl text-green-500 tracking-wider mb-2">¡PLAN GENERADO!</h2>
-              <p className="text-gray-300 text-lg">Tu rutina incluye ejercicios predefinidos listos para entrenar.</p>
+              <h3 className="text-xl font-semibold text-white mb-2">Plan Generado</h3>
+              <p className="text-gray-400 text-sm mb-3">
+                Tu rutina incluye ejercicios predefinidos listos para entrenar.
+              </p>
             </div>
             
-            <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-6 mb-6 text-left">
-              <p className="text-white mb-3 flex items-start gap-2">
-                <span className="text-2xl">💡</span>
+            <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 mb-4 text-left">
+              <p className="text-white text-sm mb-2 flex items-start gap-2">
+                <span className="text-lg">💡</span>
                 <span>
                   Puedes personalizar en{' '}
                   <button
@@ -598,26 +598,16 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
                       setShowSuccessModal(false);
                       navigate('/', { state: { scrollToExercises: true } });
                     }}
-                    className="text-cyan-400 hover:text-cyan-300 underline font-semibold"
+                    className="text-cyan-400 hover:text-cyan-300 underline font-medium"
                   >
                     Lista de Ejercicios
                   </button>
-                  :
                 </span>
               </p>
-              <ul className="space-y-2 ml-8 text-gray-300">
-                <li className="flex items-start gap-2">
-                  <span className="text-cyan-400 mt-1">•</span>
-                  <span>Agregar/quitar ejercicios</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-cyan-400 mt-1">•</span>
-                  <span>Cambiar series y repeticiones</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-cyan-400 mt-1">•</span>
-                  <span>Ver videos instructivos</span>
-                </li>
+              <ul className="space-y-1 ml-6 text-gray-400 text-xs">
+                <li>• Agregar/quitar ejercicios</li>
+                <li>• Cambiar series y repeticiones</li>
+                <li>• Ver videos instructivos</li>
               </ul>
             </div>
             
@@ -627,13 +617,13 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
                   setShowSuccessModal(false);
                   navigate('/', { state: { scrollToExercises: true } });
                 }}
-                className="bebas-font flex-1 bg-cyan-600 text-white px-5 py-2 rounded-lg hover:bg-cyan-700 transition-all shadow-lg text-lg tracking-wider"
+                className="flex-1 bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700 transition-all text-sm"
               >
-                Personalizar Ahora
+                Personalizar
               </button>
               <button 
                 onClick={() => setShowSuccessModal(false)}
-                className="bebas-font flex-1 bg-gray-700 text-white px-5 py-2 rounded-lg hover:bg-gray-600 transition-all shadow-lg text-lg tracking-wider"
+                className="flex-1 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all text-sm"
               >
                 Entendido
               </button>
@@ -644,32 +634,32 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
 
       {/* Modal de Guardar Rutina */}
       {showSaveModal && (
-        <div className="fixed inset-0 bg-black/80 z-[200] flex justify-center items-center p-4" onClick={() => setShowSaveModal(false)}>
-          <div className="bg-gray-900 border-2 border-cyan-500 rounded-xl shadow-2xl p-8 w-full max-w-md text-center relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
-            
-            <div className="mb-6">
-              <div className="w-16 h-16 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-8 h-8 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowSaveModal(false)}>
+          <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-xl p-6 w-full max-w-sm text-center" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-4">
+              <div className="w-12 h-12 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center mb-3">
+                <svg className="w-6 h-6 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                 </svg>
               </div>
-              <h2 className="bebas-font text-3xl text-cyan-500 tracking-wider mb-2">Guardar Rutina</h2>
-              <p className="text-gray-300">Se guardará en <span className="font-bold text-white">{getCurrentRoutineName()}</span></p>
+              <h3 className="text-xl font-semibold text-white mb-2">Guardar Rutina</h3>
+              <p className="text-gray-400 text-sm">
+                Se guardará en <span className="text-white font-medium">"{getCurrentRoutineName()}"</span>
+              </p>
             </div>
             
             <div className="flex gap-3">
               <button 
                 onClick={() => setShowSaveModal(false)}
-                className="bebas-font flex-1 bg-gray-700 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-all text-lg tracking-wider"
+                className="flex-1 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all text-sm"
               >
                 Cancelar
               </button>
               <button 
                 onClick={confirmSaveRoutine}
-                className="bebas-font flex-1 bg-cyan-600 text-white px-6 py-2 rounded-lg hover:bg-cyan-700 transition-all shadow-lg text-lg tracking-wider"
+                className="flex-1 bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700 transition-all text-sm"
               >
-                Aceptar
+                Guardar
               </button>
             </div>
           </div>
@@ -678,24 +668,22 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
 
       {/* Modal de Renombrar Rutina */}
       {showRenameModal && (
-        <div className="fixed inset-0 bg-black/80 z-[200] flex justify-center items-center p-4" onClick={() => setShowRenameModal(false)}>
-          <div className="bg-gray-900 border-2 border-orange-500 rounded-xl shadow-2xl p-8 w-full max-w-md text-center relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent"></div>
-            
-            <div className="mb-6">
-              <div className="w-16 h-16 mx-auto bg-orange-500/20 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowRenameModal(false)}>
+          <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-xl p-6 w-full max-w-sm text-center" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-4">
+              <div className="w-12 h-12 mx-auto bg-orange-500/20 rounded-full flex items-center justify-center mb-3">
+                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
               </div>
-              <h2 className="bebas-font text-3xl text-orange-500 tracking-wider mb-4">Renombrar Rutina</h2>
+              <h3 className="text-xl font-semibold text-white mb-3">Renombrar Rutina</h3>
               
               <input
                 type="text"
                 value={newRoutineName}
                 onChange={(e) => setNewRoutineName(e.target.value)}
                 placeholder="Nuevo nombre"
-                className="w-full bg-gray-800 border border-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-orange-500 transition-all"
+                className="w-full bg-gray-800 border border-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 transition-all text-sm"
                 autoFocus
                 onKeyPress={(e) => e.key === 'Enter' && confirmRenameRoutine()}
               />
@@ -707,14 +695,14 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
                   setShowRenameModal(false);
                   setNewRoutineName('');
                 }}
-                className="bebas-font flex-1 bg-gray-700 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-all text-lg tracking-wider"
+                className="flex-1 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all text-sm"
               >
                 Cancelar
               </button>
               <button 
                 onClick={confirmRenameRoutine}
                 disabled={!newRoutineName.trim()}
-                className="bebas-font flex-1 bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 transition-all shadow-lg text-lg tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-all text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Renombrar
               </button>
