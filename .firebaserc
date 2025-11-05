@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "energyhco"
-  }
+    "default": "gym-energyhco"
+  },
+  "targets": {},
+  "etags": {}
 }

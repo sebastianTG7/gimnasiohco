@@ -5,6 +5,7 @@ import { images, videos } from './assets';
 import DetalleEjercicio from './components/rutinas/DetalleEjercicio';
 import MiPlan from './components/MiPlan';
 import WorkoutMode from './components/WorkoutMode'; // Importar el nuevo componente
+import Login from './components/Login'; // Importar Login
 import SwipeableMenu from './components/SwipeableMenu';
 import ScrollToTop from './components/ScrollToTop';
 import PlanificadorModal from './components/PlanificadorModal';
@@ -84,6 +85,15 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
             </a>
           </li>
         ))}
+        <li>
+          <Link 
+            to="/login"
+            onClick={() => setIsMenuOpen(false)} 
+            className="bebas-font text-2xl text-[#379AA5] hover:text-[#2A7A87] tracking-widest transition-colors"
+          >
+            LOGIN
+          </Link>
+        </li>
       </ul>
       <div className="border-t border-gray-700 mt-auto pt-6">
         <div className="flex justify-center space-x-6">
@@ -111,7 +121,9 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
       
       <button
         onClick={() => setIsMenuOpen(!isMenuOpen)}
-        className="md:hidden fixed top-6 right-6 z-[100] flex items-center gap-2 text-white"
+        className={`md:hidden fixed top-6 right-6 z-[100] flex items-center gap-2 text-white transition-all duration-300 ${
+          (lastScrollY > 50 && !showNav) ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
+        }`}
         aria-label="Toggle menu"
       >
         <span className="bebas-font text-xl tracking-wider">
@@ -124,21 +136,21 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
       </button>
 
       {/* Navegación */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 p-6 flex justify-between items-center transition-all duration-300 ${
+      <nav className={`fixed top-0 left-0 right-0 z-50 p-6 flex justify-between items-center transition-all duration-100 ${
         showNav ? 'translate-y-0' : '-translate-y-full'
       } ${lastScrollY > 50 ? 'bg-black/80 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}>
            <div className="flex items-center space-x-3">
               <img src={images.logo_gym} alt="Logo de Energy" className="h-10 opacity-70 ml-2" />
               <h1 className="bebas-font text-3x2 md:text-4x2 text-white tracking-widest">ENERGY</h1>
           </div>
-          <div className="hidden md:flex space-x-12 text-lg">
+          <div className="hidden md:flex space-x-12 text-lg items-center">
             {navLinks.map(link => (
               <a key={link.href} href={link.href} className="hover:text-[#2A7A87] transition-colors">{link.text}</a>
             ))}
           </div>
-          <a href="#ejercicios" className="hidden md:block bebas-font border-2 border-[#379AA5] text-[#379AA5] px-6 py-2 rounded-lg hover:bg-[#379AA5] hover:text-gray-900 transition-colors">
-            Empezar
-          </a>
+          <Link to="/login" className="bebas-font bg-[#379AA5] text-white px-6 py-2 rounded-lg hover:bg-[#2A7A87] transition-colors shadow-md tracking-wider">
+            LOGIN
+          </Link>
       </nav>
       
       {/* Contenido principal del Hero */}
@@ -615,6 +627,7 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage typewriterText={text} loopNum={loopNum} toRotate={toRotate} />} />
+        <Route path="/login" element={<Login />} />
         <Route 
           path="/:grupo" 
           element={<DetalleEjercicio 
