@@ -1,0 +1,56 @@
+{
+  "Full Body": {
+    "description": "Rutina completa que trabaja todos los grupos musculares en cada sesión",
+    "exercises": {
+      "pecho": ["Press Banca (barra)", "Press Inclinado (barra)"],
+      "espalda": ["Remo Parado (barra)", "Dominadas"],
+      "hombros": ["Press Militar (barra)", "Aperturas Laterales"],
+      "biceps": ["Curl Parado (Barra)", "Curl Martillo"],
+      "triceps": ["Press Frances", "Empujon Parado (Cable)"],
+      "piernas": {
+        "Cuádriceps": ["Sentadillas Libre", "Prensa 45 grados"],
+        "Isquiotibiales o Femorales": ["Peso Muerto Rumano", "Curl Femoral Tumbado"],
+        "Glúteos": ["Hip Thrust", "Búlgaras para Glúteos"]
+      },
+      "abdominales": ["Crunches", "Plancha Frontal"]
+    }
+  },
+  "Torso-Pierna": {
+    "description": "Rutina dividida entre tren superior (torso) y tren inferior (pierna)",
+    "torso": {
+      "pecho": ["Press Banca (barra)", "Press Inclinado (barra)", "Aperturas (Mancuernas)"],
+      "espalda": ["Remo Parado (barra)", "Dominadas", "Remo sentado (Polea, Cerrado)"],
+      "hombros": ["Press Militar (barra)", "Aperturas Laterales", "Elevaciones Posteriores"],
+      "biceps": ["Curl Parado (Barra)", "Curl Banco Scott"],
+      "triceps": ["Press Frances", "Empujon Parado (Cable)", "Fondos para Tríceps"]
+    },
+    "pierna": {
+      "piernas": {
+        "Cuádriceps": ["Sentadillas Libre", "Prensa 45 grados", "Extensiones de Cuádriceps"],
+        "Isquiotibiales o Femorales": ["Peso Muerto Rumano", "Curl Femoral Tumbado"],
+        "Glúteos": ["Hip Thrust", "Búlgaras para Glúteos", "Patadas con Cable"]
+      },
+      "abdominales": ["Crunches", "Elevación de Piernas", "Plancha Frontal"]
+    }
+  },
+  "Push-Pull-Legs": {
+    "description": "Rutina dividida en empuje (push), jalón (pull) y piernas",
+    "push": {
+      "pecho": ["Press Banca (barra)", "Press Inclinado (barra)", "Aperturas (Mancuernas)"],
+      "hombros": ["Press Militar (barra)", "Aperturas Laterales", "Elevaciones Frontales"],
+      "triceps": ["Press Frances", "Empujon Parado (Cable)", "Fondos para Tríceps"]
+    },
+    "pull": {
+      "espalda": ["Remo Parado (barra)", "Dominadas", "Jalón (Agarre Abierto)", "Remo sentado (Polea, Cerrado)"],
+      "biceps": ["Curl Parado (Barra)", "Curl Banco Scott", "Curl Martillo"]
+    },
+    "legs": {
+      "piernas": {
+        "Cuádriceps": ["Sentadillas Libre", "Prensa 45 grados", "Extensiones de Cuádriceps"],
+        "Isquiotibiales o Femorales": ["Peso Muerto Rumano", "Curl Femoral Tumbado"],
+        "Glúteos": ["Hip Thrust", "Búlgaras para Glúteos", "Sentadilla Sumo"]
+      },
+      "abdominales": ["Crunches", "Elevación de Piernas", "Plancha Frontal"]
+    }
+  }
+}

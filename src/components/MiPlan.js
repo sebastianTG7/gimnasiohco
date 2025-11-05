@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GridBackground } from './GridBackground';
+import predefinedRoutines from '../data/predefinedRoutines.json';
 
 // Objeto para mapear grupos musculares a colores de Tailwind CSS
 const groupColors = {
@@ -67,7 +68,7 @@ const ResumenSemanal = ({ schedule, daysOfWeek }) => {
   );
 };
 
-const MiPlan = ({ schedule, onOpenPlanner, setSchedule }) => {
+const MiPlan = ({ schedule, onOpenPlanner, setSchedule, setSelectedExercises }) => {
   const navigate = useNavigate();
   const scheduleRef = useRef(null);
   const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -109,6 +110,8 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule }) => {
 
   const handleSavePlan = () => {
     const newSchedule = {};
+    const newSelectedExercises = {};
+    
     const muscleGroups = {
       'Full Body': ['Pecho', 'Espalda', 'Hombros', 'Biceps', 'Triceps', 'Piernas'],
       'Torso-Pierna': {
@@ -122,6 +125,30 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule }) => {
       },
     };
 
+    // Función auxiliar para aplicar ejercicios predefinidos
+    const applyPredefinedExercises = (routineType, section = null) => {
+      const routineConfig = predefinedRoutines[routineType];
+      if (!routineConfig) return;
+
+      let exercisesSource = section ? routineConfig[section] : routineConfig.exercises;
+      
+      for (const [grupoKey, exercises] of Object.entries(exercisesSource)) {
+        const grupoLower = grupoKey.toLowerCase();
+        
+        if (typeof exercises === 'object' && !Array.isArray(exercises)) {
+          // Es piernas con subgrupos
+          const allPiernasExercises = [];
+          for (const [subgrupo, subExercises] of Object.entries(exercises)) {
+            allPiernasExercises.push(...subExercises);
+          }
+          newSelectedExercises[grupoLower] = allPiernasExercises;
+        } else {
+          // Es un grupo muscular normal
+          newSelectedExercises[grupoLower] = [...exercises];
+        }
+      }
+    };
+
     if (recommendation === 'Full Body') {
       selectedDays.forEach(day => {
         muscleGroups['Full Body'].forEach(group => {
@@ -129,6 +156,9 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule }) => {
           newSchedule[group.toLowerCase()].push(day);
         });
       });
+      // Aplicar ejercicios predefinidos de Full Body
+      applyPredefinedExercises('Full Body');
+      
     } else if (recommendation === 'Torso-Pierna') {
       selectedDays.forEach((day, index) => {
         const type = index % 2 === 0 ? 'Torso' : 'Pierna';
@@ -137,6 +167,10 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule }) => {
           newSchedule[group.toLowerCase()].push(day);
         });
       });
+      // Aplicar ejercicios predefinidos de Torso-Pierna
+      applyPredefinedExercises('Torso-Pierna', 'torso');
+      applyPredefinedExercises('Torso-Pierna', 'pierna');
+      
     } else if (recommendation === 'Push-Pull-Legs') {
       const pplOrder = ['Push', 'Pull', 'Legs'];
       selectedDays.forEach((day, index) => {
@@ -146,9 +180,14 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule }) => {
           newSchedule[group.toLowerCase()].push(day);
         });
       });
+      // Aplicar ejercicios predefinidos de Push-Pull-Legs
+      applyPredefinedExercises('Push-Pull-Legs', 'push');
+      applyPredefinedExercises('Push-Pull-Legs', 'pull');
+      applyPredefinedExercises('Push-Pull-Legs', 'legs');
     }
 
     setSchedule(prev => ({ ...prev, days: newSchedule }));
+    setSelectedExercises(newSelectedExercises); // Aplicar ejercicios predefinidos
     handleCancel(); // Reset wizard
     setTimeout(() => {
       scheduleRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });

@@ -701,7 +701,8 @@ function App() {
           element={<MiPlan 
             schedule={schedule} 
             onOpenPlanner={() => setIsPlannerOpen(true)} 
-            setSchedule={setSchedule} // Pasar la función para actualizar el horario 
+            setSchedule={setSchedule} // Pasar la función para actualizar el horario
+            setSelectedExercises={setSelectedExercises} // Pasar la función para actualizar ejercicios
           />}
         />
         <Route 
