@@ -183,7 +183,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                   <div className="flex-grow">
                     <div className="flex justify-between items-center">
                       <h2 className="bebas-font text-3xl text-white">Mi Rutina Semanal:</h2>
-                      <Link to="/mi-plan" className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors underline">
+                      <Link to="/mi-plan" className="bebas-font text-sm bg-[#111827] border border-[#61DBEC] text-white px-4 py-2 rounded-lg hover:bg-[#1f2937] transition-all shadow-md tracking-wider">
                         Editar Plan
                       </Link>
                     </div>

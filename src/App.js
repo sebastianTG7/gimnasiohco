@@ -121,9 +121,9 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
           <Link 
             to="/login"
             onClick={() => setIsMenuOpen(false)} 
-            className="bebas-font text-2xl text-[#379AA5] hover:text-[#2A7A87] tracking-widest transition-colors"
+            className="bebas-font text-2xl text-[#61DBEC] hover:text-[#4ac9de] tracking-widest transition-colors"
           >
-            LOGIN
+            INICIAR SESIÓN
           </Link>
         </li>
       </ul>
@@ -216,8 +216,8 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
               )}
             </div>
           ) : (
-            <Link to="/login" className="bebas-font bg-gray-800/80 border border-gray-700 text-white px-6 py-2 rounded-lg hover:bg-gray-700 hover:border-[#379AA5] transition-all shadow-md tracking-wider">
-              LOGIN
+            <Link to="/login" className="bebas-font bg-[#111827] border border-[#61DBEC] text-white px-6 py-2 rounded-lg hover:bg-[#1f2937] transition-all shadow-md tracking-wider">
+              INICIAR SESIÓN
             </Link>
           )}
       </nav>

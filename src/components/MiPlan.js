@@ -399,21 +399,21 @@ const MiPlan = ({
             </div>
 
             {/* Botones de Acción */}
-            <div className="flex gap-2 mt-6 sm:mt-0">
+            <div className="flex gap-2">
               <button
                 onClick={handleSaveRoutine}
-                className="bebas-font flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all shadow-md tracking-wider"
+                className="bebas-font flex items-center gap-2 bg-[#111827] border border-[#61DBEC] text-white px-4 py-2 rounded-lg hover:bg-[#1f2937] transition-all shadow-md tracking-wider"
                 title="Guardar rutina"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                 </svg>
-                <span className="hidden sm:inline">Guardar</span>
+                <span>Guardar</span>
               </button>
               
               <button
                 onClick={handleCreateRoutine}
-                className="bg-cyan-600 text-white p-2 rounded-lg hover:bg-cyan-700 transition-all shadow-md"
+                className="bg-[#111827] border border-[#61DBEC] text-white p-2 rounded-lg hover:bg-[#1f2937] transition-all shadow-md"
                 title="Crear nueva rutina"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -424,7 +424,7 @@ const MiPlan = ({
               <button
                 onClick={handleRenameRoutine}
                 disabled={!currentRoutine}
-                className="bg-orange-600 text-white p-2 rounded-lg hover:bg-orange-700 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-[#111827] border border-[#61DBEC] text-white p-2 rounded-lg hover:bg-[#1f2937] transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                 title="Renombrar rutina"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -435,7 +435,7 @@ const MiPlan = ({
               <button
                 onClick={handleDeleteRoutine}
                 disabled={!currentRoutine}
-                className="bg-red-600 text-white p-2 rounded-lg hover:bg-red-700 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-[#111827] border border-[#61DBEC] text-white p-2 rounded-lg hover:bg-[#1f2937] transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                 title="Eliminar rutina"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -533,7 +533,7 @@ const MiPlan = ({
             <h2 className="bebas-font text-3xl text-white">Mi Horario</h2>
             <button 
               onClick={onOpenPlanner}
-              className="bebas-font text-base sm:text-lg tracking-wider px-4 sm:px-6 py-2 rounded-lg text-white bg-[#379AA5] hover:bg-[#2A7A87] transition-colors shadow-lg"
+              className="bebas-font text-base sm:text-lg tracking-wider px-4 sm:px-6 py-2 rounded-lg text-white bg-[#111827] border border-[#61DBEC] hover:bg-[#1f2937] transition-colors shadow-lg"
             >
               Editar Horario
             </button>
@@ -542,7 +542,7 @@ const MiPlan = ({
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button
               onClick={() => navigate('/', { state: { scrollToExercises: true } })}
-              className="bebas-font text-xl tracking-wider px-6 py-3 rounded-lg text-white bg-cyan-600 hover:bg-cyan-700 transition-all duration-300 shadow-lg transform hover:scale-105 w-full sm:w-auto"
+              className="bebas-font text-xl tracking-wider px-6 py-3 rounded-lg text-white bg-[#111827] border border-[#61DBEC] hover:bg-[#1f2937] transition-all duration-300 shadow-lg w-full sm:w-auto"
             >
               Personalizar Ejercicios
             </button>
