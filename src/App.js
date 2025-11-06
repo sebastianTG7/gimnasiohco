@@ -822,7 +822,7 @@ function App() {
   // Función para crear una nueva rutina
   const handleCreateRoutine = async (routineName = 'Nueva Rutina') => {
     if (!currentUser) {
-      alert('Debes iniciar sesión para guardar rutinas');
+      console.log('Usuario no autenticado');
       return;
     }
 
@@ -835,16 +835,16 @@ function App() {
     });
 
     if (result.success) {
-      alert(`Rutina "${routineName}" creada exitosamente`);
+      console.log(`Rutina "${routineName}" creada exitosamente`);
     } else {
-      alert('Error al crear la rutina: ' + result.error);
+      console.error('Error al crear la rutina:', result.error);
     }
   };
 
   // Función para guardar la rutina actual
   const handleSaveRoutine = async () => {
     if (!currentUser) {
-      alert('Debes iniciar sesión para guardar rutinas');
+      console.log('Usuario no autenticado');
       return;
     }
 
@@ -860,9 +860,9 @@ function App() {
       });
 
       if (result.success) {
-        alert('Rutina guardada exitosamente');
+        console.log('Rutina guardada exitosamente');
       } else {
-        alert('Error al guardar la rutina: ' + result.error);
+        console.error('Error al guardar la rutina:', result.error);
       }
     }
   };

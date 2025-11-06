@@ -103,6 +103,7 @@ const MiPlan = ({
   const [showSuccessCreateModal, setShowSuccessCreateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [newlyCreatedRoutineName, setNewlyCreatedRoutineName] = useState('');
+  const [showLoginRequiredModal, setShowLoginRequiredModal] = useState(false);
 
   const handleStartWizard = () => {
     setIsWizardActive(true);
@@ -232,7 +233,7 @@ const MiPlan = ({
   // Funciones del sistema de rutinas (usando Firebase)
   const handleCreateRoutine = async () => {
     if (!currentUser) {
-      alert('Debes iniciar sesión para guardar rutinas');
+      setShowLoginRequiredModal(true);
       return;
     }
     
@@ -256,7 +257,7 @@ const MiPlan = ({
 
   const handleSaveRoutine = async () => {
     if (!currentUser) {
-      alert('Debes iniciar sesión para guardar rutinas');
+      setShowLoginRequiredModal(true);
       return;
     }
 
@@ -658,7 +659,7 @@ const MiPlan = ({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Rutina Guardada</h3>
+              <h3 className="text-xl font-semibold text-white mb-2">Rutina Creada</h3>
               <p className="text-gray-400 text-sm">
                 Se guardó como <span className="text-white font-medium">"{newlyCreatedRoutineName}"</span>
               </p>
@@ -703,6 +704,43 @@ const MiPlan = ({
                 className="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all text-sm"
               >
                 Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Login Requerido */}
+      {showLoginRequiredModal && (
+        <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowLoginRequiredModal(false)}>
+          <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-xl p-6 w-full max-w-sm text-center" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-4">
+              <div className="w-12 h-12 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center mb-3">
+                <svg className="w-6 h-6 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">Inicia Sesión</h3>
+              <p className="text-gray-400 text-sm">
+                Para guardar o crear rutinas, primero debes iniciar sesión.
+              </p>
+            </div>
+            
+            <div className="flex flex-col gap-3">
+              <button 
+                onClick={() => {
+                  setShowLoginRequiredModal(false);
+                  navigate('/login');
+                }}
+                className="bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700 transition-all text-sm"
+              >
+                Ir a Iniciar Sesión
+              </button>
+              <button 
+                onClick={() => setShowLoginRequiredModal(false)}
+                className="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all text-sm"
+              >
+                Cancelar
               </button>
             </div>
           </div>
