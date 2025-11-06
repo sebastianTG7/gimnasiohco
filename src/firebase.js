@@ -6,12 +6,12 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // TODO: Reemplazar con tu configuración real de Firebase Console
 const firebaseConfig = {
-  apiKey: "AIzaSyBvPqjeEFOL4DH77xo4oWyfugzhrfs5z-o",
+  apiKey: "AIza...",
   authDomain: "gym-energyhco.firebaseapp.com",
   projectId: "gym-energyhco",
   storageBucket: "gym-energyhco.firebasestorage.app",
-  messagingSenderId: "538933541475",
-  appId: "1:538933541475:web:b22a5b8d0e8747243f1656"
+  messagingSenderId: "53893...",
+  appId: "1:5389335414..."
 };
 
 // Initialize Firebase
