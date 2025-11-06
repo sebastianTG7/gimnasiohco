@@ -104,6 +104,8 @@ const MiPlan = ({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [newlyCreatedRoutineName, setNewlyCreatedRoutineName] = useState('');
   const [showLoginRequiredModal, setShowLoginRequiredModal] = useState(false);
+  const [showOverwriteWarningModal, setShowOverwriteWarningModal] = useState(false);
+  const [pendingPlanData, setPendingPlanData] = useState(null);
 
   const handleStartWizard = () => {
     setIsWizardActive(true);
@@ -212,13 +214,41 @@ const MiPlan = ({
       applyPredefinedExercises('Push-Pull-Legs', 'legs');
     }
 
-    setSchedule(prev => ({ ...prev, days: newSchedule }));
-    setSelectedExercises(newSelectedExercises); // Aplicar ejercicios predefinidos
+    // Guardar los datos del plan generado
+    const planData = {
+      schedule: { ...schedule, days: newSchedule },
+      selectedExercises: newSelectedExercises
+    };
+
+    // Si hay una rutina actual, mostrar advertencia de sobrescritura
+    if (currentRoutine) {
+      setPendingPlanData(planData);
+      setShowOverwriteWarningModal(true);
+      return;
+    }
+
+    // Si no hay rutina, aplicar directamente
+    applyPlan(planData);
+  };
+
+  // Función para aplicar el plan
+  const applyPlan = (planData) => {
+    setSchedule(planData.schedule);
+    setSelectedExercises(planData.selectedExercises);
     handleCancel(); // Reset wizard
     setShowSuccessModal(true); // Mostrar modal de éxito
     setTimeout(() => {
       scheduleRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
+  };
+
+  // Confirmar sobrescritura del plan
+  const confirmOverwritePlan = () => {
+    setShowOverwriteWarningModal(false);
+    if (pendingPlanData) {
+      applyPlan(pendingPlanData);
+      setPendingPlanData(null);
+    }
   };
 
   const handleCancel = () => {
@@ -749,6 +779,48 @@ const MiPlan = ({
                 className="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all text-sm"
               >
                 Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Advertencia de Sobrescritura */}
+      {showOverwriteWarningModal && (
+        <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowOverwriteWarningModal(false)}>
+          <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-4">
+              <div className="w-12 h-12 mx-auto bg-orange-500/20 rounded-full flex items-center justify-center mb-3">
+                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">¿Sobrescribir Rutina Actual?</h3>
+              <p className="text-gray-400 text-sm mb-4">
+                Esto reemplazará completamente tu rutina <span className="text-white font-medium">"{currentRoutine?.name}"</span> con el plan generado.
+              </p>
+              <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 mb-2">
+                <p className="text-cyan-300 text-xs">
+                  💡 <strong>Sugerencia:</strong> Si quieres conservar tu rutina actual, cancela y crea una nueva rutina desde el botón "Crear Nueva Rutina".
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex gap-3">
+              <button 
+                onClick={() => {
+                  setShowOverwriteWarningModal(false);
+                  setPendingPlanData(null);
+                }}
+                className="flex-1 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all text-sm"
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={confirmOverwritePlan}
+                className="flex-1 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-all text-sm"
+              >
+                Sí, Sobrescribir
               </button>
             </div>
           </div>
