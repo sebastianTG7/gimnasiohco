@@ -235,8 +235,11 @@ export const useRoutines = () => {
     if (currentUser) {
       loadRoutines();
     } else {
+      // Usuario cerró sesión - limpiar todo
       setRoutines([]);
       setCurrentRoutine(null);
+      setError(null);
+      setLoading(false);
     }
   }, [currentUser?.uid]);
 

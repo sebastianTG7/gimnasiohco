@@ -68,7 +68,22 @@ const ResumenSemanal = ({ schedule, daysOfWeek }) => {
   );
 };
 
-const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSelectedExercises, customDetails, setCustomDetails }) => {
+const MiPlan = ({ 
+  schedule, 
+  onOpenPlanner, 
+  setSchedule, 
+  selectedExercises, 
+  setSelectedExercises, 
+  customDetails, 
+  setCustomDetails,
+  currentUser,
+  currentRoutine,
+  routines,
+  onSelectRoutine,
+  onCreateRoutine,
+  onDeleteRoutine,
+  onUpdateRoutine
+}) => {
   const navigate = useNavigate();
   const scheduleRef = useRef(null);
   const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -81,38 +96,13 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
   const [recommendation, setRecommendation] = useState(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  // Estados del sistema de rutinas guardadas
-  const [savedRoutines, setSavedRoutines] = useState(() => {
-    const saved = localStorage.getItem('savedRoutines');
-    return saved ? JSON.parse(saved) : [];
-  });
-  const [currentRoutineId, setCurrentRoutineId] = useState(() => {
-    const saved = localStorage.getItem('currentRoutineId');
-    return saved ? parseInt(saved) : null;
-  });
+  // Estados para modales
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showRenameModal, setShowRenameModal] = useState(false);
   const [newRoutineName, setNewRoutineName] = useState('');
   const [showSuccessCreateModal, setShowSuccessCreateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [newlyCreatedRoutineName, setNewlyCreatedRoutineName] = useState('');
-
-  // Cargar rutina actual SOLO la primera vez que se monta (refresh de página)
-  useEffect(() => {
-    // Verificar si ya cargamos en esta sesión
-    const hasLoaded = sessionStorage.getItem('routineLoaded');
-    
-    if (!hasLoaded && currentRoutineId) {
-      const routine = savedRoutines.find(r => r.id === currentRoutineId);
-      if (routine) {
-        setSchedule(routine.schedule);
-        setSelectedExercises(routine.selectedExercises);
-        setCustomDetails(routine.customDetails || {});
-      }
-      // Marcar como cargado para esta sesión
-      sessionStorage.setItem('routineLoaded', 'true');
-    }
-  }, []); // Dependencias vacías - solo se ejecuta al montar
 
   const handleStartWizard = () => {
     setIsWizardActive(true);
@@ -239,73 +229,42 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
   };
 
   // Funciones del sistema de rutinas
-  const handleCreateRoutine = () => {
-    const newRoutineNumber = savedRoutines.length + 1;
-    const newRoutine = {
-      id: Date.now(),
-      name: `Rutina Personalizada ${newRoutineNumber}`,
-      schedule: { days: {}, types: [] },
-      selectedExercises: {},
-      customDetails: {}
-    };
+  // Funciones del sistema de rutinas (usando Firebase)
+  const handleCreateRoutine = async () => {
+    if (!currentUser) {
+      alert('Debes iniciar sesión para guardar rutinas');
+      return;
+    }
     
-    const updatedRoutines = [...savedRoutines, newRoutine];
-    setSavedRoutines(updatedRoutines);
-    localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
-    setCurrentRoutineId(newRoutine.id);
-    localStorage.setItem('currentRoutineId', newRoutine.id.toString());
-    
-    // Limpiar el plan actual
-    setSchedule({ days: {}, types: [] });
-    setSelectedExercises({});
-    setCustomDetails({});
-    sessionStorage.setItem('routineLoaded', 'true'); // Marcar como cargado
+    const newRoutineNumber = (routines?.length || 0) + 1;
+    await onCreateRoutine(`Rutina Personalizada ${newRoutineNumber}`);
+    setNewlyCreatedRoutineName(`Rutina Personalizada ${newRoutineNumber}`);
+    setShowSuccessCreateModal(true);
   };
 
   const handleLoadRoutine = (routineId) => {
     if (!routineId) {
-      setCurrentRoutineId(null);
-      localStorage.removeItem('currentRoutineId');
-      // Limpiar todo cuando es "Sin Rutina"
-      setSchedule({ days: {}, types: [] });
-      setSelectedExercises({});
-      setCustomDetails({});
-      sessionStorage.setItem('routineLoaded', 'true'); // Marcar como cargado
+      onSelectRoutine(null);
       return;
     }
     
-    const routine = savedRoutines.find(r => r.id === parseInt(routineId));
+    const routine = routines.find(r => r.id === routineId);
     if (routine) {
-      setCurrentRoutineId(routine.id);
-      localStorage.setItem('currentRoutineId', routine.id.toString());
-      setSchedule(routine.schedule);
-      setSelectedExercises(routine.selectedExercises);
-      setCustomDetails(routine.customDetails || {});
-      sessionStorage.setItem('routineLoaded', 'true'); // Marcar como cargado
+      onSelectRoutine(routine);
     }
   };
 
-  const handleSaveRoutine = () => {
-    if (!currentRoutineId) {
-      // Si no hay rutina seleccionada, crear una nueva Y guardar los datos actuales
-      const newRoutineNumber = savedRoutines.length + 1;
-      const newRoutine = {
-        id: Date.now(),
-        name: `Rutina Personalizada ${newRoutineNumber}`,
-        schedule: schedule, // Guardar el horario actual
-        selectedExercises: selectedExercises, // Guardar ejercicios actuales
-        customDetails: customDetails // Guardar detalles actuales
-      };
-      
-      const updatedRoutines = [...savedRoutines, newRoutine];
-      setSavedRoutines(updatedRoutines);
-      localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
-      setCurrentRoutineId(newRoutine.id);
-      localStorage.setItem('currentRoutineId', newRoutine.id.toString());
-      sessionStorage.setItem('routineLoaded', 'true');
-      
-      // Mostrar modal de éxito
-      setNewlyCreatedRoutineName(newRoutine.name);
+  const handleSaveRoutine = async () => {
+    if (!currentUser) {
+      alert('Debes iniciar sesión para guardar rutinas');
+      return;
+    }
+
+    if (!currentRoutine) {
+      // Crear nueva rutina con los datos actuales
+      const newRoutineNumber = (routines?.length || 0) + 1;
+      await onCreateRoutine(`Rutina Personalizada ${newRoutineNumber}`);
+      setNewlyCreatedRoutineName(`Rutina Personalizada ${newRoutineNumber}`);
       setShowSuccessCreateModal(true);
       return;
     }
@@ -313,71 +272,49 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
     setShowSaveModal(true);
   };
 
-  const confirmSaveRoutine = () => {
-    const updatedRoutines = savedRoutines.map(routine => {
-      if (routine.id === currentRoutineId) {
-        return {
-          ...routine,
-          schedule,
-          selectedExercises,
-          customDetails // Guardar customDetails también
-        };
-      }
-      return routine;
-    });
-    
-    setSavedRoutines(updatedRoutines);
-    localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
+  const confirmSaveRoutine = async () => {
+    if (currentRoutine) {
+      await onUpdateRoutine(currentRoutine.id, {
+        schedule,
+        selectedExercises,
+        customDetails
+      });
+    }
     setShowSaveModal(false);
   };
 
   const handleRenameRoutine = () => {
-    const currentRoutine = savedRoutines.find(r => r.id === currentRoutineId);
     if (currentRoutine) {
       setNewRoutineName(currentRoutine.name);
       setShowRenameModal(true);
     }
   };
 
-  const confirmRenameRoutine = () => {
-    if (!newRoutineName.trim()) return;
+  const confirmRenameRoutine = async () => {
+    if (!newRoutineName.trim() || !currentRoutine) return;
     
-    const updatedRoutines = savedRoutines.map(routine => {
-      if (routine.id === currentRoutineId) {
-        return { ...routine, name: newRoutineName.trim() };
-      }
-      return routine;
+    await onUpdateRoutine(currentRoutine.id, {
+      name: newRoutineName.trim()
     });
     
-    setSavedRoutines(updatedRoutines);
-    localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
     setShowRenameModal(false);
     setNewRoutineName('');
   };
 
   const handleDeleteRoutine = () => {
-    if (!currentRoutineId) return;
+    if (!currentRoutine) return;
     setShowDeleteModal(true);
   };
 
-  const confirmDeleteRoutine = () => {
-    const updatedRoutines = savedRoutines.filter(r => r.id !== currentRoutineId);
-    setSavedRoutines(updatedRoutines);
-    localStorage.setItem('savedRoutines', JSON.stringify(updatedRoutines));
-    setCurrentRoutineId(null);
-    localStorage.removeItem('currentRoutineId');
-    
-    // Limpiar el plan actual
-    setSchedule({ days: {}, types: [] });
-    setSelectedExercises({});
-    setCustomDetails({});
+  const confirmDeleteRoutine = async () => {
+    if (currentRoutine) {
+      await onDeleteRoutine(currentRoutine.id);
+    }
     setShowDeleteModal(false);
   };
 
   const getCurrentRoutineName = () => {
-    if (!currentRoutineId) return 'Sin Rutina';
-    const routine = savedRoutines.find(r => r.id === currentRoutineId);
-    return routine ? routine.name : 'Sin Rutina';
+    return currentRoutine ? currentRoutine.name : 'Sin Rutina';
   };
 
   return (
@@ -401,12 +338,12 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
             <div className="flex-1 w-full sm:w-auto">
               <label className="block text-sm text-gray-400 mb-2">Rutina actual:</label>
               <select
-                value={currentRoutineId || ''}
+                value={currentRoutine?.id || ''}
                 onChange={(e) => handleLoadRoutine(e.target.value)}
                 className="w-full bg-gray-800 border border-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:border-cyan-500 transition-all"
               >
                 <option value="">Sin Rutina</option>
-                {savedRoutines.map(routine => (
+                {routines && routines.map(routine => (
                   <option key={routine.id} value={routine.id}>
                     {routine.name}
                   </option>
@@ -439,7 +376,7 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
               
               <button
                 onClick={handleRenameRoutine}
-                disabled={!currentRoutineId}
+                disabled={!currentRoutine}
                 className="bg-orange-600 text-white p-2 rounded-lg hover:bg-orange-700 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                 title="Renombrar rutina"
               >
@@ -450,7 +387,7 @@ const MiPlan = ({ schedule, onOpenPlanner, setSchedule, selectedExercises, setSe
               
               <button
                 onClick={handleDeleteRoutine}
-                disabled={!currentRoutineId}
+                disabled={!currentRoutine}
                 className="bg-red-600 text-white p-2 rounded-lg hover:bg-red-700 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                 title="Eliminar rutina"
               >

@@ -594,6 +594,16 @@ function App() {
   const [isPlannerOpen, setIsPlannerOpen] = useState(false);
   const [isRoutineManagerOpen, setIsRoutineManagerOpen] = useState(false);
 
+  // Limpiar estado local cuando el usuario cierra sesión
+  useEffect(() => {
+    if (!currentUser) {
+      // Usuario cerró sesión - limpiar todo el estado local
+      setLocalSchedule({ days: {}, types: [] });
+      setLocalSelectedExercises({});
+      setLocalCustomDetails({});
+    }
+  }, [currentUser]);
+
   // Cargar rutina activa cuando el usuario inicia sesión
   useEffect(() => {
     if (currentUser && routines.length > 0 && !currentRoutine) {
@@ -922,15 +932,39 @@ function App() {
           element={<MiPlan 
             schedule={schedule} 
             onOpenPlanner={() => setIsPlannerOpen(true)} 
-            selectedExercises={selectedExercises} // Pasar ejercicios seleccionados
-            customDetails={customDetails} // Pasar detalles personalizados
-            currentUser={currentUser} // Pasar usuario actual
-            currentRoutine={currentRoutine} // Pasar rutina actual
-            routines={routines} // Pasar todas las rutinas
-            onSelectRoutine={setCurrentRoutine} // Función para cambiar rutina
-            onCreateRoutine={handleCreateRoutine} // Función para crear rutina
-            onDeleteRoutine={deleteRoutine} // Función para eliminar rutina
-            onUpdateRoutine={updateRoutine} // Función para actualizar rutina
+            selectedExercises={selectedExercises}
+            customDetails={customDetails}
+            currentUser={currentUser}
+            currentRoutine={currentRoutine}
+            routines={routines}
+            onSelectRoutine={setCurrentRoutine}
+            onCreateRoutine={handleCreateRoutine}
+            onDeleteRoutine={deleteRoutine}
+            onUpdateRoutine={updateRoutine}
+            setSchedule={async (newSchedule) => {
+              const scheduleValue = typeof newSchedule === 'function' ? newSchedule(schedule) : newSchedule;
+              if (currentUser && currentRoutine) {
+                setCurrentRoutine(prev => ({ ...prev, schedule: scheduleValue }));
+              } else {
+                setLocalSchedule(scheduleValue);
+              }
+            }}
+            setSelectedExercises={async (newExercises) => {
+              const exercisesValue = typeof newExercises === 'function' ? newExercises(selectedExercises) : newExercises;
+              if (currentUser && currentRoutine) {
+                setCurrentRoutine(prev => ({ ...prev, selectedExercises: exercisesValue }));
+              } else {
+                setLocalSelectedExercises(exercisesValue);
+              }
+            }}
+            setCustomDetails={async (newDetails) => {
+              const detailsValue = typeof newDetails === 'function' ? newDetails(customDetails) : newDetails;
+              if (currentUser && currentRoutine) {
+                setCurrentRoutine(prev => ({ ...prev, customDetails: detailsValue }));
+              } else {
+                setLocalCustomDetails(detailsValue);
+              }
+            }}
           />}
         />
         <Route 
