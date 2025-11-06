@@ -264,8 +264,16 @@ const MiPlan = ({
     if (!currentRoutine) {
       // Crear nueva rutina con los datos actuales
       const newRoutineNumber = (routines?.length || 0) + 1;
-      await onCreateRoutine(`Rutina Personalizada ${newRoutineNumber}`);
-      setNewlyCreatedRoutineName(`Rutina Personalizada ${newRoutineNumber}`);
+      const routineName = `Rutina Personalizada ${newRoutineNumber}`;
+      
+      // Pasar los datos actuales al crear la rutina
+      await onCreateRoutine(routineName, {
+        schedule,
+        selectedExercises,
+        customDetails
+      });
+      
+      setNewlyCreatedRoutineName(routineName);
       setShowSuccessCreateModal(true);
       return;
     }

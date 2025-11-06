@@ -820,7 +820,7 @@ function App() {
   };
 
   // Función para crear una nueva rutina
-  const handleCreateRoutine = async (routineName = 'Nueva Rutina') => {
+  const handleCreateRoutine = async (routineName = 'Nueva Rutina', routineData = null) => {
     if (!currentUser) {
       console.log('Usuario no autenticado');
       return;
@@ -828,9 +828,9 @@ function App() {
 
     const result = await createRoutine({
       name: routineName,
-      schedule: { days: {}, types: [] },
-      selectedExercises: {},
-      customDetails: {},
+      schedule: routineData?.schedule || { days: {}, types: [] },
+      selectedExercises: routineData?.selectedExercises || {},
+      customDetails: routineData?.customDetails || {},
       isActive: true
     });
 
@@ -839,6 +839,8 @@ function App() {
     } else {
       console.error('Error al crear la rutina:', result.error);
     }
+    
+    return result;
   };
 
   // Función para guardar la rutina actual
