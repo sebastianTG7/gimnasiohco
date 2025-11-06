@@ -13,6 +13,8 @@ import ScrollToTopButton from './components/ScrollToTopButton';
 import { Spotlight } from './components/ui/Spotlight';
 import { GridBackground } from './components/GridBackground';
 import { useAuth } from './contexts/AuthContext';
+import { useRoutines } from './hooks/useRoutines';
+import RoutineManagerModal from './components/RoutineManagerModal';
 import pako from 'pako';
 
 
@@ -429,12 +431,24 @@ const getInitialState = () => {
 };
 
 function App() {
+  const { currentUser } = useAuth();
+  const { 
+    routines, 
+    currentRoutine, 
+    loading: routinesLoading,
+    createRoutine, 
+    updateRoutine, 
+    deleteRoutine,
+    setActiveRoutine,
+    setCurrentRoutine 
+  } = useRoutines();
+
   const [loopNum, setLoopNum] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState('');
   const [delta, setDelta] = useState(150);
 
-  const datosEjercicios = useMemo(() => ({ 
+  const datosEjercicios = useMemo(() => ({
     pecho: {
       titulo: "RUTINA DE PECHO",
       ejercicios: ["Press Banca (barra)", "Press Inclinado (barra)", "Press Banca (Mancuernas)","Press Inclinado (Mancuernas)","Press Máquina", "Aperturas (Mancuernas)","Aperturas (Cable)", "Aperturas Pec Fly","Fondos"],
@@ -566,64 +580,194 @@ function App() {
     }
   }), []);
 
-  // Estado inicializado desde la URL o por defecto
-  const initialState = useMemo(() => getInitialState(), []);
-  const [selectedExercises, setSelectedExercises] = useState(initialState.selectedExercises);
-  const [schedule, setSchedule] = useState(initialState.schedule);
-  const [customDetails, setCustomDetails] = useState(initialState.customDetails);
+  // Estado local para la rutina actual (si no hay usuario, usar estado local)
+  // Si hay usuario, usar la rutina activa de Firebase
+  const [localSchedule, setLocalSchedule] = useState({ days: {}, types: [] });
+  const [localSelectedExercises, setLocalSelectedExercises] = useState({});
+  const [localCustomDetails, setLocalCustomDetails] = useState({});
+
+  // Determinar qué datos usar (Firebase o local)
+  const schedule = currentUser && currentRoutine ? currentRoutine.schedule : localSchedule;
+  const selectedExercises = currentUser && currentRoutine ? currentRoutine.selectedExercises : localSelectedExercises;
+  const customDetails = currentUser && currentRoutine ? currentRoutine.customDetails : localCustomDetails;
 
   const [isPlannerOpen, setIsPlannerOpen] = useState(false);
+  const [isRoutineManagerOpen, setIsRoutineManagerOpen] = useState(false);
+
+  // Cargar rutina activa cuando el usuario inicia sesión
+  useEffect(() => {
+    if (currentUser && routines.length > 0 && !currentRoutine) {
+      const activeRoutine = routines.find(r => r.isActive);
+      if (activeRoutine) {
+        setCurrentRoutine(activeRoutine);
+      } else {
+        // Si no hay rutina activa, usar la primera
+        setCurrentRoutine(routines[0]);
+      }
+    }
+  }, [currentUser, routines, currentRoutine]);
+
+  // Sincronizar cambios locales con Firebase (debounced)
+  useEffect(() => {
+    if (!currentUser || !currentRoutine) return;
+
+    const timer = setTimeout(async () => {
+      await updateRoutine(currentRoutine.id, {
+        schedule: currentRoutine.schedule,
+        selectedExercises: currentRoutine.selectedExercises,
+        customDetails: currentRoutine.customDetails
+      });
+    }, 1000); // Esperar 1 segundo antes de guardar
+
+    return () => clearTimeout(timer);
+  }, [currentRoutine?.schedule, currentRoutine?.selectedExercises, currentRoutine?.customDetails]);
 
   const handleRoutineTypeChange = (type) => {
-    setSchedule(prev => {
-      const currentTypes = prev.types || [];
+    if (currentUser && currentRoutine) {
+      // Actualizar en Firebase
+      const currentTypes = currentRoutine.schedule?.types || [];
       const newTypes = currentTypes.includes(type)
         ? currentTypes.filter(t => t !== type)
         : [...currentTypes, type];
-      return { ...prev, types: newTypes };
-    });
+      
+      setCurrentRoutine(prev => ({
+        ...prev,
+        schedule: { ...prev.schedule, types: newTypes }
+      }));
+      
+      updateRoutine(currentRoutine.id, {
+        schedule: { ...currentRoutine.schedule, types: newTypes }
+      });
+    } else {
+      // Usuario no logueado, usar estado local
+      setLocalSchedule(prev => {
+        const currentTypes = prev.types || [];
+        const newTypes = currentTypes.includes(type)
+          ? currentTypes.filter(t => t !== type)
+          : [...currentTypes, type];
+        return { ...prev, types: newTypes };
+      });
+    }
   };
 
-  const handleSaveSchedule = (newDaySchedule) => {
-    setSchedule(prev => ({
-      ...prev,
-      days: newDaySchedule
-    }));
+  const handleSaveSchedule = async (newDaySchedule) => {
+    if (currentUser && currentRoutine) {
+      // Guardar en Firebase
+      setCurrentRoutine(prev => ({
+        ...prev,
+        schedule: { ...prev.schedule, days: newDaySchedule }
+      }));
+      
+      await updateRoutine(currentRoutine.id, {
+        schedule: { ...currentRoutine.schedule, days: newDaySchedule }
+      });
+    } else {
+      // Usuario no logueado, usar estado local
+      setLocalSchedule(prev => ({
+        ...prev,
+        days: newDaySchedule
+      }));
+    }
     setIsPlannerOpen(false);
   };
 
-  const handleExerciseSelection = (group, exerciseName) => {
-    setSelectedExercises(prev => {
-      const groupSelections = prev[group] || [];
+  const handleExerciseSelection = async (group, exerciseName) => {
+    if (currentUser && currentRoutine) {
+      // Actualizar en Firebase
+      const groupSelections = currentRoutine.selectedExercises[group] || [];
       const newGroupSelections = groupSelections.includes(exerciseName)
         ? groupSelections.filter(name => name !== exerciseName)
         : [...groupSelections, exerciseName];
       
-      return {
-        ...prev,
+      const newSelectedExercises = {
+        ...currentRoutine.selectedExercises,
         [group]: newGroupSelections
       };
-    });
+
+      setCurrentRoutine(prev => ({
+        ...prev,
+        selectedExercises: newSelectedExercises
+      }));
+
+      await updateRoutine(currentRoutine.id, {
+        selectedExercises: newSelectedExercises
+      });
+    } else {
+      // Usuario no logueado, usar estado local
+      setLocalSelectedExercises(prev => {
+        const groupSelections = prev[group] || [];
+        const newGroupSelections = groupSelections.includes(exerciseName)
+          ? groupSelections.filter(name => name !== exerciseName)
+          : [...groupSelections, exerciseName];
+        
+        return {
+          ...prev,
+          [group]: newGroupSelections
+        };
+      });
+    }
   };
 
-  const handleDetailsChange = (group, exerciseName, detail, value) => {
-    setCustomDetails(prev => ({
-      ...prev,
-      [group]: {
-        ...prev[group],
-        [exerciseName]: {
-          ...prev[group]?.[exerciseName],
-          [detail]: value
+  const handleDetailsChange = async (group, exerciseName, detail, value) => {
+    if (currentUser && currentRoutine) {
+      // Actualizar en Firebase
+      const newCustomDetails = {
+        ...currentRoutine.customDetails,
+        [group]: {
+          ...currentRoutine.customDetails[group],
+          [exerciseName]: {
+            ...currentRoutine.customDetails[group]?.[exerciseName],
+            [detail]: value
+          }
         }
-      }
-    }));
+      };
+
+      setCurrentRoutine(prev => ({
+        ...prev,
+        customDetails: newCustomDetails
+      }));
+
+      await updateRoutine(currentRoutine.id, {
+        customDetails: newCustomDetails
+      });
+    } else {
+      // Usuario no logueado, usar estado local
+      setLocalCustomDetails(prev => ({
+        ...prev,
+        [group]: {
+          ...prev[group],
+          [exerciseName]: {
+            ...prev[group]?.[exerciseName],
+            [detail]: value
+          }
+        }
+      }));
+    }
   };
 
-  const handleClearGroupSelection = (groupToClear) => {
-    setSelectedExercises(prev => ({
-      ...prev,
-      [groupToClear]: []
-    }));
+  const handleClearGroupSelection = async (groupToClear) => {
+    if (currentUser && currentRoutine) {
+      // Limpiar en Firebase
+      const newSelectedExercises = {
+        ...currentRoutine.selectedExercises,
+        [groupToClear]: []
+      };
+
+      setCurrentRoutine(prev => ({
+        ...prev,
+        selectedExercises: newSelectedExercises
+      }));
+
+      await updateRoutine(currentRoutine.id, {
+        selectedExercises: newSelectedExercises
+      });
+    } else {
+      // Usuario no logueado, usar estado local
+      setLocalSelectedExercises(prev => ({
+        ...prev,
+        [groupToClear]: []
+      }));
+    }
   };
 
   const handleShare = async () => {
@@ -662,6 +806,54 @@ function App() {
     } catch (error) {
       console.error('Error al compartir:', error);
       alert('Hubo un error al intentar compartir tu plan.');
+    }
+  };
+
+  // Función para crear una nueva rutina
+  const handleCreateRoutine = async (routineName = 'Nueva Rutina') => {
+    if (!currentUser) {
+      alert('Debes iniciar sesión para guardar rutinas');
+      return;
+    }
+
+    const result = await createRoutine({
+      name: routineName,
+      schedule: { days: {}, types: [] },
+      selectedExercises: {},
+      customDetails: {},
+      isActive: true
+    });
+
+    if (result.success) {
+      alert(`Rutina "${routineName}" creada exitosamente`);
+    } else {
+      alert('Error al crear la rutina: ' + result.error);
+    }
+  };
+
+  // Función para guardar la rutina actual
+  const handleSaveRoutine = async () => {
+    if (!currentUser) {
+      alert('Debes iniciar sesión para guardar rutinas');
+      return;
+    }
+
+    if (!currentRoutine) {
+      // Si no hay rutina activa, crear una nueva
+      await handleCreateRoutine('Mi Rutina');
+    } else {
+      // Actualizar la rutina existente
+      const result = await updateRoutine(currentRoutine.id, {
+        schedule,
+        selectedExercises,
+        customDetails
+      });
+
+      if (result.success) {
+        alert('Rutina guardada exitosamente');
+      } else {
+        alert('Error al guardar la rutina: ' + result.error);
+      }
     }
   };
 // Las frases dinamicas para el efecto de máquina de escribir
@@ -717,8 +909,12 @@ function App() {
             onRoutineTypeChange={handleRoutineTypeChange} // Pasar el nuevo manejador
             onOpenPlanner={() => setIsPlannerOpen(true)}
             onShare={handleShare} // Pasar la función de compartir
+            onSave={handleSaveRoutine} // Nueva: función para guardar
+            onOpenRoutineManager={() => setIsRoutineManagerOpen(true)} // Nueva: abrir gestor de rutinas
             customDetails={customDetails}
             onDetailsChange={handleDetailsChange}
+            currentUser={currentUser} // Pasar usuario actual
+            currentRoutine={currentRoutine} // Pasar rutina actual
           />} 
         />
         <Route 
@@ -726,11 +922,15 @@ function App() {
           element={<MiPlan 
             schedule={schedule} 
             onOpenPlanner={() => setIsPlannerOpen(true)} 
-            setSchedule={setSchedule} // Pasar la función para actualizar el horario
             selectedExercises={selectedExercises} // Pasar ejercicios seleccionados
-            setSelectedExercises={setSelectedExercises} // Pasar la función para actualizar ejercicios
             customDetails={customDetails} // Pasar detalles personalizados
-            setCustomDetails={setCustomDetails} // Pasar función para actualizar detalles
+            currentUser={currentUser} // Pasar usuario actual
+            currentRoutine={currentRoutine} // Pasar rutina actual
+            routines={routines} // Pasar todas las rutinas
+            onSelectRoutine={setCurrentRoutine} // Función para cambiar rutina
+            onCreateRoutine={handleCreateRoutine} // Función para crear rutina
+            onDeleteRoutine={deleteRoutine} // Función para eliminar rutina
+            onUpdateRoutine={updateRoutine} // Función para actualizar rutina
           />}
         />
         <Route 
@@ -748,6 +948,16 @@ function App() {
         onClose={() => setIsPlannerOpen(false)} 
         schedule={schedule} 
         onSave={handleSaveSchedule} 
+      />
+      <RoutineManagerModal
+        isOpen={isRoutineManagerOpen}
+        onClose={() => setIsRoutineManagerOpen(false)}
+        routines={routines}
+        currentRoutine={currentRoutine}
+        onSelectRoutine={setCurrentRoutine}
+        onCreateRoutine={handleCreateRoutine}
+        onDeleteRoutine={deleteRoutine}
+        onUpdateRoutine={updateRoutine}
       />
       <ScrollToTopButton />
     </>
