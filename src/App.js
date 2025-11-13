@@ -15,6 +15,7 @@ import { GridBackground } from './components/GridBackground';
 import { useAuth } from './contexts/AuthContext';
 import { useRoutines } from './hooks/useRoutines';
 import RoutineManagerModal from './components/RoutineManagerModal';
+import SelectExercises from './components/SelectExercises'; // Nuevo componente unificado
 import pako from 'pako';
 
 
@@ -117,6 +118,15 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
             </a>
           </li>
         ))}
+        <li>
+          <Link 
+            to="/seleccionar-ejercicios"
+            onClick={() => setIsMenuOpen(false)} 
+            className="bebas-font text-2xl text-cyan-400 hover:text-cyan-300 tracking-widest transition-colors"
+          >
+            SELECCIONAR EJERCICIOS
+          </Link>
+        </li>
         <li>
           <Link 
             to="/login"
@@ -265,8 +275,22 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
   <section id="ejercicios" className="relative py-20 px-4 md:px-8 bg-gray-900">
       <GridBackground />
       <div className="relative z-10 max-w-7xl mx-auto">
-          <h3 className="bebas-font text-5xl md:text-6xl text-center mb-8 tracking-wider">LISTA DE EJERCICIOS</h3>
-          <p className="text-lg text-gray-400 mb-8">Selecciona un grupo muscular para comenzar y ver los ejercicios.</p>
+          <h3 className="bebas-font text-5xl md:text-6xl text-center mb-4 tracking-wider">LISTA DE EJERCICIOS</h3>
+          <p className="text-lg text-gray-400 mb-8 text-center">Selecciona un grupo muscular para comenzar y ver los ejercicios.</p>
+          
+          {/* Botón para vista unificada */}
+          <div className="flex justify-center mb-8">
+            <Link
+              to="/seleccionar-ejercicios"
+              className="bebas-font bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white px-8 py-4 rounded-xl shadow-2xl transition-all transform hover:scale-105 text-xl tracking-wider flex items-center gap-3"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              </svg>
+              SELECCIONAR EJERCICIOS (VISTA RÁPIDA)
+            </Link>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {mainGrupos.map((grupo) => (
               <Link 
@@ -450,7 +474,7 @@ function App() {
 
   const datosEjercicios = useMemo(() => ({
     pecho: {
-      titulo: "RUTINA DE PECHO",
+      titulo: "EJERCICIOS DE PECHO",
       ejercicios: ["Press Banca (barra)", "Press Inclinado (barra)", "Press Banca (Mancuernas)","Press Inclinado (Mancuernas)","Press Máquina", "Aperturas (Mancuernas)","Aperturas (Cable)", "Aperturas Pec Fly","Fondos"],
       imagenes: [
         { src: images.img_press_banca_barra, nombre: 'Press Banca (barra)', descripcion: 'Activa principalmente las fibras centrales del pectoral mayor (porción esternocostal). También involucra el deltoides anterior y la cabeza larga del tríceps braquial.', detalles: '3 series de 8–12 repeticiones', videoUrl: 'https://www.youtube.com/embed/g4Ah9uYn8pI' },
@@ -465,7 +489,7 @@ function App() {
       ]
     },
     espalda: {
-        titulo: "RUTINA DE ESPALDA",
+        titulo: "EJERCICIOS DE ESPALDA",
         ejercicios: ["Remo Parado (barra)", "Remo a 1 mano (Mancuerna)","Remo a 1 mano (Polea)","Remo Máquina", "Dominadas", "Jalón (Agarre Abierto)", "Jalón (Agarre Cerrado)", "Remo sentado (Polea, Abierto)", "Remo sentado (Polea, Cerrado)"],
         imagenes: [
           { src: images.img_e_remo_parado_barra, nombre: 'Remo Parado (barra)', descripcion: 'Este ejercicio fortalece la espalda alta y media al jalar la barra hacia el abdomen. Ayuda a mejorar la postura, ganar fuerza general y desarrollar volumen en la espalda superior.', detalles: '3 series de 10–12 repeticiones', videoUrl: 'https://www.youtube.com/embed/sr_U0jBE89A' },
@@ -480,7 +504,7 @@ function App() {
         ]
       },
       hombros: {
-        titulo: "RUTINA DE HOMBROS",
+        titulo: "EJERCICIOS DE HOMBROS",
         ejercicios: ["Press Militar (barra)", "Press Militar (mancuernas)", "Aperturas Laterales", "Elevaciones Frontales", "Elevaciones Posteriores", "Encogimientos de Hombros (Trapecios)"],
         imagenes: [
             { src: images.img_h_press_militar_barra, nombre: 'Press Militar (barra)', descripcion: 'Activa principalmente las fibras anteriores del deltoides (porción anterior). También participa el deltoides medio (porción lateral) y el tríceps braquial (cabeza larga y mediana).', detalles: '3 series de 8-12 repeticiones', videoUrl: 'https://www.youtube.com/embed/895PvlhMpTQ' },
@@ -492,7 +516,7 @@ function App() {
         ]
     },
     biceps: {
-        titulo: "RUTINA DE BICEPS",
+        titulo: "EJERCICIOS DE BICEPS",
         ejercicios: ["Curl Parado (Barra)", "Curl Banco Scott", "Curl Banco Inclinado","Curl Araña","Curl Concentrado a 1 brazo", "Curl Martillo"],
         imagenes: [
             { src: images.img_b_curl_parado_barra, nombre: 'Curl Parado (Barra)', descripcion: 'Activa principalmente el bíceps braquial (cabeza larga y corta) en el movimiento de flexión del codo. También participa el braquial anterior como músculo sinergista.', detalles: '3 series de 8-12 repeticiones', videoUrl: 'https://youtube.com/embed/QLduGgStKTA?si=22dQ72agxuZ0Z33o' },
@@ -504,7 +528,7 @@ function App() {
         ]
     },
     triceps: {
-        titulo: "RUTINA DE TRICEPS",
+        titulo: "EJERCICIOS DE TRICEPS",
         ejercicios: ["Press Frances", "Fondos para Tríceps", "Empujon Parado (Cable)", "Empujon Tras Nuca (Cable)","Empujon Tras Nuca (Mancuerna)","Patada de Tríceps", "Extensiones en Polea Alta Cruzada"],
         imagenes: [
             { src: images.img_t_press_frances, nombre: 'Press Frances', descripcion: 'Gran ejercicio compuesto para tríceps y pecho.', detalles: '4 series al fallo', videoUrl: 'https://www.youtube.com/embed/emnTk9VixDA' },
@@ -517,7 +541,7 @@ function App() {
         ]
     },
     abdominales: {
-      titulo: "RUTINA DE ABDOMINALES",
+      titulo: "EJERCICIOS DE ABDOMINALES",
       ejercicios: ["Crunches", "Palo Press (Cable)", "Elevación de Piernas", "Caminata de Granjero", "Plancha Frontal"],
       imagenes: [
           { src: images.img_a_crunch, nombre: 'Crunches', descripcion: 'El ejercicio básico para la parte superior del abdomen.', detalles: '3 series al fallo', videoUrl: 'https://www.youtube.com/embed/U2Pxw_PLfXc' },
@@ -530,7 +554,7 @@ function App() {
       ]
   },
     piernas: {
-        titulo: "RUTINA DE PIERNAS",
+        titulo: "EJERCICIOS DE PIERNAS",
         subgrupos: [
           {
             nombre: "Cuádriceps",
@@ -909,6 +933,22 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage typewriterText={text} loopNum={loopNum} toRotate={toRotate} />} />
         <Route path="/login" element={<Login />} />
+        
+        {/* Nueva ruta unificada para selección de ejercicios */}
+        <Route 
+          path="/seleccionar-ejercicios"
+          element={<SelectExercises
+            datosEjercicios={datosEjercicios}
+            selectedExercises={selectedExercises}
+            onSelectExercise={handleExerciseSelection}
+            onClearGroup={handleClearGroupSelection}
+            customDetails={customDetails}
+            onDetailsChange={handleDetailsChange}
+            currentUser={currentUser}
+          />}
+        />
+        
+        {/* Rutas individuales por grupo (mantener compatibilidad) */}
         <Route 
           path="/:grupo" 
           element={<DetalleEjercicio 
