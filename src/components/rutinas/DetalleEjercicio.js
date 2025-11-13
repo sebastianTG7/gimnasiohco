@@ -6,46 +6,6 @@ import ImageLoader from '../ImageLoader';
 import { GridBackground } from '../GridBackground';
 import VideoPlayer from '../VideoPlayer';
 
-const RestDayModal = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black/70 z-[101] flex justify-center items-center p-4" onClick={onClose}>
-      <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-xl p-6 w-full max-w-sm text-center" onClick={(e) => e.stopPropagation()}>
-        <div className="mb-4">
-          <div className="w-12 h-12 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center mb-3">
-            <svg className="w-6 h-6 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <h3 className="text-xl font-semibold text-white mb-2">Día de Descanso</h3>
-          <p className="text-gray-400 text-sm">
-            Hoy no tienes una rutina planificada. ¡Aprovecha para recargar energías o crea un nuevo plan!
-          </p>
-        </div>
-        
-        <div className="flex gap-3">
-          <button 
-            onClick={onClose}
-            className="flex-1 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all text-sm"
-          >
-            Entendido
-          </button>
-          <Link 
-            to="/mi-plan"
-            onClick={onClose}
-            className="flex-1 bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700 transition-all text-sm text-center"
-          >
-            Crear Plan
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-
-
 const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, schedule, routineTypes, onRoutineTypeChange, onOpenPlanner, onShare, customDetails, onDetailsChange, datosEjercicios }) => {
   let { grupo } = useParams();
   const navigate = useNavigate();
@@ -53,7 +13,7 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
   const [openIndex, setOpenIndex] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isPersonalizeAccordionOpen, setIsPersonalizeAccordionOpen] = useState(false);
-  const [showRestDayModal, setShowRestDayModal] = useState(false);
+  const [filterMode, setFilterMode] = useState('all'); // 'all' o 'selected'
 
   // Abrir acordeón automáticamente si viene desde "Personalizar Ejercicios"
   useEffect(() => {
@@ -61,29 +21,6 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
       setIsPersonalizeAccordionOpen(true);
     }
   }, [location]);
-
-  // Logic to get today's workout
-  const daysMap = useMemo(() => ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'], []);
-  const todayName = daysMap[new Date().getDay()];
-
-  const todaysGroups = useMemo(() => {
-    const groups = [];
-    const scheduleDays = schedule.days || {};
-    for (const group in scheduleDays) {
-      if (scheduleDays[group] && scheduleDays[group].includes(todayName)) {
-        groups.push(group.charAt(0).toUpperCase() + group.slice(1));
-      }
-    }
-    return groups;
-  }, [schedule, todayName]);
-
-  const handleStartWorkoutClick = () => {
-    if (todaysGroups.length > 0) {
-      navigate('/entrenamiento');
-    } else {
-      setShowRestDayModal(true);
-    }
-  };
 
   const handleToggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -102,23 +39,34 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
   }, [datosEjercicios, grupo]);
 
   const currentSelections = selectedExercises[grupo] || [];
+  const totalCount = useMemo(() => {
+    if (grupo === 'piernas' && rutinaActual.subgrupos) {
+      return rutinaActual.subgrupos.reduce((sum, sg) => sum + sg.ejercicios.length, 0);
+    }
+    return rutinaActual.ejercicios?.length || 0;
+  }, [grupo, rutinaActual]);
+
+  const selectedCount = currentSelections.length;
 
   const filteredGallery = useMemo(() => {
-    const hasSelection = currentSelections.length > 0;
     if (grupo === 'piernas' && rutinaActual.subgrupos) {
-      if (!hasSelection) return rutinaActual.subgrupos; // Devuelve todos los subgrupos si no hay selección
-      // Filtra los ejercicios dentro de cada subgrupo y mantiene la estructura
-      return rutinaActual.subgrupos.map(subgrupo => ({
-        ...subgrupo,
-        ejercicios: subgrupo.ejercicios.filter(ejercicio => currentSelections.includes(ejercicio.nombre))
-      })).filter(subgrupo => subgrupo.ejercicios.length > 0); // Elimina subgrupos que quedaron vacíos
+      if (filterMode === 'selected') {
+        // Solo mostrar ejercicios seleccionados
+        return rutinaActual.subgrupos.map(subgrupo => ({
+          ...subgrupo,
+          ejercicios: subgrupo.ejercicios.filter(ejercicio => currentSelections.includes(ejercicio.nombre))
+        })).filter(subgrupo => subgrupo.ejercicios.length > 0);
+      }
+      // Mostrar todos
+      return rutinaActual.subgrupos;
     }
 
     // Lógica original para los demás grupos musculares
-    return hasSelection
-      ? rutinaActual.imagenes.filter(imagen => currentSelections.includes(imagen.nombre))
-      : rutinaActual.imagenes;
-  }, [currentSelections, grupo, rutinaActual]);
+    if (filterMode === 'selected') {
+      return rutinaActual.imagenes.filter(imagen => currentSelections.includes(imagen.nombre));
+    }
+    return rutinaActual.imagenes;
+  }, [currentSelections, grupo, rutinaActual, filterMode]);
 
   const menuItems = ['pecho', 'espalda', 'hombros', 'biceps', 'triceps', 'piernas', 'abdominales'];
   const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -172,56 +120,57 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
             <span className="text-green-600">{rutinaActual.titulo}</span>
           </h1>
 
-          <div 
-            className="bg-gray-800 rounded-lg shadow-lg mb-10 transition-all duration-300"
-          >
-            <div 
-              className="p-4 sm:p-6"
-            >
-              <div className="flex flex-col gap-4">
-                <div className="flex justify-between items-start">
-                  <div className="flex-grow">
-                    <div className="flex justify-between items-center">
-                      <h2 className="bebas-font text-3xl text-white">Mi Rutina Semanal:</h2>
-                      <Link to="/mi-plan" className="bebas-font text-sm bg-[#111827] border border-[#61DBEC] text-white px-4 py-2 rounded-lg hover:bg-[#1f2937] transition-all shadow-md tracking-wider">
-                        Editar Plan
-                      </Link>
-                    </div>
-                    <div className="mt-3 flex flex-col sm:flex-row sm:items-center text-lg">
-                      <span className="w-full sm:w-32 font-semibold text-[#379AA5] mb-2 sm:mb-0 flex-shrink-0">{todayName}:</span>
-                      <div className="flex flex-wrap gap-2">
-                        {todaysGroups.length > 0 ? (
-                          todaysGroups.map(group => (
-                            <span key={group} className="bg-gray-700 text-white text-sm font-medium px-3 py-1 rounded-full shadow-md">
-                              {group}
-                            </span>
-                          ))
-                        ) : (
-                          <span className="text-gray-400">Descanso</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <button 
-                    onClick={handleStartWorkoutClick}
-                    className="hidden sm:block bebas-font text-base tracking-wider px-4 py-2 rounded-lg text-gray-900 bg-green-500 hover:bg-green-600 transition-colors shadow-lg flex-shrink-0 ml-4"
-                  >
-                    Empezar Entrenamiento
-                  </button>
-                </div>
-                
-                <button 
-                  onClick={handleStartWorkoutClick}
-                  className="sm:hidden bebas-font text-base tracking-wider px-4 py-2 rounded-lg text-gray-900 bg-green-500 hover:bg-green-600 transition-colors shadow-lg w-full"
-                >
-                  Empezar Entrenamiento
-                </button>
-              </div>
+          {/* Toggle de filtro: Todos vs Mis seleccionados */}
+          <div className="flex justify-center mb-8">
+            <div className="inline-flex bg-gray-800 rounded-lg p-1 shadow-lg border border-gray-700">
+              <button
+                onClick={() => setFilterMode('all')}
+                className={`bebas-font px-6 py-2.5 rounded-md transition-all tracking-wider text-lg ${
+                  filterMode === 'all'
+                    ? 'bg-cyan-600 text-white shadow-md'
+                    : 'text-gray-400 hover:text-gray-200'
+                }`}
+                aria-pressed={filterMode === 'all'}
+                aria-label={`Mostrar todos los ${totalCount} ejercicios`}
+              >
+                TODOS ({totalCount})
+              </button>
+              <button
+                onClick={() => setFilterMode('selected')}
+                className={`bebas-font px-6 py-2.5 rounded-md transition-all tracking-wider text-lg ${
+                  filterMode === 'selected'
+                    ? 'bg-cyan-600 text-white shadow-md'
+                    : 'text-gray-400 hover:text-gray-200'
+                }`}
+                aria-pressed={filterMode === 'selected'}
+                aria-label={`Mostrar solo mis ${selectedCount} ejercicios seleccionados`}
+              >
+                MIS SELECCIONADOS ({selectedCount})
+              </button>
             </div>
           </div>
 
-          
+          {/* Mensaje cuando no hay seleccionados y está en modo filtrado */}
+          {filterMode === 'selected' && selectedCount === 0 && (
+            <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-8 text-center mb-8">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gray-700 rounded-full flex items-center justify-center">
+                <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">No has seleccionado ejercicios</h3>
+              <p className="text-gray-400 mb-4">
+                Despliega "Lista de ejercicios" abajo para comenzar a seleccionar.
+              </p>
+              <button
+                onClick={() => setFilterMode('all')}
+                className="bebas-font bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 rounded-lg transition-all tracking-wider"
+              >
+                Ver todos los ejercicios
+              </button>
+            </div>
+          )}
+
           <div className="bg-gray-800 p-6 rounded-lg shadow-lg mb-12">
             <div 
               className="cursor-pointer"
@@ -344,10 +293,22 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {subgrupo.ejercicios.map((imagen, index) => {
                         const isOpen = openIndex === `${subgrupo.nombre}-${index}`;
+                        const isSelected = currentSelections.includes(imagen.nombre);
                         return (
                           <div key={imagen.nombre}>
                             <div onClick={() => handleToggle(`${subgrupo.nombre}-${index}`)} className="relative h-80 rounded-lg overflow-hidden shadow-xl transform transition-transform hover:scale-105 cursor-pointer">
                                 <ImageLoader src={imagen.src} alt={imagen.nombre} className="w-full h-full"/>
+                                
+                                {/* Badge de seleccionado */}
+                                {isSelected && (
+                                  <div className="absolute top-3 right-3 bg-green-500 text-white px-3 py-1 rounded-full flex items-center gap-1 shadow-lg">
+                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                    </svg>
+                                    <span className="text-xs font-bold">SELECCIONADO</span>
+                                  </div>
+                                )}
+                                
                                 <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/70 to-transparent">
                                     <h4 className="text-white text-xl font-bold tracking-wide">{imagen.nombre}</h4>
                                     <p className="text-cyan-400 text-sm font-semibold mt-1">Ver Ejecución ▸</p>
@@ -378,10 +339,22 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredGallery.map((imagen, index) => {
                       const isOpen = openIndex === index;
+                      const isSelected = currentSelections.includes(imagen.nombre);
                       return (
                           <div key={imagen.nombre}>
                               <div onClick={() => handleToggle(index)} className="relative h-80 rounded-lg overflow-hidden shadow-xl transform transition-transform hover:scale-105 cursor-pointer">
                                   <ImageLoader src={imagen.src} alt={imagen.nombre} className="w-full h-full"/>
+                                  
+                                  {/* Badge de seleccionado */}
+                                  {isSelected && (
+                                    <div className="absolute top-3 right-3 bg-green-500 text-white px-3 py-1 rounded-full flex items-center gap-1 shadow-lg">
+                                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                      </svg>
+                                      <span className="text-xs font-bold">SELECCIONADO</span>
+                                    </div>
+                                  )}
+                                  
                                   <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/70 to-transparent">
                                       <h4 className="text-white text-xl font-bold tracking-wide">{imagen.nombre}</h4>
                                       <p className="text-cyan-400 text-sm font-semibold mt-1">Ver Ejecución ▸</p>
@@ -409,8 +382,21 @@ const DetalleEjercicio = ({ selectedExercises, onSelectExercise, onClearGroup, s
           </div>
 
         </div>
+        
+        {/* Botón flotante para ir a vista unificada */}
+        <button
+          onClick={() => navigate('/seleccionar-ejercicios')}
+          className="fixed bottom-24 right-6 z-50 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white px-6 py-3 rounded-full shadow-2xl transition-all transform hover:scale-110 flex items-center gap-2 bebas-font text-lg tracking-wider"
+          aria-label="Ver todos mis ejercicios en una sola vista"
+          title="Ver selección completa"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+          </svg>
+          <span className="hidden sm:inline">SELECCIÓN COMPLETA</span>
+          <span className="sm:hidden">VER TODO</span>
+        </button>
       </div>
-      <RestDayModal isOpen={showRestDayModal} onClose={() => setShowRestDayModal(false)} />
     </>
   );
 };
