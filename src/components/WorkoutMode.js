@@ -193,9 +193,6 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
             const isCompleted = completedExercises.has(exerciseId);
             const details = customDetails[groupName.toLowerCase()]?.[ejercicio.nombre];
 
-            // Debug: ver qué datos tenemos
-            console.log('Ejercicio:', ejercicio.nombre, 'Details:', details);
-
             workoutData.exercises.push({
               name: ejercicio.nombre,
               group: groupName,

@@ -10,6 +10,7 @@ const WorkoutHistory = () => {
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedWorkout, setSelectedWorkout] = useState(null);
+  const [expandedMonths, setExpandedMonths] = useState({});
 
   useEffect(() => {
     if (currentUser) {
@@ -34,11 +35,68 @@ const WorkoutHistory = () => {
       });
       
       setWorkouts(workoutList);
+      
+      // Auto-expandir el mes actual
+      if (workoutList.length > 0) {
+        const now = new Date();
+        const currentMonthKey = `${now.getFullYear()}-${now.getMonth()}`;
+        setExpandedMonths({ [currentMonthKey]: true });
+      }
+      
       setLoading(false);
     } catch (error) {
       console.error('Error al cargar historial:', error);
       setLoading(false);
     }
+  };
+
+  // Agrupar entrenamientos por mes
+  const groupWorkoutsByMonth = () => {
+    const grouped = {};
+    
+    workouts.forEach(workout => {
+      const date = workout.date.toDate();
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const monthKey = `${year}-${month}`;
+      
+      if (!grouped[monthKey]) {
+        grouped[monthKey] = {
+          year,
+          month,
+          monthName: date.toLocaleDateString('es-ES', { month: 'long' }),
+          workouts: [],
+          stats: {
+            total: 0,
+            completed: 0,
+            incomplete: 0,
+            totalExercises: 0,
+            completedExercises: 0
+          }
+        };
+      }
+      
+      grouped[monthKey].workouts.push(workout);
+      grouped[monthKey].stats.total++;
+      
+      if (workout.status === 'completado') {
+        grouped[monthKey].stats.completed++;
+      } else {
+        grouped[monthKey].stats.incomplete++;
+      }
+      
+      grouped[monthKey].stats.totalExercises += workout.totalExercises || 0;
+      grouped[monthKey].stats.completedExercises += workout.completedCount || 0;
+    });
+    
+    return grouped;
+  };
+
+  const toggleMonth = (monthKey) => {
+    setExpandedMonths(prev => ({
+      ...prev,
+      [monthKey]: !prev[monthKey]
+    }));
   };
 
   const formatDate = (timestamp) => {
@@ -48,6 +106,18 @@ const WorkoutHistory = () => {
       year: 'numeric', 
       month: 'long', 
       day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    };
+    return date.toLocaleDateString('es-ES', options);
+  };
+
+  const formatShortDate = (timestamp) => {
+    const date = timestamp.toDate();
+    const options = { 
+      weekday: 'short', 
+      day: 'numeric',
+      month: 'short',
       hour: '2-digit',
       minute: '2-digit'
     };
@@ -98,52 +168,118 @@ const WorkoutHistory = () => {
             <p className="text-gray-500 text-lg">Aún no has guardado ningún entrenamiento</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {workouts.map((workout) => (
-              <div 
-                key={workout.id}
-                onClick={() => setSelectedWorkout(workout)}
-                className="bg-gray-800 border-2 border-gray-700 rounded-xl p-5 hover:border-cyan-500 transition-all cursor-pointer shadow-lg"
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-2xl font-bold text-white mb-1">{workout.dayName}</h3>
-                    <p className="text-sm text-gray-400">
-                      {formatDate(workout.date)}
-                    </p>
-                  </div>
-                  <span className={`px-3 py-1 rounded-full text-sm font-bold ${
-                    workout.status === 'completado' 
-                      ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
-                      : 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
-                  }`}>
-                    {workout.status === 'completado' ? 'COMPLETADO' : 'INCOMPLETO'}
-                  </span>
-                </div>
+          <div className="space-y-6">
+            {Object.entries(groupWorkoutsByMonth())
+              .sort((a, b) => b[0].localeCompare(a[0])) // Ordenar por mes más reciente
+              .map(([monthKey, monthData]) => {
+                const isExpanded = expandedMonths[monthKey];
+                const avgCompletion = monthData.stats.totalExercises > 0 
+                  ? Math.round((monthData.stats.completedExercises / monthData.stats.totalExercises) * 100)
+                  : 0;
 
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Ejercicios:</span>
-                    <span className="text-white font-bold">{workout.completedCount} / {workout.totalExercises}</span>
-                  </div>
-                  
-                  <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-                    <div 
-                      className={`h-full transition-all ${
-                        workout.progressPercentage === 100 ? 'bg-green-500' : 'bg-cyan-500'
-                      }`}
-                      style={{ width: `${workout.progressPercentage}%` }}
-                    />
-                  </div>
-                  
-                  <p className="text-xs text-gray-500 text-center">{workout.progressPercentage}% completado</p>
-                </div>
+                return (
+                  <div key={monthKey} className="bg-gray-800 border-2 border-gray-700 rounded-xl overflow-hidden">
+                    {/* Header del Mes */}
+                    <button
+                      onClick={() => toggleMonth(monthKey)}
+                      className="w-full p-5 sm:p-6 bg-gray-800 hover:bg-gray-750 transition-all flex items-center justify-between gap-4"
+                    >
+                      <div className="flex items-center gap-4 flex-1">
+                        <div className="text-left flex-1">
+                          <h2 className="bebas-font text-3xl sm:text-4xl text-white tracking-wider capitalize">
+                            {monthData.monthName} {monthData.year}
+                          </h2>
+                          <div className="flex flex-wrap gap-3 mt-2">
+                            <span className="text-sm bg-cyan-500/20 text-cyan-300 px-3 py-1 rounded-full border border-cyan-500/30">
+                              {monthData.stats.total} entrenamientos
+                            </span>
+                            <span className="text-sm bg-green-500/20 text-green-300 px-3 py-1 rounded-full border border-green-500/30">
+                              {monthData.stats.completed} completados
+                            </span>
+                            {monthData.stats.incomplete > 0 && (
+                              <span className="text-sm bg-orange-500/20 text-orange-300 px-3 py-1 rounded-full border border-orange-500/30">
+                                {monthData.stats.incomplete} incompletos
+                              </span>
+                            )}
+                          </div>
+                        </div>
 
-                <button className="w-full mt-4 bg-cyan-600 text-white py-2 rounded-lg hover:bg-cyan-700 transition-all font-medium text-sm">
-                  Ver Detalles
-                </button>
-              </div>
-            ))}
+                        {/* Progreso del mes */}
+                        <div className="hidden sm:block w-32">
+                          <div className="text-center mb-1">
+                            <span className="text-2xl font-bold text-cyan-400">{avgCompletion}%</span>
+                          </div>
+                          <div className="h-3 bg-gray-700 rounded-full overflow-hidden">
+                            <div 
+                              className={`h-full transition-all ${avgCompletion === 100 ? 'bg-green-500' : 'bg-cyan-500'}`}
+                              style={{ width: `${avgCompletion}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Icono de expandir/contraer */}
+                      <svg 
+                        className={`w-6 h-6 sm:w-8 sm:h-8 text-cyan-400 transition-transform duration-300 flex-shrink-0 ${isExpanded ? 'rotate-180' : ''}`}
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Lista de entrenamientos del mes */}
+                    {isExpanded && (
+                      <div className="p-4 sm:p-6 bg-gray-900/50 border-t-2 border-gray-700">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                          {monthData.workouts.map((workout) => (
+                            <div 
+                              key={workout.id}
+                              onClick={() => setSelectedWorkout(workout)}
+                              className="bg-gray-800 border-2 border-gray-700 rounded-lg p-4 hover:border-cyan-500 transition-all cursor-pointer shadow-lg"
+                            >
+                              <div className="flex justify-between items-start mb-3">
+                                <div>
+                                  <h3 className="text-xl font-bold text-white mb-1">{workout.dayName}</h3>
+                                  <p className="text-xs text-gray-400">
+                                    {formatShortDate(workout.date)}
+                                  </p>
+                                </div>
+                                <span className={`px-2 py-1 rounded-full text-xs font-bold ${
+                                  workout.status === 'completado' 
+                                    ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
+                                    : 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
+                                }`}>
+                                  {workout.status === 'completado' ? '✓' : '•'}
+                                </span>
+                              </div>
+
+                              <div className="space-y-2">
+                                <div className="flex justify-between text-sm">
+                                  <span className="text-gray-400">Ejercicios:</span>
+                                  <span className="text-white font-bold">{workout.completedCount} / {workout.totalExercises}</span>
+                                </div>
+                                
+                                <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                                  <div 
+                                    className={`h-full transition-all ${
+                                      workout.progressPercentage === 100 ? 'bg-green-500' : 'bg-cyan-500'
+                                    }`}
+                                    style={{ width: `${workout.progressPercentage}%` }}
+                                  />
+                                </div>
+                                
+                                <p className="text-xs text-gray-500 text-center">{workout.progressPercentage}%</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
           </div>
         )}
       </div>
