@@ -5,6 +5,7 @@ import VideoPlayer from './VideoPlayer';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../firebase';
 import { collection, addDoc, query, where, getDocs, Timestamp } from 'firebase/firestore';
+import UserMenu from './UserMenu';
 
 // Componente para el Modal de Video
 const VideoModal = ({ videoUrl, title, onClose }) => {
@@ -273,7 +274,10 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
     <div className="relative text-white min-h-screen p-8 bg-gray-900 pb-32">
       <GridBackground />
       <div className="relative z-10 max-w-4xl mx-auto">
-        <Link to="/mi-plan" className="bebas-font text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest">&larr; VOLVER A MI PLAN</Link>
+        <div className="flex items-center justify-between mb-6">
+          <Link to="/mi-plan" className="bebas-font text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest">&larr; VOLVER A MI PLAN</Link>
+          <UserMenu />
+        </div>
         
         <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider">
           Entrenamiento de Hoy: <span className="text-green-500">{todayName}</span>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { GridBackground } from './GridBackground';
 import ImageLoader from './ImageLoader';
 import VideoPlayer from './VideoPlayer';
+import UserMenu from './UserMenu';
 
 // Objeto para mapear grupos musculares a colores
 const groupColors = {
@@ -343,15 +344,19 @@ const SelectExercises = ({
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <Link 
-            to="/" 
-            className="bebas-font text-xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest inline-flex items-center gap-2 mb-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded px-2 py-1"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            VOLVER AL INICIO
-          </Link>
+          <div className="flex items-center justify-between mb-4">
+            <Link 
+              to="/" 
+              className="bebas-font text-xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest inline-flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded px-2 py-1"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              VOLVER AL INICIO
+            </Link>
+            
+            <UserMenu />
+          </div>
           
           <h1 className="bebas-font text-4xl sm:text-5xl md:text-6xl text-center text-white tracking-wider mb-4">
             SELECCIONA TUS <span className="text-cyan-400">EJERCICIOS</span>

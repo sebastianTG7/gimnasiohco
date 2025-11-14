@@ -4,6 +4,7 @@ import { GridBackground } from './GridBackground';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../firebase';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
+import UserMenu from './UserMenu';
 
 const WorkoutHistory = () => {
   const { currentUser } = useAuth();
@@ -151,12 +152,16 @@ const WorkoutHistory = () => {
             &larr; VOLVER
           </Link>
           
-          <Link 
-            to="/mi-plan"
-            className="bebas-font text-lg tracking-wider px-4 py-2 rounded-lg text-white bg-purple-700 border-2 border-purple-600 hover:bg-purple-600 transition-all shadow-lg"
-          >
-            IR A MI PLAN
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link 
+              to="/mi-plan"
+              className="bebas-font text-lg tracking-wider px-4 py-2 rounded-lg text-white bg-purple-700 border-2 border-purple-600 hover:bg-purple-600 transition-all shadow-lg"
+            >
+              IR A MI PLAN
+            </Link>
+            
+            <UserMenu />
+          </div>
         </div>
         
         <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider">

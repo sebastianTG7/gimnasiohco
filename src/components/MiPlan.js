@@ -2,6 +2,7 @@ import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GridBackground } from './GridBackground';
 import predefinedRoutines from '../data/predefinedRoutines.json';
+import UserMenu from './UserMenu';
 
 // Objeto para mapear grupos musculares a colores con mejor contraste (WCAG AA)
 const groupColors = {
@@ -413,15 +414,19 @@ const MiPlan = ({
     <div className="relative text-white min-h-screen p-4 sm:p-8 bg-gray-900">
       <GridBackground />
       <div className="relative z-20 max-w-4xl mx-auto">
-        <button 
-          onClick={() => navigate(-1)} 
-          className="bebas-font text-xl sm:text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest mb-6 flex items-center gap-2"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          VOLVER
-        </button>
+        <div className="flex items-center justify-between mb-6">
+          <button 
+            onClick={() => navigate('/seleccionar-ejercicios')} 
+            className="bebas-font text-xl sm:text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest flex items-center gap-2"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            VOLVER A SELECCIÓN
+          </button>
+          
+          <UserMenu />
+        </div>
         
         <h1 className="bebas-font text-5xl sm:text-6xl md:text-7xl text-center my-8 tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
           MI PLAN SEMANAL
