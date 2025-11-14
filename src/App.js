@@ -23,7 +23,7 @@ import pako from 'pako';
 
 // Componente de la Página de Inicio (fuera de App para evitar re-renders)
 const HomePage = ({ typewriterText, loopNum, toRotate }) => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, loading } = useAuth();
   const location = useLocation();
   const [showMore, setShowMore] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -160,7 +160,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
       </div>
     </SwipeableMenu>
 
-    <div className="hero-bg relative w-full h-screen flex items-center justify-center p-8 bg-black">
+    <div className="hero-bg relative w-full h-screen flex items-center justify-center p-8 bg-black overflow-hidden isolate">
       <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="white" />
       
       <button
@@ -180,27 +180,35 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
       </button>
 
       {/* Navegación */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 p-6 flex justify-between items-center transition-all duration-100 ${
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ${
         showNav ? 'translate-y-0' : '-translate-y-full'
       } ${lastScrollY > 50 ? 'bg-black/80 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}>
-           <div className="flex items-center space-x-3">
+        <div className="container mx-auto px-6 py-6">
+          <div className="flex justify-between items-center gap-4">
+           <div className="flex items-center space-x-3 flex-shrink-0">
               <img src={images.logo_gym} alt="Logo de Energy" className="h-10 opacity-70 ml-2" />
               <h1 className="bebas-font text-3x2 md:text-4x2 text-white tracking-widest">ENERGY</h1>
           </div>
-          <div className="hidden md:flex space-x-12 text-lg items-center">
+          <div className="hidden md:flex space-x-12 text-lg items-center flex-grow justify-center">
             {navLinks.map(link => (
               <a key={link.href} href={link.href} className="hover:text-[#2A7A87] transition-colors">{link.text}</a>
             ))}
           </div>
           
           {/* User Menu o Login Button */}
-          {currentUser ? (
-            <UserMenu />
-          ) : (
-            <Link to="/login" className="bebas-font bg-[#111827] border border-[#61DBEC] text-white px-6 py-2 rounded-lg hover:bg-[#1f2937] transition-all shadow-md tracking-wider">
-              INICIAR SESIÓN
-            </Link>
-          )}
+          <div className="flex justify-end flex-shrink-0">
+            {loading ? (
+              <div className="w-[148px] h-10 bg-gray-800/50 rounded-lg animate-pulse"></div>
+            ) : currentUser ? (
+              <UserMenu />
+            ) : (
+              <Link to="/login" className="bebas-font bg-[#111827] border border-[#61DBEC] text-white px-6 py-2 rounded-lg hover:bg-[#1f2937] shadow-md tracking-wider whitespace-nowrap inline-block">
+                INICIAR SESIÓN
+              </Link>
+            )}
+          </div>
+          </div>
+        </div>
       </nav>
       
       {/* Contenido principal del Hero */}
