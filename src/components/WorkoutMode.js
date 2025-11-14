@@ -175,6 +175,11 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
     setIsSaving(true);
 
     try {
+      // Debug: Ver qué datos tenemos en customDetails
+      console.log('=== DATOS DE CUSTOMDETAILS ===');
+      console.log('customDetails completo:', customDetails);
+      console.log('todaysRoutine:', todaysRoutine);
+      
       const workoutData = {
         date: Timestamp.now(),
         dayName: todayName,
@@ -192,6 +197,13 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
             const exerciseId = `${groupName}-${ejercicio.nombre}`;
             const isCompleted = completedExercises.has(exerciseId);
             const details = customDetails[groupName.toLowerCase()]?.[ejercicio.nombre];
+
+            console.log(`Ejercicio: ${ejercicio.nombre}`);
+            console.log(`  Grupo: ${groupName.toLowerCase()}`);
+            console.log(`  Details encontrado:`, details);
+            console.log(`  Series: ${details?.series}`);
+            console.log(`  Reps: ${details?.reps || details?.repeticiones}`);
+            console.log(`  Peso: ${details?.peso}`);
 
             workoutData.exercises.push({
               name: ejercicio.nombre,
@@ -212,6 +224,9 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
           processExercises(groupData.exercises, groupData.groupName);
         }
       });
+
+      console.log('=== DATOS A GUARDAR ===');
+      console.log('workoutData.exercises:', workoutData.exercises);
 
       // Guardar en Firestore
       await addDoc(collection(db, 'users', currentUser.uid, 'workoutHistory'), workoutData);
