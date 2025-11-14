@@ -17,6 +17,7 @@ import { useAuth } from './contexts/AuthContext';
 import { useRoutines } from './hooks/useRoutines';
 import RoutineManagerModal from './components/RoutineManagerModal';
 import SelectExercises from './components/SelectExercises';
+import UserMenu from './components/UserMenu';
 import pako from 'pako';
 
 
@@ -194,38 +195,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
           
           {/* User Menu o Login Button */}
           {currentUser ? (
-            <div className="relative user-menu-container">
-              <button 
-                onClick={() => setShowUserMenu(!showUserMenu)}
-                className="bebas-font flex items-center gap-2 bg-gray-800/80 border border-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-700 hover:border-[#379AA5] transition-all shadow-md tracking-wider"
-              >
-                <svg className="w-5 h-5 text-[#379AA5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                <span>{currentUser.username || currentUser.email}</span>
-                <svg className={`w-4 h-4 transition-transform ${showUserMenu ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              
-              {/* Dropdown Menu */}
-              {showUserMenu && (
-                <div className="absolute right-0 mt-2 w-48 bg-gray-800/95 backdrop-blur-md border border-gray-700 rounded-lg shadow-xl overflow-hidden z-[60]">
-                  <button
-                    onClick={async () => {
-                      await logout();
-                      setShowUserMenu(false);
-                    }}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-left text-white hover:bg-[#379AA5]/20 hover:border-l-4 hover:border-[#379AA5] transition-all"
-                  >
-                    <svg className="w-5 h-5 text-[#379AA5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                    </svg>
-                    <span>Cerrar Sesión</span>
-                  </button>
-                </div>
-              )}
-            </div>
+            <UserMenu />
           ) : (
             <Link to="/login" className="bebas-font bg-[#111827] border border-[#61DBEC] text-white px-6 py-2 rounded-lg hover:bg-[#1f2937] transition-all shadow-md tracking-wider">
               INICIAR SESIÓN
