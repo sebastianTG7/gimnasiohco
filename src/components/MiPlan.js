@@ -155,6 +155,7 @@ const MiPlan = ({
   const handleSavePlan = () => {
     const newSchedule = {};
     const newSelectedExercises = {};
+    const newCustomDetails = {};
     
     const muscleGroups = {
       'Full Body': ['Pecho', 'Espalda', 'Hombros', 'Biceps', 'Triceps', 'Piernas'],
@@ -169,12 +170,13 @@ const MiPlan = ({
       },
     };
 
-    // Función auxiliar para aplicar ejercicios predefinidos
+    // Función auxiliar para aplicar ejercicios predefinidos con sus pesos
     const applyPredefinedExercises = (routineType, section = null) => {
       const routineConfig = predefinedRoutines[routineType];
       if (!routineConfig) return;
 
       let exercisesSource = section ? routineConfig[section] : routineConfig.exercises;
+      const defaultWeights = routineConfig.defaultWeights;
       
       for (const [grupoKey, exercises] of Object.entries(exercisesSource)) {
         const grupoLower = grupoKey.toLowerCase();
@@ -186,9 +188,33 @@ const MiPlan = ({
             allPiernasExercises.push(...subExercises);
           }
           newSelectedExercises[grupoLower] = allPiernasExercises;
+          
+          // Aplicar pesos predefinidos para piernas
+          if (defaultWeights && defaultWeights[grupoLower]) {
+            if (!newCustomDetails[grupoLower]) newCustomDetails[grupoLower] = {};
+            allPiernasExercises.forEach(exerciseName => {
+              if (defaultWeights[grupoLower][exerciseName]) {
+                newCustomDetails[grupoLower][exerciseName] = {
+                  ...defaultWeights[grupoLower][exerciseName]
+                };
+              }
+            });
+          }
         } else {
           // Es un grupo muscular normal
           newSelectedExercises[grupoLower] = [...exercises];
+          
+          // Aplicar pesos predefinidos
+          if (defaultWeights && defaultWeights[grupoLower]) {
+            if (!newCustomDetails[grupoLower]) newCustomDetails[grupoLower] = {};
+            exercises.forEach(exerciseName => {
+              if (defaultWeights[grupoLower][exerciseName]) {
+                newCustomDetails[grupoLower][exerciseName] = {
+                  ...defaultWeights[grupoLower][exerciseName]
+                };
+              }
+            });
+          }
         }
       }
     };
@@ -233,7 +259,8 @@ const MiPlan = ({
     // Guardar los datos del plan generado
     const planData = {
       schedule: { ...schedule, days: newSchedule },
-      selectedExercises: newSelectedExercises
+      selectedExercises: newSelectedExercises,
+      customDetails: newCustomDetails
     };
 
     // Si hay una rutina actual, mostrar advertencia de sobrescritura
@@ -251,6 +278,7 @@ const MiPlan = ({
   const applyPlan = (planData) => {
     setSchedule(planData.schedule);
     setSelectedExercises(planData.selectedExercises);
+    setCustomDetails(planData.customDetails);
     handleCancel(); // Reset wizard
     setShowSuccessModal(true); // Mostrar modal de éxito
     setTimeout(() => {

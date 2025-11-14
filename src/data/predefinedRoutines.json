@@ -13,6 +13,40 @@
         "Glúteos": ["Hip Thrust", "Búlgaras para Glúteos"]
       },
       "abdominales": ["Crunches", "Plancha Frontal"]
+    },
+    "defaultWeights": {
+      "pecho": {
+        "Press Banca (barra)": { "series": 3, "reps": 10, "peso": 20 },
+        "Press Inclinado (barra)": { "series": 3, "reps": 10, "peso": 15 }
+      },
+      "espalda": {
+        "Remo Parado (barra)": { "series": 3, "reps": 10, "peso": 20 },
+        "Dominadas": { "series": 3, "reps": 8, "peso": 0 }
+      },
+      "hombros": {
+        "Press Militar (barra)": { "series": 3, "reps": 10, "peso": 15 },
+        "Aperturas Laterales": { "series": 3, "reps": 12, "peso": 5 }
+      },
+      "biceps": {
+        "Curl Parado (Barra)": { "series": 3, "reps": 12, "peso": 10 },
+        "Curl Martillo": { "series": 3, "reps": 12, "peso": 8 }
+      },
+      "triceps": {
+        "Press Frances": { "series": 3, "reps": 12, "peso": 10 },
+        "Empujon Parado (Cable)": { "series": 3, "reps": 12, "peso": 15 }
+      },
+      "piernas": {
+        "Sentadillas Libre": { "series": 4, "reps": 10, "peso": 30 },
+        "Prensa 45 grados": { "series": 3, "reps": 12, "peso": 60 },
+        "Peso Muerto Rumano": { "series": 3, "reps": 10, "peso": 25 },
+        "Curl Femoral Tumbado": { "series": 3, "reps": 12, "peso": 20 },
+        "Hip Thrust": { "series": 3, "reps": 12, "peso": 30 },
+        "Búlgaras para Glúteos": { "series": 3, "reps": 10, "peso": 10 }
+      },
+      "abdominales": {
+        "Crunches": { "series": 3, "reps": 15, "peso": 0 },
+        "Plancha Frontal": { "series": 3, "reps": 30, "peso": 0 }
+      }
     }
   },
   "Torso-Pierna": {
@@ -31,6 +65,47 @@
         "Glúteos": ["Hip Thrust", "Búlgaras para Glúteos", "Patadas con Cable"]
       },
       "abdominales": ["Crunches", "Elevación de Piernas", "Plancha Frontal"]
+    },
+    "defaultWeights": {
+      "pecho": {
+        "Press Banca (barra)": { "series": 4, "reps": 10, "peso": 20 },
+        "Press Inclinado (barra)": { "series": 3, "reps": 10, "peso": 15 },
+        "Aperturas (Mancuernas)": { "series": 3, "reps": 12, "peso": 8 }
+      },
+      "espalda": {
+        "Remo Parado (barra)": { "series": 4, "reps": 10, "peso": 20 },
+        "Dominadas": { "series": 3, "reps": 8, "peso": 0 },
+        "Remo sentado (Polea, Cerrado)": { "series": 3, "reps": 12, "peso": 25 }
+      },
+      "hombros": {
+        "Press Militar (barra)": { "series": 3, "reps": 10, "peso": 15 },
+        "Aperturas Laterales": { "series": 3, "reps": 12, "peso": 5 },
+        "Elevaciones Posteriores": { "series": 3, "reps": 12, "peso": 5 }
+      },
+      "biceps": {
+        "Curl Parado (Barra)": { "series": 3, "reps": 12, "peso": 10 },
+        "Curl Banco Scott": { "series": 3, "reps": 12, "peso": 10 }
+      },
+      "triceps": {
+        "Press Frances": { "series": 3, "reps": 12, "peso": 10 },
+        "Empujon Parado (Cable)": { "series": 3, "reps": 12, "peso": 15 },
+        "Fondos para Tríceps": { "series": 3, "reps": 10, "peso": 0 }
+      },
+      "piernas": {
+        "Sentadillas Libre": { "series": 4, "reps": 10, "peso": 30 },
+        "Prensa 45 grados": { "series": 4, "reps": 12, "peso": 60 },
+        "Extensiones de Cuádriceps": { "series": 3, "reps": 12, "peso": 25 },
+        "Peso Muerto Rumano": { "series": 3, "reps": 10, "peso": 25 },
+        "Curl Femoral Tumbado": { "series": 3, "reps": 12, "peso": 20 },
+        "Hip Thrust": { "series": 4, "reps": 12, "peso": 30 },
+        "Búlgaras para Glúteos": { "series": 3, "reps": 10, "peso": 10 },
+        "Patadas con Cable": { "series": 3, "reps": 15, "peso": 10 }
+      },
+      "abdominales": {
+        "Crunches": { "series": 3, "reps": 15, "peso": 0 },
+        "Elevación de Piernas": { "series": 3, "reps": 12, "peso": 0 },
+        "Plancha Frontal": { "series": 3, "reps": 30, "peso": 0 }
+      }
     }
   },
   "Push-Pull-Legs": {
@@ -51,6 +126,49 @@
         "Glúteos": ["Hip Thrust", "Búlgaras para Glúteos", "Sentadilla Sumo"]
       },
       "abdominales": ["Crunches", "Elevación de Piernas", "Plancha Frontal"]
+    },
+    "defaultWeights": {
+      "pecho": {
+        "Press Banca (barra)": { "series": 4, "reps": 10, "peso": 20 },
+        "Press Inclinado (barra)": { "series": 3, "reps": 10, "peso": 15 },
+        "Aperturas (Mancuernas)": { "series": 3, "reps": 12, "peso": 8 }
+      },
+      "hombros": {
+        "Press Militar (barra)": { "series": 4, "reps": 10, "peso": 15 },
+        "Aperturas Laterales": { "series": 3, "reps": 12, "peso": 5 },
+        "Elevaciones Frontales": { "series": 3, "reps": 12, "peso": 5 }
+      },
+      "triceps": {
+        "Press Frances": { "series": 3, "reps": 12, "peso": 10 },
+        "Empujon Parado (Cable)": { "series": 3, "reps": 12, "peso": 15 },
+        "Fondos para Tríceps": { "series": 3, "reps": 10, "peso": 0 }
+      },
+      "espalda": {
+        "Remo Parado (barra)": { "series": 4, "reps": 10, "peso": 20 },
+        "Dominadas": { "series": 3, "reps": 8, "peso": 0 },
+        "Jalón (Agarre Abierto)": { "series": 3, "reps": 10, "peso": 25 },
+        "Remo sentado (Polea, Cerrado)": { "series": 3, "reps": 12, "peso": 25 }
+      },
+      "biceps": {
+        "Curl Parado (Barra)": { "series": 3, "reps": 12, "peso": 10 },
+        "Curl Banco Scott": { "series": 3, "reps": 12, "peso": 10 },
+        "Curl Martillo": { "series": 3, "reps": 12, "peso": 8 }
+      },
+      "piernas": {
+        "Sentadillas Libre": { "series": 4, "reps": 10, "peso": 30 },
+        "Prensa 45 grados": { "series": 4, "reps": 12, "peso": 60 },
+        "Extensiones de Cuádriceps": { "series": 3, "reps": 12, "peso": 25 },
+        "Peso Muerto Rumano": { "series": 3, "reps": 10, "peso": 25 },
+        "Curl Femoral Tumbado": { "series": 3, "reps": 12, "peso": 20 },
+        "Hip Thrust": { "series": 4, "reps": 12, "peso": 30 },
+        "Búlgaras para Glúteos": { "series": 3, "reps": 10, "peso": 10 },
+        "Sentadilla Sumo": { "series": 3, "reps": 12, "peso": 25 }
+      },
+      "abdominales": {
+        "Crunches": { "series": 3, "reps": 15, "peso": 0 },
+        "Elevación de Piernas": { "series": 3, "reps": 12, "peso": 0 },
+        "Plancha Frontal": { "series": 3, "reps": 30, "peso": 0 }
+      }
     }
   }
 }
