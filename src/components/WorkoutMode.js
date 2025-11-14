@@ -34,6 +34,7 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showAlreadySavedModal, setShowAlreadySavedModal] = useState(false);
+  const [showLoginRequiredModal, setShowLoginRequiredModal] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const daysMap = useMemo(() => ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'], []);
   const todayName = daysMap[new Date().getDay()];
@@ -152,7 +153,7 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
   // Función para guardar el progreso
   const handleSaveProgress = async () => {
     if (!currentUser) {
-      alert('Debes iniciar sesión para guardar tu progreso');
+      setShowLoginRequiredModal(true);
       return;
     }
 
@@ -585,6 +586,43 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
                 className="flex-1 bg-orange-600 text-white px-4 py-3 rounded-lg hover:bg-orange-700 transition-all font-bold"
               >
                 Guardar Otro
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Login Requerido */}
+      {showLoginRequiredModal && (
+        <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowLoginRequiredModal(false)}>
+          <div className="bg-gray-900 border-2 border-cyan-500 rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-4">
+              <div className="w-16 h-16 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3">Inicia Sesión</h3>
+              <p className="text-gray-300 text-base mb-4">
+                Para guardar tu progreso de entrenamiento, primero debes iniciar sesión.
+              </p>
+            </div>
+            
+            <div className="flex flex-col gap-3">
+              <button 
+                onClick={() => {
+                  setShowLoginRequiredModal(false);
+                  navigate('/login');
+                }}
+                className="bg-cyan-600 text-white px-4 py-3 rounded-lg hover:bg-cyan-700 transition-all font-bold"
+              >
+                Ir a Iniciar Sesión
+              </button>
+              <button 
+                onClick={() => setShowLoginRequiredModal(false)}
+                className="bg-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-600 transition-all font-medium"
+              >
+                Cancelar
               </button>
             </div>
           </div>
