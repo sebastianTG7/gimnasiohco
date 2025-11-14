@@ -183,9 +183,19 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
                         <div className="space-y-6">
                           {subgroupData.exercises.map((ejercicio, index) => {
                             const details = customDetails[groupData.groupName.toLowerCase()]?.[ejercicio.nombre];
-                            const displayDetails = (details && (details.series || details.reps))
-                              ? `${details.series || '?'} series de ${details.reps || '?'} repeticiones`
-                              : ejercicio.detalles;
+                            
+                            // Construir el texto de detalles incluyendo peso
+                            let displayDetails = ejercicio.detalles;
+                            if (details && (details.series || details.reps || details.peso)) {
+                              const series = details.series || '?';
+                              const reps = details.reps || details.repeticiones || '?';
+                              const peso = details.peso;
+                              
+                              displayDetails = `${series} series × ${reps} reps`;
+                              if (peso) {
+                                displayDetails += ` • ${peso} kg`;
+                              }
+                            }
                             
                             const exerciseId = `${groupData.groupName}-${ejercicio.nombre}`;
                             const isCompleted = completedExercises.has(exerciseId);
@@ -217,7 +227,7 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
                                   <h3 className={`text-base md:text-xl font-bold ${isCompleted ? 'line-through text-gray-500' : ''}`}>
                                     {ejercicio.nombre}
                                   </h3>
-                                  <p className={`mt-1 text-xs md:text-sm ${isCompleted ? 'text-gray-600' : 'text-cyan-400'}`}>
+                                  <p className={`mt-1 text-xs md:text-sm font-medium ${isCompleted ? 'text-gray-600' : 'text-cyan-400'}`}>
                                     {displayDetails}
                                   </p>
                                 </div>
@@ -243,9 +253,19 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
                   <div className="space-y-6">
                     {groupData.exercises.map((ejercicio, index) => {
                       const details = customDetails[groupData.groupName.toLowerCase()]?.[ejercicio.nombre];
-                      const displayDetails = (details && (details.series || details.reps))
-                        ? `${details.series || '?'} series de ${details.reps || '?'} repeticiones`
-                        : ejercicio.detalles;
+                      
+                      // Construir el texto de detalles incluyendo peso
+                      let displayDetails = ejercicio.detalles;
+                      if (details && (details.series || details.reps || details.peso)) {
+                        const series = details.series || '?';
+                        const reps = details.reps || details.repeticiones || '?';
+                        const peso = details.peso;
+                        
+                        displayDetails = `${series} series × ${reps} reps`;
+                        if (peso) {
+                          displayDetails += ` • ${peso} kg`;
+                        }
+                      }
                       
                       const exerciseId = `${groupData.groupName}-${ejercicio.nombre}`;
                       const isCompleted = completedExercises.has(exerciseId);
@@ -277,7 +297,7 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
                             <h3 className={`text-base md:text-xl font-bold ${isCompleted ? 'line-through text-gray-500' : ''}`}>
                               {ejercicio.nombre}
                             </h3>
-                            <p className={`mt-1 text-xs md:text-sm ${isCompleted ? 'text-gray-600' : 'text-cyan-400'}`}>
+                            <p className={`mt-1 text-xs md:text-sm font-medium ${isCompleted ? 'text-gray-600' : 'text-cyan-400'}`}>
                               {displayDetails}
                             </p>
                           </div>
