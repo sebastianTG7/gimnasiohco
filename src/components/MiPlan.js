@@ -486,7 +486,7 @@ const MiPlan = ({
               </p>
               <button 
                 onClick={handleStartWizard}
-                className="bebas-font text-xl tracking-wider px-8 py-4 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-all shadow-lg border-2 border-green-500 font-bold"
+                className="bebas-font text-xl tracking-wider px-8 py-4 rounded-lg text-gray-900 bg-green-500 hover:bg-green-600 transition-all shadow-lg border-2 border-green-400 font-black"
                 style={{ minHeight: '60px' }}
               >
                 GENERAR PLAN RECOMENDADO
@@ -504,7 +504,7 @@ const MiPlan = ({
                       <button 
                         key={day} 
                         onClick={() => handleSelectDaysPerWeek(day)} 
-                        className="bebas-font text-2xl tracking-wider py-4 sm:py-5 rounded-lg text-white bg-cyan-600 hover:bg-cyan-700 transition-all border-2 border-cyan-500 shadow-lg font-bold"
+                        className="bebas-font text-2xl tracking-wider py-4 sm:py-5 rounded-lg text-gray-900 bg-cyan-400 hover:bg-cyan-500 transition-all border-2 border-cyan-300 shadow-lg font-black"
                         style={{ minHeight: '70px' }}
                       >
                         {day} {day === 1 ? 'DÍA' : 'DÍAS'}
@@ -554,7 +554,7 @@ const MiPlan = ({
                     <button 
                       onClick={handleShowRecommendation} 
                       disabled={selectedDays.length !== daysPerWeek} 
-                      className="bebas-font text-lg sm:text-xl tracking-wider px-8 py-4 rounded-lg text-white bg-cyan-600 hover:bg-cyan-700 transition-all disabled:bg-gray-600 disabled:cursor-not-allowed border-2 border-cyan-500 disabled:border-gray-500 shadow-lg font-bold"
+                      className="bebas-font text-lg sm:text-xl tracking-wider px-8 py-4 rounded-lg text-gray-900 bg-cyan-400 hover:bg-cyan-500 transition-all disabled:bg-gray-600 disabled:cursor-not-allowed disabled:text-gray-400 border-2 border-cyan-300 disabled:border-gray-500 shadow-lg font-black"
                       style={{ minHeight: '60px' }}
                     >
                       VER RECOMENDACIÓN
@@ -588,14 +588,14 @@ const MiPlan = ({
                   <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4">
                     <button 
                       onClick={handleCancel} 
-                      className="bebas-font text-lg sm:text-xl tracking-wider px-6 py-4 rounded-lg text-white bg-gray-700 hover:bg-gray-600 transition-all border-2 border-gray-600 shadow-lg font-bold order-2 sm:order-1"
+                      className="bebas-font text-lg sm:text-xl tracking-wider px-6 py-4 rounded-lg text-gray-300 bg-gray-800 hover:bg-gray-700 transition-all border-2 border-gray-600 shadow-lg font-bold order-2 sm:order-1"
                       style={{ minHeight: '60px' }}
                     >
                       CANCELAR
                     </button>
                     <button 
                       onClick={handleSavePlan} 
-                      className="bebas-font text-lg sm:text-xl tracking-wider px-6 py-4 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-all border-2 border-green-500 shadow-lg font-bold order-1 sm:order-2"
+                      className="bebas-font text-lg sm:text-xl tracking-wider px-6 py-4 rounded-lg text-gray-900 bg-green-500 hover:bg-green-600 transition-all border-2 border-green-400 shadow-lg font-black order-1 sm:order-2"
                       style={{ minHeight: '60px' }}
                     >
                       ✓ ACEPTAR PLAN
@@ -616,7 +616,7 @@ const MiPlan = ({
             </h2>
             <button 
               onClick={onOpenPlanner}
-              className="bebas-font text-lg tracking-wider px-6 py-3 rounded-lg text-white bg-cyan-600 border-2 border-cyan-500 hover:bg-cyan-700 transition-all shadow-lg font-bold"
+              className="bebas-font text-lg tracking-wider px-6 py-3 rounded-lg text-gray-900 bg-cyan-400 border-2 border-cyan-300 hover:bg-cyan-500 transition-all shadow-lg font-black"
               style={{ minHeight: '56px' }}
             >
               EDITAR HORARIO
@@ -626,7 +626,7 @@ const MiPlan = ({
           <div className="mt-8 flex flex-col gap-4">
             <button
               onClick={() => navigate('/seleccionar-ejercicios')}
-              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 transition-all duration-300 shadow-lg border-2 border-cyan-500 flex items-center justify-center gap-3 font-bold"
+              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-gray-900 bg-gradient-to-r from-cyan-400 to-blue-400 hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 shadow-lg border-2 border-cyan-300 flex items-center justify-center gap-3 font-black"
               style={{ minHeight: '70px' }}
             >
               <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -636,14 +636,14 @@ const MiPlan = ({
             </button>
             <button
               onClick={() => navigate('/', { state: { scrollToExercises: true } })}
-              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-purple-600 border-2 border-purple-500 hover:bg-purple-700 transition-all duration-300 shadow-lg font-bold"
+              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-gray-200 bg-purple-700 border-2 border-purple-600 hover:bg-purple-600 transition-all duration-300 shadow-lg font-bold"
               style={{ minHeight: '70px' }}
             >
               VER POR GRUPO
             </button>
             <button
               onClick={() => navigate('/entrenamiento')}
-              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-all duration-300 shadow-lg transform hover:scale-[1.02] border-2 border-green-500 font-bold"
+              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-gray-900 bg-green-500 hover:bg-green-600 transition-all duration-300 shadow-lg transform hover:scale-[1.02] border-2 border-green-400 font-black"
               style={{ minHeight: '70px' }}
             >
               🏋️ EMPEZAR ENTRENAMIENTO
