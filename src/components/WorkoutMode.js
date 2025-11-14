@@ -1,7 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GridBackground } from './GridBackground';
-import VideoPlayer from './VideoPlayer'; // Importar VideoPlayer
+import VideoPlayer from './VideoPlayer';
+import { useAuth } from '../contexts/AuthContext';
+import { db } from '../firebase';
+import { collection, addDoc, query, where, getDocs, Timestamp } from 'firebase/firestore';
 
 // Componente para el Modal de Video
 const VideoModal = ({ videoUrl, title, onClose }) => {
@@ -23,9 +26,15 @@ const VideoModal = ({ videoUrl, title, onClose }) => {
 };
 
 const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercicios }) => {
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const [selectedVideoUrl, setSelectedVideoUrl] = useState(null);
   const [selectedVideoTitle, setSelectedVideoTitle] = useState('');
   const [completedExercises, setCompletedExercises] = useState(new Set());
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showAlreadySavedModal, setShowAlreadySavedModal] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const daysMap = useMemo(() => ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'], []);
   const todayName = daysMap[new Date().getDay()];
 
@@ -116,8 +125,111 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
     });
   };
 
+  // Función para verificar si ya guardó hoy
+  const checkIfSavedToday = async () => {
+    if (!currentUser) return false;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    try {
+      const workoutRef = collection(db, 'users', currentUser.uid, 'workoutHistory');
+      const q = query(
+        workoutRef,
+        where('date', '>=', Timestamp.fromDate(today)),
+        where('date', '<', Timestamp.fromDate(tomorrow))
+      );
+      const querySnapshot = await getDocs(q);
+      return !querySnapshot.empty;
+    } catch (error) {
+      console.error('Error al verificar entrenamientos:', error);
+      return false;
+    }
+  };
+
+  // Función para guardar el progreso
+  const handleSaveProgress = async () => {
+    if (!currentUser) {
+      alert('Debes iniciar sesión para guardar tu progreso');
+      return;
+    }
+
+    // Verificar si ya guardó hoy
+    const alreadySaved = await checkIfSavedToday();
+    if (alreadySaved) {
+      setShowAlreadySavedModal(true);
+      return;
+    }
+
+    setShowSaveModal(true);
+  };
+
+  // Confirmar guardado
+  const confirmSaveProgress = async () => {
+    setShowSaveModal(false);
+    setIsSaving(true);
+
+    try {
+      const workoutData = {
+        date: Timestamp.now(),
+        dayName: todayName,
+        totalExercises: totalExercises,
+        completedCount: completedExercises.size,
+        progressPercentage: progressPercentage,
+        status: progressPercentage === 100 ? 'completado' : 'incompleto',
+        exercises: []
+      };
+
+      // Recopilar todos los ejercicios con sus detalles
+      todaysRoutine.forEach(groupData => {
+        const processExercises = (exercises, groupName) => {
+          exercises.forEach(ejercicio => {
+            const exerciseId = `${groupName}-${ejercicio.nombre}`;
+            const isCompleted = completedExercises.has(exerciseId);
+            const details = customDetails[groupName.toLowerCase()]?.[ejercicio.nombre];
+
+            workoutData.exercises.push({
+              name: ejercicio.nombre,
+              group: groupName,
+              completed: isCompleted,
+              series: details?.series || 0,
+              reps: details?.reps || details?.repeticiones || 0,
+              peso: details?.peso || 0
+            });
+          });
+        };
+
+        if (groupData.hasSubgroups) {
+          groupData.subgroups.forEach(sg => {
+            processExercises(sg.exercises, groupData.groupName);
+          });
+        } else {
+          processExercises(groupData.exercises, groupData.groupName);
+        }
+      });
+
+      // Guardar en Firestore
+      await addDoc(collection(db, 'users', currentUser.uid, 'workoutHistory'), workoutData);
+
+      setIsSaving(false);
+      setShowSuccessModal(true);
+    } catch (error) {
+      console.error('Error al guardar progreso:', error);
+      setIsSaving(false);
+      alert('Error al guardar el progreso. Intenta de nuevo.');
+    }
+  };
+
+  // Confirmar guardar otro progreso
+  const confirmSaveAnotherProgress = async () => {
+    setShowAlreadySavedModal(false);
+    setShowSaveModal(true);
+  };
+
   return (
-    <div className="relative text-white min-h-screen p-8 bg-gray-900">
+    <div className="relative text-white min-h-screen p-8 bg-gray-900 pb-32">
       <GridBackground />
       <div className="relative z-10 max-w-4xl mx-auto">
         <Link to={-1} className="bebas-font text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest">&larr; VOLVER</Link>
@@ -327,12 +439,157 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
             <p className="text-lg text-gray-500 mt-4">Usa el planificador para añadir una rutina.</p>
           </div>
         )}
+
+        {/* Botón Guardar Progreso - Sticky en la parte inferior */}
+        {todaysRoutine.length > 0 && (
+          <div className="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-md border-t-2 border-cyan-500 p-4 z-50">
+            <div className="max-w-4xl mx-auto flex gap-3">
+              <button
+                onClick={handleSaveProgress}
+                disabled={isSaving}
+                className="bebas-font flex-1 text-xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+              >
+                {isSaving ? (
+                  <>
+                    <svg className="animate-spin w-6 h-6" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    GUARDANDO...
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                    </svg>
+                    GUARDAR PROGRESO
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-      <VideoModal 
-        videoUrl={selectedVideoUrl} 
-        title={selectedVideoTitle} 
-        onClose={() => setSelectedVideoUrl(null)} 
+
+      {/* Modal de Video */}
+      <VideoModal
+        videoUrl={selectedVideoUrl}
+        title={selectedVideoTitle}
+        onClose={() => setSelectedVideoUrl(null)}
       />
+
+      {/* Modal de Confirmación de Guardado */}
+      {showSaveModal && (
+        <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowSaveModal(false)}>
+          <div className="bg-gray-900 border-2 border-cyan-500 rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-4">
+              <div className="w-16 h-16 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3">Guardar Progreso</h3>
+              <p className="text-gray-300 text-base mb-2">
+                Se guardará tu entrenamiento de hoy con:
+              </p>
+              <div className="bg-gray-800 rounded-lg p-4 mb-4">
+                <p className="text-cyan-400 font-bold text-lg">{completedExercises.size} de {totalExercises} ejercicios completados</p>
+                <p className="text-sm text-gray-400 mt-2">
+                  Estado: <span className={progressPercentage === 100 ? 'text-green-400 font-bold' : 'text-orange-400 font-bold'}>
+                    {progressPercentage === 100 ? 'COMPLETADO' : 'INCOMPLETO'}
+                  </span>
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex gap-3">
+              <button 
+                onClick={() => setShowSaveModal(false)}
+                className="flex-1 bg-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-600 transition-all font-medium"
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={confirmSaveProgress}
+                className="flex-1 bg-cyan-600 text-white px-4 py-3 rounded-lg hover:bg-cyan-700 transition-all font-bold"
+              >
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Éxito */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowSuccessModal(false)}>
+          <div className="bg-gray-900 border-2 border-green-500 rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-4">
+              <div className="w-16 h-16 mx-auto bg-green-500/20 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3">¡Progreso Guardado!</h3>
+              <p className="text-gray-300 text-base">
+                Tu entrenamiento se ha guardado exitosamente.
+              </p>
+            </div>
+            
+            <div className="flex flex-col gap-3">
+              <button 
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  navigate('/historial-entrenamiento');
+                }}
+                className="bg-cyan-600 text-white px-4 py-3 rounded-lg hover:bg-cyan-700 transition-all font-bold"
+              >
+                Ver Historial
+              </button>
+              <button 
+                onClick={() => setShowSuccessModal(false)}
+                className="bg-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-600 transition-all font-medium"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Ya Guardó Hoy */}
+      {showAlreadySavedModal && (
+        <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowAlreadySavedModal(false)}>
+          <div className="bg-gray-900 border-2 border-orange-500 rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-4">
+              <div className="w-16 h-16 mx-auto bg-orange-500/20 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3">Ya Guardaste Hoy</h3>
+              <p className="text-gray-300 text-base mb-4">
+                Ya tienes un progreso guardado para hoy. ¿Deseas guardar otro entrenamiento adicional?
+              </p>
+            </div>
+            
+            <div className="flex gap-3">
+              <button 
+                onClick={() => setShowAlreadySavedModal(false)}
+                className="flex-1 bg-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-600 transition-all font-medium"
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={confirmSaveAnotherProgress}
+                className="flex-1 bg-orange-600 text-white px-4 py-3 rounded-lg hover:bg-orange-700 transition-all font-bold"
+              >
+                Guardar Otro
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
