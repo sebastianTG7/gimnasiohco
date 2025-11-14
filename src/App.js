@@ -4,8 +4,9 @@ import './App.css';
 import { images, videos } from './assets';
 import DetalleEjercicio from './components/rutinas/DetalleEjercicio';
 import MiPlan from './components/MiPlan';
-import WorkoutMode from './components/WorkoutMode'; // Importar el nuevo componente
-import Login from './components/Login'; // Importar Login
+import WorkoutMode from './components/WorkoutMode';
+import WorkoutHistory from './components/WorkoutHistory';
+import Login from './components/Login';
 import SwipeableMenu from './components/SwipeableMenu';
 import ScrollToTop from './components/ScrollToTop';
 import PlanificadorModal from './components/PlanificadorModal';
@@ -15,7 +16,7 @@ import { GridBackground } from './components/GridBackground';
 import { useAuth } from './contexts/AuthContext';
 import { useRoutines } from './hooks/useRoutines';
 import RoutineManagerModal from './components/RoutineManagerModal';
-import SelectExercises from './components/SelectExercises'; // Nuevo componente unificado
+import SelectExercises from './components/SelectExercises';
 import pako from 'pako';
 
 
@@ -1017,6 +1018,10 @@ function App() {
             selectedExercises={selectedExercises}
             customDetails={customDetails}
           />}
+        />
+        <Route 
+          path="/historial-entrenamiento"
+          element={<WorkoutHistory />}
         />
       </Routes>
       <PlanificadorModal 

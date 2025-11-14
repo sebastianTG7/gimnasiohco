@@ -193,13 +193,16 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
             const isCompleted = completedExercises.has(exerciseId);
             const details = customDetails[groupName.toLowerCase()]?.[ejercicio.nombre];
 
+            // Debug: ver qué datos tenemos
+            console.log('Ejercicio:', ejercicio.nombre, 'Details:', details);
+
             workoutData.exercises.push({
               name: ejercicio.nombre,
               group: groupName,
               completed: isCompleted,
-              series: details?.series || 0,
-              reps: details?.reps || details?.repeticiones || 0,
-              peso: details?.peso || 0
+              series: details?.series || details?.Series || 0,
+              reps: details?.reps || details?.repeticiones || details?.Reps || 0,
+              peso: details?.peso || details?.Peso || 0
             });
           });
         };
