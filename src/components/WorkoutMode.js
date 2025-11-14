@@ -35,6 +35,8 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showAlreadySavedModal, setShowAlreadySavedModal] = useState(false);
   const [showLoginRequiredModal, setShowLoginRequiredModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const daysMap = useMemo(() => ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'], []);
   const todayName = daysMap[new Date().getDay()];
@@ -219,7 +221,8 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
     } catch (error) {
       console.error('Error al guardar progreso:', error);
       setIsSaving(false);
-      alert('Error al guardar el progreso. Intenta de nuevo.');
+      setErrorMessage(error.message || 'Error desconocido al guardar el progreso');
+      setShowErrorModal(true);
     }
   };
 
@@ -625,6 +628,42 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
                 Cancelar
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Error */}
+      {showErrorModal && (
+        <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowErrorModal(false)}>
+          <div className="bg-gray-900 border-2 border-red-500 rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-4">
+              <div className="w-16 h-16 mx-auto bg-red-500/20 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3">Error al Guardar</h3>
+              <p className="text-gray-300 text-base mb-4">
+                No se pudo guardar tu progreso de entrenamiento.
+              </p>
+              {errorMessage.includes('permission') && (
+                <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-3 mb-4">
+                  <p className="text-orange-300 text-sm">
+                    <strong>Problema de permisos:</strong> Contacta al administrador para configurar las reglas de seguridad de Firebase.
+                  </p>
+                </div>
+              )}
+              <p className="text-gray-500 text-xs font-mono mt-2">
+                {errorMessage}
+              </p>
+            </div>
+            
+            <button 
+              onClick={() => setShowErrorModal(false)}
+              className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-600 transition-all font-medium"
+            >
+              Cerrar
+            </button>
           </div>
         </div>
       )}
