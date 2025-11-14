@@ -121,6 +121,33 @@ const SelectExercises = ({
     }
   }, [searchQuery, datosEjercicios]);
 
+  // Auto-expandir grupos que tengan resultados de búsqueda
+  useEffect(() => {
+    if (searchQuery) {
+      const groupsWithResults = {};
+      muscleGroups.forEach(grupo => {
+        const data = datosEjercicios[grupo];
+        let hasResults = false;
+        
+        if (data.subgrupos) {
+          // Verificar si algún subgrupo tiene ejercicios que coincidan
+          hasResults = data.subgrupos.some(sg => 
+            filterExercisesBySearch(sg.ejercicios, grupo).length > 0
+          );
+        } else {
+          // Verificar si hay ejercicios que coincidan
+          hasResults = filterExercisesBySearch(data.imagenes, grupo).length > 0;
+        }
+        
+        if (hasResults) {
+          groupsWithResults[grupo] = true;
+        }
+      });
+      
+      setExpandedGroups(groupsWithResults);
+    }
+  }, [searchQuery, muscleGroups, datosEjercicios, filterExercisesBySearch]);
+
   // Mostrar detalles de ejercicio
   const showExerciseDetails = useCallback((ejercicio, grupo) => {
     setSelectedExerciseForDetails({ ...ejercicio, grupo });
@@ -189,7 +216,6 @@ const SelectExercises = ({
     
     // Filtrar según modo de filtro
     if (filterMode === 'selected' && selectedCount === 0) return null;
-    if (filterMode === 'unselected' && selectedCount === totalCount) return null;
 
     return (
       <div key={grupo} id={`group-${grupo}`} className="border border-slate-700/80 rounded-xl overflow-hidden">
@@ -435,16 +461,6 @@ const SelectExercises = ({
                 }`}
               >
                 Solo seleccionados
-              </button>
-              <button
-                onClick={() => setFilterMode('unselected')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 ${
-                  filterMode === 'unselected' 
-                    ? 'bg-cyan-600 text-white' 
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
-              >
-                Pendientes
               </button>
             </div>
 
