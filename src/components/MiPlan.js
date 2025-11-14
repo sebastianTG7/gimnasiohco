@@ -277,7 +277,6 @@ const MiPlan = ({
 
   // Función para aplicar el plan
   const applyPlan = (planData) => {
-    console.log('Aplicando plan con customDetails:', planData.customDetails);
     setSchedule(planData.schedule);
     setSelectedExercises(planData.selectedExercises);
     setCustomDetails(planData.customDetails);

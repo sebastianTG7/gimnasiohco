@@ -176,11 +176,6 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
     setIsSaving(true);
 
     try {
-      // Debug: Ver qué datos tenemos en customDetails
-      console.log('=== DATOS DE CUSTOMDETAILS ===');
-      console.log('customDetails completo:', customDetails);
-      console.log('todaysRoutine:', todaysRoutine);
-      
       const workoutData = {
         date: Timestamp.now(),
         dayName: todayName,
@@ -199,33 +194,21 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
             const isCompleted = completedExercises.has(exerciseId);
             const details = customDetails[groupName.toLowerCase()]?.[ejercicio.nombre];
 
-            console.log(`Ejercicio: ${ejercicio.nombre}`);
-            console.log(`  Grupo: ${groupName.toLowerCase()}`);
-            console.log(`  Details encontrado:`, details);
-
             // Obtener valores de customDetails (fuente primaria)
             let series = details?.series || details?.Series || 0;
             let reps = details?.reps || details?.repeticiones || details?.Reps || 0;
             let peso = details?.peso || details?.Peso || 0;
 
-            // Si customDetails tiene datos, úsalos
-            if (series || reps || peso) {
-              console.log(`  Usando customDetails - Series: ${series}, Reps: ${reps}, Peso: ${peso}`);
-            } else {
-              // Si no, parsear desde ejercicio.detalles como fallback
-              console.log(`  ejercicio.detalles:`, ejercicio.detalles);
-              if (ejercicio.detalles) {
-                const detallesStr = ejercicio.detalles;
-                const seriesMatch = detallesStr.match(/(\d+)\s*series/i);
-                const repsMatch = detallesStr.match(/(\d+)\s*(reps?|repeticiones)/i);
-                const pesoMatch = detallesStr.match(/(\d+)\s*kg/i);
-                
-                if (seriesMatch) series = parseInt(seriesMatch[1]);
-                if (repsMatch) reps = parseInt(repsMatch[1]);
-                if (pesoMatch) peso = parseInt(pesoMatch[1]);
-                
-                console.log(`  Parseado de detalles - Series: ${series}, Reps: ${reps}, Peso: ${peso}`);
-              }
+            // Si customDetails no tiene datos, parsear desde ejercicio.detalles como fallback
+            if (!series && !reps && !peso && ejercicio.detalles) {
+              const detallesStr = ejercicio.detalles;
+              const seriesMatch = detallesStr.match(/(\d+)\s*series/i);
+              const repsMatch = detallesStr.match(/(\d+)\s*(reps?|repeticiones)/i);
+              const pesoMatch = detallesStr.match(/(\d+)\s*kg/i);
+              
+              if (seriesMatch) series = parseInt(seriesMatch[1]);
+              if (repsMatch) reps = parseInt(repsMatch[1]);
+              if (pesoMatch) peso = parseInt(pesoMatch[1]);
             }
 
             workoutData.exercises.push({
@@ -247,9 +230,6 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
           processExercises(groupData.exercises, groupData.groupName);
         }
       });
-
-      console.log('=== DATOS A GUARDAR ===');
-      console.log('workoutData.exercises:', workoutData.exercises);
 
       // Guardar en Firestore
       await addDoc(collection(db, 'users', currentUser.uid, 'workoutHistory'), workoutData);
