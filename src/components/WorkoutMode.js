@@ -201,26 +201,30 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
             console.log(`Ejercicio: ${ejercicio.nombre}`);
             console.log(`  Grupo: ${groupName.toLowerCase()}`);
             console.log(`  Details encontrado:`, details);
-            console.log(`  ejercicio.detalles:`, ejercicio.detalles);
 
-            // Intentar obtener valores de customDetails primero
+            // Obtener valores de customDetails (fuente primaria)
             let series = details?.series || details?.Series || 0;
             let reps = details?.reps || details?.repeticiones || details?.Reps || 0;
             let peso = details?.peso || details?.Peso || 0;
 
-            // Si no hay datos en customDetails, intentar parsear desde ejercicio.detalles
-            if (!series && !reps && ejercicio.detalles) {
-              const detallesStr = ejercicio.detalles;
-              // Parsear formato: "4 series × 12 reps • 20 kg" o "3 series de 12 repeticiones"
-              const seriesMatch = detallesStr.match(/(\d+)\s*series/i);
-              const repsMatch = detallesStr.match(/(\d+)\s*(reps?|repeticiones)/i);
-              const pesoMatch = detallesStr.match(/(\d+)\s*kg/i);
-              
-              if (seriesMatch) series = parseInt(seriesMatch[1]);
-              if (repsMatch) reps = parseInt(repsMatch[1]);
-              if (pesoMatch) peso = parseInt(pesoMatch[1]);
-              
-              console.log(`  Parseado de detalles - Series: ${series}, Reps: ${reps}, Peso: ${peso}`);
+            // Si customDetails tiene datos, úsalos
+            if (series || reps || peso) {
+              console.log(`  Usando customDetails - Series: ${series}, Reps: ${reps}, Peso: ${peso}`);
+            } else {
+              // Si no, parsear desde ejercicio.detalles como fallback
+              console.log(`  ejercicio.detalles:`, ejercicio.detalles);
+              if (ejercicio.detalles) {
+                const detallesStr = ejercicio.detalles;
+                const seriesMatch = detallesStr.match(/(\d+)\s*series/i);
+                const repsMatch = detallesStr.match(/(\d+)\s*(reps?|repeticiones)/i);
+                const pesoMatch = detallesStr.match(/(\d+)\s*kg/i);
+                
+                if (seriesMatch) series = parseInt(seriesMatch[1]);
+                if (repsMatch) reps = parseInt(repsMatch[1]);
+                if (pesoMatch) peso = parseInt(pesoMatch[1]);
+                
+                console.log(`  Parseado de detalles - Series: ${series}, Reps: ${reps}, Peso: ${peso}`);
+              }
             }
 
             workoutData.exercises.push({
