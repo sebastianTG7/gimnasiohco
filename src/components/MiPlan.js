@@ -428,7 +428,7 @@ const MiPlan = ({
           <div className="grid grid-cols-2 sm:flex gap-3">
             <button
               onClick={handleSaveRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-cyan-600 border-2 border-cyan-500 text-white px-4 py-3 sm:py-3 rounded-lg hover:bg-cyan-700 transition-all shadow-lg tracking-wider text-base sm:text-lg font-bold col-span-2 sm:col-span-1"
+              className="bebas-font flex items-center justify-center gap-2 bg-cyan-600 border-2 border-cyan-500 text-white px-4 py-3 sm:py-3 rounded-lg hover:bg-cyan-700 transition-all shadow-lg tracking-wider text-base sm:text-lg col-span-2 sm:col-span-1"
               style={{ minHeight: '56px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -439,7 +439,7 @@ const MiPlan = ({
             
             <button
               onClick={handleCreateRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-green-600 border-2 border-green-500 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition-all shadow-lg tracking-wider text-base sm:text-lg font-bold"
+              className="bebas-font flex items-center justify-center gap-2 bg-green-600 border-2 border-green-500 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition-all shadow-lg tracking-wider text-base sm:text-lg"
               style={{ minHeight: '56px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -451,7 +451,7 @@ const MiPlan = ({
             <button
               onClick={handleRenameRoutine}
               disabled={!currentRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-orange-600 border-2 border-orange-500 text-white px-4 py-3 rounded-lg hover:bg-orange-700 transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg font-bold"
+              className="bebas-font flex items-center justify-center gap-2 bg-orange-600 border-2 border-orange-500 text-white px-4 py-3 rounded-lg hover:bg-orange-700 transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
               style={{ minHeight: '56px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -463,7 +463,7 @@ const MiPlan = ({
             <button
               onClick={handleDeleteRoutine}
               disabled={!currentRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-red-600 border-2 border-red-500 text-white px-4 py-3 rounded-lg hover:bg-red-700 transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg font-bold"
+              className="bebas-font flex items-center justify-center gap-2 bg-red-600 border-2 border-red-500 text-white px-4 py-3 rounded-lg hover:bg-red-700 transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
               style={{ minHeight: '56px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -633,13 +633,6 @@ const MiPlan = ({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
               </svg>
               SELECCIÓN RÁPIDA
-            </button>
-            <button
-              onClick={() => navigate('/', { state: { scrollToExercises: true } })}
-              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-gray-200 bg-purple-700 border-2 border-purple-600 hover:bg-purple-600 transition-all duration-300 shadow-lg"
-              style={{ minHeight: '70px' }}
-            >
-              VER POR GRUPO
             </button>
             <button
               onClick={() => navigate('/entrenamiento')}
