@@ -53,22 +53,6 @@ const SelectExercises = ({
     return Object.values(selectedExercises).reduce((acc, curr) => acc + (curr?.length || 0), 0);
   }, [selectedExercises]);
 
-  // Calcular total de ejercicios disponibles
-  const totalAvailable = useMemo(() => {
-    return muscleGroups.reduce((acc, grupo) => {
-      const data = datosEjercicios[grupo];
-      if (data.subgrupos) {
-        return acc + data.subgrupos.reduce((sum, sg) => sum + sg.ejercicios.length, 0);
-      }
-      return acc + (data.ejercicios?.length || 0);
-    }, 0);
-  }, [muscleGroups, datosEjercicios]);
-
-  // Porcentaje de progreso
-  const progressPercentage = useMemo(() => {
-    return totalAvailable > 0 ? Math.round((totalSelected / totalAvailable) * 100) : 0;
-  }, [totalSelected, totalAvailable]);
-
   // Función para anunciar cambios a lectores de pantalla
   const announce = useCallback((message) => {
     setAnnounceMessage(message);
@@ -378,30 +362,16 @@ const SelectExercises = ({
           </p>
         </div>
 
-        {/* Barra de progreso global */}
-        <div className="bg-gray-800 rounded-xl p-4 sm:p-6 mb-6 border border-gray-700">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xl font-bold text-white">Progreso de Selección</h2>
-            <span className="text-2xl font-bold text-cyan-400">{progressPercentage}%</span>
+        {/* Contador simple de ejercicios seleccionados */}
+        <div className="bg-gray-800 rounded-xl p-4 mb-6 border border-gray-700">
+          <div className="flex items-center justify-center gap-3">
+            <svg className="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+            <p className="text-lg sm:text-xl font-bold text-white">
+              {totalSelected} ejercicio{totalSelected !== 1 ? 's' : ''} seleccionado{totalSelected !== 1 ? 's' : ''}
+            </p>
           </div>
-          <div 
-            className="h-3 bg-gray-700 rounded-full overflow-hidden mb-2"
-            role="progressbar"
-            aria-valuenow={progressPercentage}
-            aria-valuemin="0"
-            aria-valuemax="100"
-            aria-label="Progreso de selección de ejercicios"
-          >
-            <div 
-              className={`h-full transition-all duration-500 ${
-                progressPercentage === 100 ? 'bg-green-500' : 'bg-gradient-to-r from-cyan-500 to-blue-500'
-              }`}
-              style={{ width: `${progressPercentage}%` }}
-            />
-          </div>
-          <p className="text-sm text-gray-400 text-center">
-            {totalSelected} de {totalAvailable} ejercicios seleccionados
-          </p>
         </div>
 
         {/* Controles de búsqueda y filtros */}
