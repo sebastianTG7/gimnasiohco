@@ -146,9 +146,18 @@ const WorkoutHistory = () => {
     <div className="relative text-white min-h-screen p-4 sm:p-8 bg-gray-900">
       <GridBackground />
       <div className="relative z-10 max-w-6xl mx-auto">
-        <Link to="/entrenamiento" className="bebas-font text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest inline-block mb-6">
-          &larr; VOLVER
-        </Link>
+        <div className="flex items-center justify-between mb-6">
+          <Link to="/entrenamiento" className="bebas-font text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest inline-block">
+            &larr; VOLVER
+          </Link>
+          
+          <Link 
+            to="/mi-plan"
+            className="bebas-font text-lg tracking-wider px-4 py-2 rounded-lg text-white bg-purple-700 border-2 border-purple-600 hover:bg-purple-600 transition-all shadow-lg"
+          >
+            IR A MI PLAN
+          </Link>
+        </div>
         
         <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider">
           HISTORIAL DE <span className="text-cyan-400">ENTRENAMIENTOS</span>
