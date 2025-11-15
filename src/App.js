@@ -236,7 +236,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
                   >
                    Tu punto de partida está aquí  
                   </div>
-                  <a href="#ejercicios" className="bg-[#379AA5] hover:bg-[#2A7A87] text-white px-8 py-3 rounded-md shadow-lg transition-colors">Comenzar Ahora!</a>
+                  <Link to="/mi-plan" className="bg-[#379AA5] hover:bg-[#2A7A87] text-white px-8 py-3 rounded-md shadow-lg transition-colors">Comenzar Ahora!</Link>
               </div>
 
               {/* Animated Scroll Down Indicator */}

@@ -431,83 +431,7 @@ const MiPlan = ({
           MI PLAN SEMANAL
         </h1>
 
-        {/* Sistema de Rutinas Guardadas */}
-        <div className="bg-gradient-to-b from-slate-800 to-gray-900/50 border-2 border-slate-600 rounded-xl shadow-2xl p-5 sm:p-6 mb-10">
-          <h2 className="bebas-font text-3xl sm:text-4xl text-white mb-5 tracking-wider">
-            📋 MIS RUTINAS
-          </h2>
-          
-          {/* Selector de Rutina - Mejorado para móvil */}
-          <div className="mb-4">
-            <label className="block text-base sm:text-lg font-bold text-gray-300 mb-3">
-              Rutina Actual:
-            </label>
-            <select
-              value={currentRoutine?.id || ''}
-              onChange={(e) => handleLoadRoutine(e.target.value)}
-              className="w-full bg-gray-800 border-2 border-cyan-500 text-white text-base sm:text-lg px-4 py-3 sm:py-4 rounded-lg focus:outline-none focus:ring-4 focus:ring-cyan-500/50 transition-all font-medium shadow-lg"
-              style={{ minHeight: '56px' }}
-            >
-              <option value="">Sin Rutina</option>
-              {routines && routines.map(routine => (
-                <option key={routine.id} value={routine.id}>
-                  {routine.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Botones de Acción - Mejorados para móvil */}
-          <div className="grid grid-cols-2 sm:flex gap-3">
-            <button
-              onClick={handleSaveRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-cyan-600 border-2 border-cyan-500 text-white px-4 py-3 sm:py-3 rounded-lg hover:bg-cyan-700 transition-all shadow-lg tracking-wider text-base sm:text-lg col-span-2 sm:col-span-1"
-              style={{ minHeight: '56px' }}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-              </svg>
-              <span>GUARDAR</span>
-            </button>
-            
-            <button
-              onClick={handleCreateRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-green-600 border-2 border-green-500 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition-all shadow-lg tracking-wider text-base sm:text-lg"
-              style={{ minHeight: '56px' }}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-              <span>NUEVA</span>
-            </button>
-            
-            <button
-              onClick={handleRenameRoutine}
-              disabled={!currentRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-orange-600 border-2 border-orange-500 text-white px-4 py-3 rounded-lg hover:bg-orange-700 transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
-              style={{ minHeight: '56px' }}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-              </svg>
-              <span>RENOMBRAR</span>
-            </button>
-            
-            <button
-              onClick={handleDeleteRoutine}
-              disabled={!currentRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-red-600 border-2 border-red-500 text-white px-4 py-3 rounded-lg hover:bg-red-700 transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
-              style={{ minHeight: '56px' }}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
-              <span>ELIMINAR</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Asistente de Planificación */}
+        {/* Asistente de Planificación - AHORA PRIMERO */}
         <div className="bg-gradient-to-b from-slate-800 to-gray-900/50 border-2 border-slate-600 rounded-xl shadow-2xl p-5 sm:p-6 mb-10">
           <h2 className="bebas-font text-3xl sm:text-4xl text-white mb-5 tracking-wider">
             RECOMENDACION DE PLAN
@@ -641,7 +565,83 @@ const MiPlan = ({
           )}
         </div>
 
-        {/* Horario Semanal */}
+        {/* Sistema de Rutinas Guardadas - AHORA DESPUÉS DE RECOMENDACIÓN */}
+        <div className="bg-gradient-to-b from-slate-800 to-gray-900/50 border-2 border-slate-600 rounded-xl shadow-2xl p-5 sm:p-6 mb-10">
+          <h2 className="bebas-font text-3xl sm:text-4xl text-white mb-5 tracking-wider">
+            📋 MIS RUTINAS
+          </h2>
+          
+          {/* Selector de Rutina - Mejorado para móvil */}
+          <div className="mb-4">
+            <label className="block text-base sm:text-lg font-bold text-gray-300 mb-3">
+              Rutina Actual:
+            </label>
+            <select
+              value={currentRoutine?.id || ''}
+              onChange={(e) => handleLoadRoutine(e.target.value)}
+              className="w-full bg-gray-800 border-2 border-cyan-500 text-white text-base sm:text-lg px-4 py-3 sm:py-4 rounded-lg focus:outline-none focus:ring-4 focus:ring-cyan-500/50 transition-all font-medium shadow-lg"
+              style={{ minHeight: '56px' }}
+            >
+              <option value="">Sin Rutina</option>
+              {routines && routines.map(routine => (
+                <option key={routine.id} value={routine.id}>
+                  {routine.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Botones de Acción - Mejorados para móvil */}
+          <div className="grid grid-cols-2 sm:flex gap-3">
+            <button
+              onClick={handleSaveRoutine}
+              className="bebas-font flex items-center justify-center gap-2 bg-cyan-600 border-2 border-cyan-500 text-white px-4 py-3 sm:py-3 rounded-lg hover:bg-cyan-700 transition-all shadow-lg tracking-wider text-base sm:text-lg col-span-2 sm:col-span-1"
+              style={{ minHeight: '56px' }}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+              </svg>
+              <span>GUARDAR</span>
+            </button>
+            
+            <button
+              onClick={handleCreateRoutine}
+              className="bebas-font flex items-center justify-center gap-2 bg-green-600 border-2 border-green-500 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition-all shadow-lg tracking-wider text-base sm:text-lg"
+              style={{ minHeight: '56px' }}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              <span>NUEVA</span>
+            </button>
+            
+            <button
+              onClick={handleRenameRoutine}
+              disabled={!currentRoutine}
+              className="bebas-font flex items-center justify-center gap-2 bg-orange-600 border-2 border-orange-500 text-white px-4 py-3 rounded-lg hover:bg-orange-700 transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
+              style={{ minHeight: '56px' }}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+              <span>RENOMBRAR</span>
+            </button>
+            
+            <button
+              onClick={handleDeleteRoutine}
+              disabled={!currentRoutine}
+              className="bebas-font flex items-center justify-center gap-2 bg-red-600 border-2 border-red-500 text-white px-4 py-3 rounded-lg hover:bg-red-700 transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
+              style={{ minHeight: '56px' }}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              <span>ELIMINAR</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Horario Semanal y Botón de Entrenar - AHORA AL FINAL */}
         <div ref={scheduleRef} className="bg-gradient-to-b from-slate-800 to-gray-900/50 border-2 border-slate-600 rounded-xl shadow-2xl p-5 sm:p-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left mb-6 gap-4">
             <h2 className="bebas-font text-3xl sm:text-4xl text-white tracking-wider">
