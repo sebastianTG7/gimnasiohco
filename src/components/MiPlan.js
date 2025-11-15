@@ -443,7 +443,7 @@ const MiPlan = ({
               </p>
               <button 
                 onClick={handleStartWizard}
-                className="bebas-font text-2xl tracking-wider px-8 py-4 rounded-lg text-white bg-[#111827] border border-emerald-500 hover:bg-[#1f2937] transition-all shadow-lg"
+                className="bebas-font text-2xl tracking-wider px-8 py-4 rounded-lg text-white bg-[#111827] border-2 border-emerald-500 hover:bg-[#1f2937] transition-all shadow-lg"
                 style={{ minHeight: '60px' }}
               >
                 GENERAR PLAN RECOMENDADO
@@ -595,7 +595,7 @@ const MiPlan = ({
           <div className="grid grid-cols-2 sm:flex gap-3">
             <button
               onClick={handleSaveRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-[#111827] border border-blue-500 text-white px-4 py-3 sm:py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg tracking-wider text-base sm:text-lg col-span-2 sm:col-span-1"
+              className="bebas-font flex items-center justify-center gap-2 bg-[#111827] border-2 border-blue-500 text-white px-4 py-3 sm:py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg tracking-wider text-base sm:text-lg col-span-2 sm:col-span-1"
               style={{ minHeight: '56px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -606,7 +606,7 @@ const MiPlan = ({
             
             <button
               onClick={handleCreateRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-[#111827] border border-emerald-500 text-white px-4 py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg tracking-wider text-base sm:text-lg"
+              className="bebas-font flex items-center justify-center gap-2 bg-[#111827] border-2 border-emerald-500 text-white px-4 py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg tracking-wider text-base sm:text-lg"
               style={{ minHeight: '56px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -618,7 +618,7 @@ const MiPlan = ({
             <button
               onClick={handleRenameRoutine}
               disabled={!currentRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-[#111827] border border-amber-500 text-white px-4 py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
+              className="bebas-font flex items-center justify-center gap-2 bg-[#111827] border-2 border-amber-500 text-white px-4 py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
               style={{ minHeight: '56px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -630,7 +630,7 @@ const MiPlan = ({
             <button
               onClick={handleDeleteRoutine}
               disabled={!currentRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-[#111827] border border-rose-500 text-white px-4 py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
+              className="bebas-font flex items-center justify-center gap-2 bg-[#111827] border-2 border-rose-500 text-white px-4 py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
               style={{ minHeight: '56px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -649,7 +649,7 @@ const MiPlan = ({
             </h2>
             <button 
               onClick={onOpenPlanner}
-              className="bebas-font text-xl tracking-wider px-6 py-3 rounded-lg text-white bg-[#111827] border border-blue-500 hover:bg-[#1f2937] transition-all shadow-lg"
+              className="bebas-font text-xl tracking-wider px-6 py-3 rounded-lg text-white bg-[#111827] border-2 border-amber-500 hover:bg-[#1f2937] transition-all shadow-lg"
               style={{ minHeight: '56px' }}
             >
               EDITAR HORARIO
