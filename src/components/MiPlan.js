@@ -415,38 +415,38 @@ const MiPlan = ({
       <div className="relative z-20 max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <button 
-            onClick={() => navigate('/seleccionar-ejercicios')} 
+            onClick={() => navigate('/')} 
             className="bebas-font text-xl sm:text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest flex items-center gap-2"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            VOLVER A SELECCIÓN
+            VOLVER A INICIO
           </button>
           
           <UserMenu />
         </div>
         
         <h1 className="bebas-font text-5xl sm:text-6xl md:text-7xl text-center my-8 tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-          MI PLAN SEMANAL
+          MI RUTINA
         </h1>
 
         {/* Asistente de Planificación - AHORA PRIMERO */}
         <div className="bg-gray-800/50 border border-slate-700/80 rounded-xl shadow-2xl p-5 sm:p-6 mb-10">
           <h2 className="bebas-font text-3xl sm:text-4xl text-center mb-5 tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-            RECOMENDACION DE PLAN
+            RECOMENDACION DE RUTINA
           </h2>
           {!isWizardActive ? (
             <div className="text-center">
               <p className="text-gray-300 text-base sm:text-lg mb-6 font-medium">
-                ¿No sabes por dónde empezar? Deja que te ayudemos a crear un plan basado en tu disponibilidad.
+                ¿No sabes por dónde empezar? Deja que te ayudemos a crear una rutina basada en tu disponibilidad.
               </p>
               <button 
                 onClick={handleStartWizard}
                 className="bebas-font text-2xl tracking-wider px-8 py-4 rounded-lg text-white bg-black border-2 border-emerald-500 hover:bg-gray-900 transition-all shadow-lg"
                 style={{ minHeight: '60px' }}
               >
-                GENERAR PLAN RECOMENDADO
+                GENERAR UNA RUTINA
               </button>
             </div>
           ) : (
