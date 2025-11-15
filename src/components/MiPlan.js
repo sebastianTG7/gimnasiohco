@@ -565,6 +565,43 @@ const MiPlan = ({
           )}
         </div>
 
+        {/* Horario Semanal y Botón de Entrenar - AHORA AL FINAL */}
+        <div ref={scheduleRef} className="bg-gray-800/50 border border-slate-700/80 rounded-xl shadow-2xl p-5 sm:p-6">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left mb-6 gap-4">
+            <h2 className="bebas-font text-3xl sm:text-4xl tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+               MI HORARIO
+            </h2>
+            <button 
+              onClick={onOpenPlanner}
+              className="bebas-font text-xl tracking-wider px-6 py-3 rounded-lg text-white bg-black border-2 border-amber-500 hover:bg-gray-900 transition-all shadow-lg"
+              style={{ minHeight: '56px' }}
+            >
+              EDITAR HORARIO
+            </button>
+          </div>
+          <ResumenSemanal schedule={schedule} daysOfWeek={daysOfWeek} />
+          {/* Botones visibles solo en desktop (≥768px) */}
+          <div className="mt-8 hidden md:flex flex-col gap-4">
+            <button
+              onClick={() => navigate('/seleccionar-ejercicios')}
+              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 shadow-lg border-2 border-cyan-500/30 flex items-center justify-center gap-3"
+              style={{ minHeight: '70px' }}
+            >
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              🔧 PERSONALIZAR EJERCICIOS
+            </button>
+            <button
+              onClick={() => navigate('/entrenamiento')}
+              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 transition-all duration-300 shadow-lg transform hover:scale-[1.02] border-2 border-emerald-500/30"
+              style={{ minHeight: '70px' }}
+            >
+              🏋️ EMPEZAR
+            </button>
+          </div>
+        </div>
         {/* Sistema de Rutinas Guardadas - AHORA DESPUÉS DE RECOMENDACIÓN */}
         <div className="bg-gray-800/50 border border-slate-700/80 rounded-xl shadow-2xl p-5 sm:p-6 mb-10">
           <h2 className="bebas-font text-3xl sm:text-4xl text-center mb-5 tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
@@ -641,43 +678,6 @@ const MiPlan = ({
           </div>
         </div>
 
-        {/* Horario Semanal y Botón de Entrenar - AHORA AL FINAL */}
-        <div ref={scheduleRef} className="bg-gray-800/50 border border-slate-700/80 rounded-xl shadow-2xl p-5 sm:p-6">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left mb-6 gap-4">
-            <h2 className="bebas-font text-3xl sm:text-4xl tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-               MI HORARIO
-            </h2>
-            <button 
-              onClick={onOpenPlanner}
-              className="bebas-font text-xl tracking-wider px-6 py-3 rounded-lg text-white bg-black border-2 border-amber-500 hover:bg-gray-900 transition-all shadow-lg"
-              style={{ minHeight: '56px' }}
-            >
-              EDITAR HORARIO
-            </button>
-          </div>
-          <ResumenSemanal schedule={schedule} daysOfWeek={daysOfWeek} />
-          {/* Botones visibles solo en desktop (≥768px) */}
-          <div className="mt-8 hidden md:flex flex-col gap-4">
-            <button
-              onClick={() => navigate('/seleccionar-ejercicios')}
-              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 shadow-lg border-2 border-cyan-500/30 flex items-center justify-center gap-3"
-              style={{ minHeight: '70px' }}
-            >
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              🔧 PERSONALIZAR EJERCICIOS
-            </button>
-            <button
-              onClick={() => navigate('/entrenamiento')}
-              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 transition-all duration-300 shadow-lg transform hover:scale-[1.02] border-2 border-emerald-500/30"
-              style={{ minHeight: '70px' }}
-            >
-              🏋️ EMPEZAR
-            </button>
-          </div>
-        </div>
       </div>
 
       {/* Barra fija inferior - Solo en móvil (<768px) */}
