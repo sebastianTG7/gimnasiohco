@@ -656,27 +656,57 @@ const MiPlan = ({
             </button>
           </div>
           <ResumenSemanal schedule={schedule} daysOfWeek={daysOfWeek} />
-          <div className="mt-8 flex flex-col gap-4">
+          {/* Botones visibles solo en desktop (≥768px) */}
+          <div className="mt-8 hidden md:flex flex-col gap-4">
             <button
               onClick={() => navigate('/seleccionar-ejercicios')}
               className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 transition-all duration-300 shadow-lg border-2 border-cyan-500 flex items-center justify-center gap-3"
               style={{ minHeight: '70px' }}
             >
               <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              SELECCIÓN RÁPIDA
+              🔧 PERSONALIZAR EJERCICIOS
             </button>
             <button
               onClick={() => navigate('/entrenamiento')}
               className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-all duration-300 shadow-lg transform hover:scale-[1.02] border-2 border-green-500"
               style={{ minHeight: '70px' }}
             >
-              🏋️ EMPEZAR ENTRENAMIENTO
+              🏋️ EMPEZAR
             </button>
           </div>
         </div>
       </div>
+
+      {/* Barra fija inferior - Solo en móvil (<768px) */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-md border-t-2 border-gray-700 shadow-2xl" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+        <div className="flex gap-3 p-3">
+          <button
+            onClick={() => navigate('/seleccionar-ejercicios')}
+            className="flex-1 bebas-font text-lg tracking-wider px-4 py-4 rounded-lg text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 transition-all shadow-lg border-2 border-cyan-500 flex flex-col items-center justify-center gap-1"
+            style={{ minHeight: '64px' }}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span className="text-sm">PERSONALIZAR</span>
+          </button>
+          <button
+            onClick={() => navigate('/entrenamiento')}
+            className="flex-1 bebas-font text-xl tracking-wider px-4 py-4 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-all shadow-lg border-2 border-green-500 flex items-center justify-center gap-2"
+            style={{ minHeight: '64px' }}
+          >
+            <span className="text-2xl">🏋️</span>
+            <span>EMPEZAR</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Espaciador para compensar la barra fija en móvil */}
+      <div className="md:hidden h-20"></div>
 
       {/* Modal de Éxito - Plan Generado */}
       {showSuccessModal && (
