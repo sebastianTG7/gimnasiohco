@@ -660,7 +660,7 @@ const MiPlan = ({
           <div className="mt-8 hidden md:flex flex-col gap-4">
             <button
               onClick={() => navigate('/seleccionar-ejercicios')}
-              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg border-2 border-blue-500 flex items-center justify-center gap-3"
+              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 shadow-lg border-2 border-cyan-500/30 flex items-center justify-center gap-3"
               style={{ minHeight: '70px' }}
             >
               <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -671,7 +671,7 @@ const MiPlan = ({
             </button>
             <button
               onClick={() => navigate('/entrenamiento')}
-              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 transition-all duration-300 shadow-lg transform hover:scale-[1.02] border-2 border-emerald-500"
+              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 transition-all duration-300 shadow-lg transform hover:scale-[1.02] border-2 border-emerald-500/30"
               style={{ minHeight: '70px' }}
             >
               🏋️ EMPEZAR
@@ -685,7 +685,7 @@ const MiPlan = ({
         <div className="flex gap-3 p-3">
           <button
             onClick={() => navigate('/seleccionar-ejercicios')}
-            className="flex-1 bebas-font text-lg tracking-wider px-4 py-4 rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg border-2 border-blue-500 flex flex-col items-center justify-center gap-1"
+            className="flex-1 bebas-font text-lg tracking-wider px-4 py-4 rounded-lg text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 transition-all shadow-lg border-2 border-cyan-500/30 flex flex-col items-center justify-center gap-1"
             style={{ minHeight: '64px' }}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -696,7 +696,7 @@ const MiPlan = ({
           </button>
           <button
             onClick={() => navigate('/entrenamiento')}
-            className="flex-1 bebas-font text-xl tracking-wider px-4 py-4 rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 transition-all shadow-lg border-2 border-emerald-500 flex items-center justify-center gap-2"
+            className="flex-1 bebas-font text-xl tracking-wider px-4 py-4 rounded-lg text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 transition-all shadow-lg border-2 border-emerald-500/30 flex items-center justify-center gap-2"
             style={{ minHeight: '64px' }}
           >
             <span className="text-2xl">🏋️</span>

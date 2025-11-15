@@ -472,7 +472,7 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
               <button
                 onClick={handleSaveProgress}
                 disabled={isSaving}
-                className="bebas-font flex-1 text-xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                className="bebas-font flex-1 text-xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
               >
                 {isSaving ? (
                   <>
