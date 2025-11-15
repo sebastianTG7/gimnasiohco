@@ -568,7 +568,7 @@ const MiPlan = ({
         {/* Sistema de Rutinas Guardadas - AHORA DESPUÉS DE RECOMENDACIÓN */}
         <div className="bg-gray-800/50 border border-slate-700/80 rounded-xl shadow-2xl p-5 sm:p-6 mb-10">
           <h2 className="bebas-font text-3xl sm:text-4xl text-center mb-5 tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-            📋 MIS RUTINAS
+             MIS RUTINAS
           </h2>
           
           {/* Selector de Rutina - Mejorado para móvil */}
@@ -645,7 +645,7 @@ const MiPlan = ({
         <div ref={scheduleRef} className="bg-gray-800/50 border border-slate-700/80 rounded-xl shadow-2xl p-5 sm:p-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left mb-6 gap-4">
             <h2 className="bebas-font text-3xl sm:text-4xl tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              📆 MI HORARIO
+               MI HORARIO
             </h2>
             <button 
               onClick={onOpenPlanner}

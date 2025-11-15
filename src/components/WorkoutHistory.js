@@ -155,8 +155,8 @@ const WorkoutHistory = () => {
           <UserMenu />
         </div>
         
-        <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider">
-          HISTORIAL DE <span className="text-cyan-400">ENTRENAMIENTOS</span>
+        <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+          HISTORIAL DE ENTRENAMIENTOS
         </h1>
 
         {loading ? (

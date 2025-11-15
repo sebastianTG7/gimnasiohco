@@ -259,8 +259,8 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
           <UserMenu />
         </div>
         
-        <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider">
-          Entrenamiento de Hoy: <span className="text-green-500">{todayName}</span>
+        <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+          Entrenamiento de Hoy: {todayName}
         </h1>
 
         {/* Barra de progreso del entrenamiento */}
@@ -307,7 +307,7 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
           <div className="space-y-12">
             {todaysRoutine.map(groupData => (
               <div key={groupData.groupName}>
-                <h2 className="bebas-font text-4xl text-cyan-400 tracking-wider border-b-2 border-cyan-400/30 pb-2 mb-6">{groupData.groupName}</h2>
+                <h2 className="bebas-font text-4xl tracking-wider border-b-2 border-cyan-400/30 pb-2 mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">{groupData.groupName}</h2>
                 
                 {groupData.hasSubgroups ? (
                   // Renderizar grupos con subgrupos (piernas)
