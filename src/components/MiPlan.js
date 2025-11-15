@@ -443,7 +443,7 @@ const MiPlan = ({
               </p>
               <button 
                 onClick={handleStartWizard}
-                className="bebas-font text-2xl tracking-wider px-8 py-4 rounded-lg text-white bg-[#111827] border-2 border-emerald-500 hover:bg-[#1f2937] transition-all shadow-lg"
+                className="bebas-font text-2xl tracking-wider px-8 py-4 rounded-lg text-white bg-black border-2 border-emerald-500 hover:bg-gray-900 transition-all shadow-lg"
                 style={{ minHeight: '60px' }}
               >
                 GENERAR PLAN RECOMENDADO
@@ -649,7 +649,7 @@ const MiPlan = ({
             </h2>
             <button 
               onClick={onOpenPlanner}
-              className="bebas-font text-xl tracking-wider px-6 py-3 rounded-lg text-white bg-[#111827] border-2 border-amber-500 hover:bg-[#1f2937] transition-all shadow-lg"
+              className="bebas-font text-xl tracking-wider px-6 py-3 rounded-lg text-white bg-black border-2 border-amber-500 hover:bg-gray-900 transition-all shadow-lg"
               style={{ minHeight: '56px' }}
             >
               EDITAR HORARIO
