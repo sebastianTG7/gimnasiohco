@@ -433,7 +433,7 @@ const MiPlan = ({
 
         {/* Asistente de Planificación - AHORA PRIMERO */}
         <div className="bg-gray-800/50 border border-slate-700/80 rounded-xl shadow-2xl p-5 sm:p-6 mb-10">
-          <h2 className="bebas-font text-3xl sm:text-4xl text-white mb-5 tracking-wider">
+          <h2 className="bebas-font text-3xl sm:text-4xl text-center mb-5 tracking-wider bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
             RECOMENDACION DE PLAN
           </h2>
           {!isWizardActive ? (
@@ -567,7 +567,7 @@ const MiPlan = ({
 
         {/* Sistema de Rutinas Guardadas - AHORA DESPUÉS DE RECOMENDACIÓN */}
         <div className="bg-gray-800/50 border border-slate-700/80 rounded-xl shadow-2xl p-5 sm:p-6 mb-10">
-          <h2 className="bebas-font text-3xl sm:text-4xl text-white mb-5 tracking-wider">
+          <h2 className="bebas-font text-3xl sm:text-4xl text-center mb-5 tracking-wider bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
             📋 MIS RUTINAS
           </h2>
           
@@ -644,7 +644,7 @@ const MiPlan = ({
         {/* Horario Semanal y Botón de Entrenar - AHORA AL FINAL */}
         <div ref={scheduleRef} className="bg-gray-800/50 border border-slate-700/80 rounded-xl shadow-2xl p-5 sm:p-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left mb-6 gap-4">
-            <h2 className="bebas-font text-3xl sm:text-4xl text-white tracking-wider">
+            <h2 className="bebas-font text-3xl sm:text-4xl tracking-wider bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
               📆 MI HORARIO
             </h2>
             <button 
