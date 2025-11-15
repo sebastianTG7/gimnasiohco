@@ -4,15 +4,15 @@ import { GridBackground } from './GridBackground';
 import predefinedRoutines from '../data/predefinedRoutines.json';
 import UserMenu from './UserMenu';
 
-// Objeto para mapear grupos musculares a colores con mejor contraste (WCAG AA)
+// Objeto para mapear grupos musculares a colores con bordes fuertes y fondos suaves
 const groupColors = {
-  Pecho: 'bg-red-600 border-2 border-red-500 text-white',
-  Espalda: 'bg-blue-600 border-2 border-blue-500 text-white',
-  Hombros: 'bg-purple-600 border-2 border-purple-500 text-white',
-  Biceps: 'bg-pink-600 border-2 border-pink-500 text-white',
-  Triceps: 'bg-indigo-600 border-2 border-indigo-500 text-white',
-  Piernas: 'bg-orange-600 border-2 border-orange-500 text-white',
-  Abdominales: 'bg-green-600 border-2 border-green-500 text-white',
+  Pecho: 'bg-red-500/5 border border-red-500/30 text-red-400',
+  Espalda: 'bg-blue-500/5 border border-blue-500/30 text-blue-400',
+  Hombros: 'bg-purple-500/5 border border-purple-500/30 text-purple-400',
+  Biceps: 'bg-pink-500/5 border border-pink-500/30 text-pink-400',
+  Triceps: 'bg-indigo-500/5 border border-indigo-500/30 text-indigo-400',
+  Piernas: 'bg-orange-500/5 border border-orange-500/30 text-orange-400',
+  Abdominales: 'bg-emerald-500/5 border border-emerald-500/30 text-emerald-400',
 };
 
 const ResumenSemanal = ({ schedule, daysOfWeek }) => {
@@ -38,8 +38,8 @@ const ResumenSemanal = ({ schedule, daysOfWeek }) => {
   }, []);
 
   return (
-    <div className="border-2 border-slate-600 rounded-xl shadow-lg overflow-hidden">
-      <ul className="divide-y-2 divide-slate-600">
+    <div className="border-2 border-slate-700/50 rounded-xl shadow-lg overflow-hidden bg-[#141B26]">
+      <ul className="divide-y-2 divide-slate-700/30">
         {daysOfWeek.map(day => {
           const groupsForDay = scheduleByDay[day];
           const isToday = day === todayName;
@@ -48,13 +48,13 @@ const ResumenSemanal = ({ schedule, daysOfWeek }) => {
             <li 
               key={day} 
               className={`flex flex-col sm:flex-row sm:items-center p-4 sm:p-5 transition-colors ${
-                isToday ? 'bg-cyan-600/20 border-l-4 border-cyan-500' : 'hover:bg-slate-800/30'
+                isToday ? 'bg-blue-500/10 border-l-4 border-blue-500' : 'hover:bg-slate-800/20'
               }`}
             >
               <div className="w-full sm:w-40 font-bold text-white text-lg sm:text-xl mb-3 sm:mb-0 flex-shrink-0 flex items-center gap-3">
                 <span>{day}</span>
                 {isToday && (
-                  <span className="text-xs font-bold text-cyan-100 bg-cyan-600 px-3 py-1 rounded-full shadow-lg">
+                  <span className="text-xs font-bold text-blue-50 bg-blue-600 px-3 py-1 rounded-full shadow-lg">
                     HOY
                   </span>
                 )}
@@ -64,8 +64,8 @@ const ResumenSemanal = ({ schedule, daysOfWeek }) => {
                   groupsForDay.map(group => (
                     <span 
                       key={group} 
-                      className={`text-sm sm:text-base font-bold px-4 py-2 rounded-lg shadow-md ${
-                        groupColors[group] || 'bg-gray-700 text-white border-2 border-gray-600'
+                      className={`text-sm sm:text-base font-bold px-4 py-2 rounded-full shadow-sm ${
+                        groupColors[group] || 'bg-gray-700/50 text-white border border-gray-600/30'
                       }`}
                     >
                       {group}
@@ -410,13 +410,13 @@ const MiPlan = ({
   };
 
   return (
-    <div className="relative text-white min-h-screen p-4 sm:p-8 bg-gray-900">
+    <div className="relative text-white min-h-screen p-4 sm:p-8 bg-[#0A0E17]">
       <GridBackground />
       <div className="relative z-20 max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <button 
             onClick={() => navigate('/seleccionar-ejercicios')} 
-            className="bebas-font text-xl sm:text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest flex items-center gap-2"
+            className="bebas-font text-xl sm:text-2xl text-blue-400 hover:text-blue-300 transition-colors tracking-widest flex items-center gap-2"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -427,12 +427,12 @@ const MiPlan = ({
           <UserMenu />
         </div>
         
-        <h1 className="bebas-font text-5xl sm:text-6xl md:text-7xl text-center my-8 tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+        <h1 className="bebas-font text-5xl sm:text-6xl md:text-7xl text-center my-8 tracking-wider bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
           MI PLAN SEMANAL
         </h1>
 
         {/* Asistente de Planificación - AHORA PRIMERO */}
-        <div className="bg-gradient-to-b from-slate-800 to-gray-900/50 border-2 border-slate-600 rounded-xl shadow-2xl p-5 sm:p-6 mb-10">
+        <div className="bg-gray-800/50 border border-slate-700/80 rounded-xl shadow-2xl p-5 sm:p-6 mb-10">
           <h2 className="bebas-font text-3xl sm:text-4xl text-white mb-5 tracking-wider">
             RECOMENDACION DE PLAN
           </h2>
@@ -443,7 +443,7 @@ const MiPlan = ({
               </p>
               <button 
                 onClick={handleStartWizard}
-                className="bebas-font text-xl tracking-wider px-8 py-4 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-all shadow-lg border-2 border-green-500"
+                className="bebas-font text-2xl tracking-wider px-8 py-4 rounded-lg text-white bg-[#111827] border border-emerald-500 hover:bg-[#1f2937] transition-all shadow-lg"
                 style={{ minHeight: '60px' }}
               >
                 GENERAR PLAN RECOMENDADO
@@ -461,7 +461,7 @@ const MiPlan = ({
                       <button 
                         key={day} 
                         onClick={() => handleSelectDaysPerWeek(day)} 
-                        className="bebas-font text-2xl tracking-wider py-4 sm:py-5 rounded-lg text-white bg-slate-700 hover:bg-slate-600 transition-all shadow-lg"
+                        className="bebas-font text-2xl tracking-wider py-4 sm:py-5 rounded-lg text-white bg-[#1A2332] hover:bg-[#1E293B] border-2 border-slate-700/50 hover:border-blue-500/50 transition-all shadow-lg"
                         style={{ minHeight: '70px' }}
                       >
                         {day} {day === 1 ? 'DÍA' : 'DÍAS'}
@@ -486,18 +486,18 @@ const MiPlan = ({
                           disabled={isDisabled}
                           className={`flex items-center justify-start gap-3 p-4 rounded-lg transition-all border-2 font-bold text-base sm:text-lg ${
                             isDisabled 
-                              ? 'opacity-40 cursor-not-allowed bg-gray-800 border-gray-700' 
+                              ? 'opacity-40 cursor-not-allowed bg-[#141B26] border-slate-700/30' 
                               : isChecked 
-                                ? 'bg-cyan-600 border-cyan-500 text-white shadow-lg' 
-                                : 'bg-gray-800 border-gray-600 text-gray-300 hover:bg-gray-700'
+                                ? 'bg-blue-600 border-blue-500 text-white shadow-lg' 
+                                : 'bg-[#1A2332] border-slate-700/50 text-gray-300 hover:bg-[#1E293B] hover:border-blue-500/30'
                           }`}
                           style={{ minHeight: '60px' }}
                         >
                           <div className={`w-7 h-7 flex justify-center items-center border-2 rounded-md transition-all ${
-                            isChecked ? 'border-white bg-white' : 'border-gray-400'
+                            isChecked ? 'border-white bg-white' : 'border-slate-500'
                           }`}>
                             {isChecked && (
-                              <svg className="w-5 h-5 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M5 13l4 4L19 7"></path>
                               </svg>
                             )}
@@ -511,7 +511,7 @@ const MiPlan = ({
                     <button 
                       onClick={handleShowRecommendation} 
                       disabled={selectedDays.length !== daysPerWeek} 
-                      className="bebas-font text-lg sm:text-xl tracking-wider px-8 py-4 rounded-lg text-white bg-cyan-600 hover:bg-cyan-700 transition-all disabled:bg-gray-600 disabled:cursor-not-allowed disabled:text-gray-400 border-2 border-cyan-500 disabled:border-gray-500 shadow-lg"
+                      className="bebas-font text-lg sm:text-xl tracking-wider px-8 py-4 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-all disabled:bg-slate-700 disabled:cursor-not-allowed disabled:text-slate-400 border-2 border-blue-500 disabled:border-slate-600 shadow-lg"
                       style={{ minHeight: '60px' }}
                     >
                       VER RECOMENDACIÓN
@@ -525,17 +525,17 @@ const MiPlan = ({
                     Paso 3: ¡Aquí tienes tu plan!
                   </h3>
                   <p className="text-gray-300 text-base sm:text-lg mb-6 font-medium">
-                    Basado en los <span className="font-bold text-cyan-400">{daysPerWeek} días</span> que seleccionaste, te recomendamos una rutina <span className="font-bold text-green-400 text-xl">{recommendation}</span>.
+                    Basado en los <span className="font-bold text-blue-400">{daysPerWeek} días</span> que seleccionaste, te recomendamos una rutina <span className="font-bold text-emerald-400 text-xl">{recommendation}</span>.
                   </p>
                   
-                  <div className="border-2 border-cyan-500 bg-cyan-500/10 rounded-xl p-5 mb-6">
+                  <div className="border-2 border-blue-500/50 bg-blue-500/5 rounded-xl p-5 mb-6">
                     <h4 className="font-bold text-lg sm:text-xl text-white mb-4">
                       📅 Así se verá tu horario:
                     </h4>
                     <ul className="space-y-2">
                       {selectedDays.map(day => (
                         <li key={day} className="text-gray-200 text-base sm:text-lg font-medium flex items-center gap-2">
-                          <span className="text-cyan-400 text-xl">•</span>
+                          <span className="text-blue-400 text-xl">•</span>
                           <span className="font-bold">{day}:</span> {recommendation}
                         </li>
                       ))}
@@ -545,14 +545,14 @@ const MiPlan = ({
                   <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4">
                     <button 
                       onClick={handleCancel} 
-                      className="bebas-font text-lg sm:text-xl tracking-wider px-6 py-4 rounded-lg text-gray-300 bg-gray-800 hover:bg-gray-700 transition-all border-2 border-gray-600 shadow-lg order-2 sm:order-1"
+                      className="bebas-font text-lg sm:text-xl tracking-wider px-6 py-4 rounded-lg text-gray-300 bg-[#1A2332] hover:bg-[#1E293B] transition-all border-2 border-slate-700/50 shadow-lg order-2 sm:order-1"
                       style={{ minHeight: '60px' }}
                     >
                       CANCELAR
                     </button>
                     <button 
                       onClick={handleSavePlan} 
-                      className="bebas-font text-lg sm:text-xl tracking-wider px-6 py-4 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-all border-2 border-green-500 shadow-lg order-1 sm:order-2"
+                      className="bebas-font text-lg sm:text-xl tracking-wider px-6 py-4 rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 transition-all border-2 border-emerald-500 shadow-lg order-1 sm:order-2"
                       style={{ minHeight: '60px' }}
                     >
                       ✓ ACEPTAR PLAN
@@ -566,7 +566,7 @@ const MiPlan = ({
         </div>
 
         {/* Sistema de Rutinas Guardadas - AHORA DESPUÉS DE RECOMENDACIÓN */}
-        <div className="bg-gradient-to-b from-slate-800 to-gray-900/50 border-2 border-slate-600 rounded-xl shadow-2xl p-5 sm:p-6 mb-10">
+        <div className="bg-gray-800/50 border border-slate-700/80 rounded-xl shadow-2xl p-5 sm:p-6 mb-10">
           <h2 className="bebas-font text-3xl sm:text-4xl text-white mb-5 tracking-wider">
             📋 MIS RUTINAS
           </h2>
@@ -579,7 +579,7 @@ const MiPlan = ({
             <select
               value={currentRoutine?.id || ''}
               onChange={(e) => handleLoadRoutine(e.target.value)}
-              className="w-full bg-gray-800 border-2 border-cyan-500 text-white text-base sm:text-lg px-4 py-3 sm:py-4 rounded-lg focus:outline-none focus:ring-4 focus:ring-cyan-500/50 transition-all font-medium shadow-lg"
+              className="w-full bg-gray-900 border border-gray-700 text-white text-base sm:text-lg px-4 py-3 sm:py-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all font-medium shadow-lg"
               style={{ minHeight: '56px' }}
             >
               <option value="">Sin Rutina</option>
@@ -595,7 +595,7 @@ const MiPlan = ({
           <div className="grid grid-cols-2 sm:flex gap-3">
             <button
               onClick={handleSaveRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-cyan-600 border-2 border-cyan-500 text-white px-4 py-3 sm:py-3 rounded-lg hover:bg-cyan-700 transition-all shadow-lg tracking-wider text-base sm:text-lg col-span-2 sm:col-span-1"
+              className="bebas-font flex items-center justify-center gap-2 bg-[#111827] border border-blue-500 text-white px-4 py-3 sm:py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg tracking-wider text-base sm:text-lg col-span-2 sm:col-span-1"
               style={{ minHeight: '56px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -606,7 +606,7 @@ const MiPlan = ({
             
             <button
               onClick={handleCreateRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-green-600 border-2 border-green-500 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition-all shadow-lg tracking-wider text-base sm:text-lg"
+              className="bebas-font flex items-center justify-center gap-2 bg-[#111827] border border-emerald-500 text-white px-4 py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg tracking-wider text-base sm:text-lg"
               style={{ minHeight: '56px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -618,7 +618,7 @@ const MiPlan = ({
             <button
               onClick={handleRenameRoutine}
               disabled={!currentRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-orange-600 border-2 border-orange-500 text-white px-4 py-3 rounded-lg hover:bg-orange-700 transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
+              className="bebas-font flex items-center justify-center gap-2 bg-[#111827] border border-amber-500 text-white px-4 py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
               style={{ minHeight: '56px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -630,7 +630,7 @@ const MiPlan = ({
             <button
               onClick={handleDeleteRoutine}
               disabled={!currentRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-red-600 border-2 border-red-500 text-white px-4 py-3 rounded-lg hover:bg-red-700 transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
+              className="bebas-font flex items-center justify-center gap-2 bg-[#111827] border border-rose-500 text-white px-4 py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
               style={{ minHeight: '56px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -642,14 +642,14 @@ const MiPlan = ({
         </div>
 
         {/* Horario Semanal y Botón de Entrenar - AHORA AL FINAL */}
-        <div ref={scheduleRef} className="bg-gradient-to-b from-slate-800 to-gray-900/50 border-2 border-slate-600 rounded-xl shadow-2xl p-5 sm:p-6">
+        <div ref={scheduleRef} className="bg-gray-800/50 border border-slate-700/80 rounded-xl shadow-2xl p-5 sm:p-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left mb-6 gap-4">
             <h2 className="bebas-font text-3xl sm:text-4xl text-white tracking-wider">
               📆 MI HORARIO
             </h2>
             <button 
               onClick={onOpenPlanner}
-              className="bebas-font text-lg tracking-wider px-6 py-3 rounded-lg text-white bg-cyan-600 border-2 border-cyan-500 hover:bg-cyan-700 transition-all shadow-lg"
+              className="bebas-font text-xl tracking-wider px-6 py-3 rounded-lg text-white bg-[#111827] border border-blue-500 hover:bg-[#1f2937] transition-all shadow-lg"
               style={{ minHeight: '56px' }}
             >
               EDITAR HORARIO
@@ -660,7 +660,7 @@ const MiPlan = ({
           <div className="mt-8 hidden md:flex flex-col gap-4">
             <button
               onClick={() => navigate('/seleccionar-ejercicios')}
-              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 transition-all duration-300 shadow-lg border-2 border-cyan-500 flex items-center justify-center gap-3"
+              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg border-2 border-blue-500 flex items-center justify-center gap-3"
               style={{ minHeight: '70px' }}
             >
               <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -671,7 +671,7 @@ const MiPlan = ({
             </button>
             <button
               onClick={() => navigate('/entrenamiento')}
-              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-all duration-300 shadow-lg transform hover:scale-[1.02] border-2 border-green-500"
+              className="bebas-font text-xl sm:text-2xl tracking-wider px-6 py-4 rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 transition-all duration-300 shadow-lg transform hover:scale-[1.02] border-2 border-emerald-500"
               style={{ minHeight: '70px' }}
             >
               🏋️ EMPEZAR
@@ -681,11 +681,11 @@ const MiPlan = ({
       </div>
 
       {/* Barra fija inferior - Solo en móvil (<768px) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-md border-t-2 border-gray-700 shadow-2xl" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0A0E17]/95 backdrop-blur-md border-t-2 border-slate-700/50 shadow-2xl" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
         <div className="flex gap-3 p-3">
           <button
             onClick={() => navigate('/seleccionar-ejercicios')}
-            className="flex-1 bebas-font text-lg tracking-wider px-4 py-4 rounded-lg text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 transition-all shadow-lg border-2 border-cyan-500 flex flex-col items-center justify-center gap-1"
+            className="flex-1 bebas-font text-lg tracking-wider px-4 py-4 rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg border-2 border-blue-500 flex flex-col items-center justify-center gap-1"
             style={{ minHeight: '64px' }}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -696,7 +696,7 @@ const MiPlan = ({
           </button>
           <button
             onClick={() => navigate('/entrenamiento')}
-            className="flex-1 bebas-font text-xl tracking-wider px-4 py-4 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-all shadow-lg border-2 border-green-500 flex items-center justify-center gap-2"
+            className="flex-1 bebas-font text-xl tracking-wider px-4 py-4 rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 transition-all shadow-lg border-2 border-emerald-500 flex items-center justify-center gap-2"
             style={{ minHeight: '64px' }}
           >
             <span className="text-2xl">🏋️</span>
