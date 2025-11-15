@@ -9,16 +9,16 @@ const SuccessModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/80 z-[200] flex justify-center items-center p-4" onClick={onClose}>
-      <div className="bg-gray-900 border-2 border-[#379AA5] rounded-xl shadow-2xl p-8 w-full max-w-md text-center relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#379AA5] to-transparent"></div>
+      <div className="bg-gray-900 border-2 border-cyan-500 rounded-xl shadow-2xl p-8 w-full max-w-md text-center relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
         
         <div className="mb-6">
-          <div className="w-20 h-20 mx-auto bg-[#379AA5]/20 rounded-full flex items-center justify-center mb-4">
-            <svg className="w-10 h-10 text-[#379AA5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-20 h-20 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center mb-4">
+            <svg className="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="bebas-font text-4xl text-[#379AA5] tracking-wider mb-2">¡REGISTRO EXITOSO!</h2>
+          <h2 className="bebas-font text-4xl bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent tracking-wider mb-2">¡REGISTRO EXITOSO!</h2>
           <p className="text-gray-300 text-lg">Tu cuenta ha sido creada correctamente</p>
         </div>
         
@@ -26,7 +26,7 @@ const SuccessModal = ({ isOpen, onClose }) => {
         
         <button 
           onClick={onClose}
-          className="bebas-font w-full bg-[#379AA5] text-white px-6 py-3 rounded-lg hover:bg-[#2A7A87] transition-all shadow-lg text-lg tracking-wider"
+          className="bebas-font w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-3 rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all shadow-lg text-lg tracking-wider"
         >
           Continuar
         </button>
@@ -168,9 +168,9 @@ const Login = () => {
 
           <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-2xl shadow-2xl overflow-hidden">
             <div className="relative">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#379AA5] to-transparent"></div>
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
               <div className="p-8 pb-6">
-                <h1 className="bebas-font text-5xl text-center tracking-wider mb-2">
+                <h1 className="bebas-font text-5xl text-center tracking-wider mb-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                   {mode === 'login' && 'INICIAR SESIÓN'}
                   {mode === 'register' && 'REGISTRARSE'}
                   {mode === 'forgot' && 'RECUPERAR CUENTA'}
@@ -201,7 +201,7 @@ const Login = () => {
                     value={formData.username}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#379AA5] focus:ring-1 focus:ring-[#379AA5] transition-all"
+                    className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                     placeholder="Tu nombre de usuario"
                   />
                 </div>
@@ -217,7 +217,7 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#379AA5] focus:ring-1 focus:ring-[#379AA5] transition-all"
+                  className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                   placeholder="tu@email.com"
                 />
               </div>
@@ -233,7 +233,7 @@ const Login = () => {
                     value={formData.password}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#379AA5] focus:ring-1 focus:ring-[#379AA5] transition-all"
+                    className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                     placeholder="••••••••"
                   />
                 </div>
@@ -250,7 +250,7 @@ const Login = () => {
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#379AA5] focus:ring-1 focus:ring-[#379AA5] transition-all"
+                    className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                     placeholder="••••••••"
                   />
                 </div>
@@ -265,15 +265,15 @@ const Login = () => {
                     checked={formData.acceptTerms}
                     onChange={handleInputChange}
                     required
-                    className="mt-1 w-4 h-4 bg-gray-800 border-gray-700 rounded focus:ring-[#379AA5] focus:ring-2"
+                    className="mt-1 w-4 h-4 bg-gray-800 border-gray-700 rounded focus:ring-cyan-500 focus:ring-2"
                   />
                   <label htmlFor="acceptTerms" className="text-sm text-gray-400 cursor-pointer">
                     Acepto los{' '}
-                    <a href="#" className="text-[#379AA5] hover:text-[#2A7A87] underline">
+                    <a href="#" className="text-cyan-400 hover:text-cyan-300 underline">
                       términos y condiciones
                     </a>
                     {' '}y la{' '}
-                    <a href="#" className="text-[#379AA5] hover:text-[#2A7A87] underline">
+                    <a href="#" className="text-cyan-400 hover:text-cyan-300 underline">
                       política de privacidad
                     </a>
                   </label>
@@ -285,7 +285,7 @@ const Login = () => {
                   <button
                     type="button"
                     onClick={() => setMode('forgot')}
-                    className="text-sm text-[#379AA5] hover:text-[#2A7A87] transition-colors"
+                    className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
                   >
                     ¿Olvidaste tu contraseña?
                   </button>
@@ -295,7 +295,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bebas-font bg-gradient-to-r from-[#379AA5] to-[#2A7A87] text-white px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-[#379AA5]/50 transition-all text-xl tracking-wider transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bebas-font bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all text-xl tracking-wider transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'PROCESANDO...' : (
                   <>
@@ -314,7 +314,7 @@ const Login = () => {
                     ¿No tienes cuenta?{' '}
                     <button
                       onClick={() => setMode('register')}
-                      className="text-[#379AA5] hover:text-[#2A7A87] font-semibold transition-colors"
+                      className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
                     >
                       Regístrate aquí
                     </button>
@@ -325,7 +325,7 @@ const Login = () => {
                     ¿Ya tienes cuenta?{' '}
                     <button
                       onClick={() => setMode('login')}
-                      className="text-[#379AA5] hover:text-[#2A7A87] font-semibold transition-colors"
+                      className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
                     >
                       Inicia sesión
                     </button>
