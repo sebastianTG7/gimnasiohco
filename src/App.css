@@ -121,3 +121,19 @@ body {
 .open .bar2 {
   transform: rotate(-45deg);
 }
+
+
+.open .bar2 {
+  transform: rotate(-45deg);
+}
+
+/* Control de posición de imagen hero */
+.hero-image-position {
+  object-position: 85% center; /* Móvil: muestra lado derecho (ajusta entre 40%-80%) */
+}
+
+@media (min-width: 768px) {
+  .hero-image-position {
+    object-position: 50% center; /* Desktop: centrado completo */
+  }
+}

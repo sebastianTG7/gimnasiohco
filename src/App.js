@@ -133,7 +133,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
           <Link 
             to="/login"
             onClick={() => setIsMenuOpen(false)} 
-            className="bebas-font text-2xl text-[#61DBEC] hover:text-[#4ac9de] tracking-widest transition-colors"
+            className="text-2xl text-[#61DBEC] hover:text-[#4ac9de] tracking-widest transition-colors"
           >
             INICIAR SESIÓN
           </Link>
@@ -159,8 +159,8 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
         </div>
       </div>
     </SwipeableMenu>
-
-    <div className="hero-bg relative w-full h-screen flex items-center justify-center p-8 bg-black overflow-hidden isolate">
+    
+    <div className="hero-bg relative w-full h-screen flex items-center justify-center md:justify-start p-8 bg-black overflow-hidden isolate">
       <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="white" />
       
       <button
@@ -189,9 +189,9 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
               <img src={images.logo_gym} alt="Logo de Energy" className="h-10 opacity-70 ml-2" />
               <h1 className="bebas-font text-3x2 md:text-4x2 text-white tracking-widest">ENERGY</h1>
           </div>
-          <div className="hidden md:flex space-x-12 text-lg items-center flex-grow justify-center">
+          <div className="bebas-font hidden md:flex space-x-14 md:space-x-8 lg:space-x-20 text-2xl md:text-xl lg:text-2xl items-center flex-grow justify-center">
             {navLinks.map(link => (
-              <a key={link.href} href={link.href} className="hover:text-[#2A7A87] transition-colors">{link.text}</a>
+              <a key={link.href} href={link.href} className="hover:text-[#2A7A87] transition-colors whitespace-nowrap">{link.text}</a>
             ))}
           </div>
           
@@ -202,8 +202,8 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
             ) : currentUser ? (
               <UserMenu />
             ) : (
-              <Link to="/login" className="bebas-font bg-[#111827] border border-[#61DBEC] text-white px-6 py-2 rounded-lg hover:bg-[#1f2937] shadow-md tracking-wider whitespace-nowrap inline-block">
-                INICIAR SESIÓN
+              <Link to="/login" className="bebas-font bg-[#379AA5] hover:bg-[#2A7A87] rounded-md shadow-lg text-white px-6 py-2 tracking-wider whitespace-nowrap inline-block">
+                INICIAR SESIÓN 
               </Link>
             )}
           </div>
@@ -212,7 +212,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
       </nav>
       
       {/* Contenido principal del Hero */}
-      <div className="relative z-10 text-center md:text-left md:w-1/2 p-4">
+      <div className="relative z-10 text-center md:text-left md:w-[70%] md:p-20 p-4">
         {/* Letras efecto maquina de escribir */}
           <h2 className="bebas-font text-5xl md:text-7xl lg:text-8xl text-white leading-tight mb-4 tracking-wider">
               BIENVENIDO A <span style={{ color: '#379AA5' }}>ENERGY</span>
@@ -227,14 +227,14 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
               <span className="cursor">|</span>
           </h2>
                   <div
-                    className="animate-shine text-xl md:text-2xl mb-8 tracking-wide bg-clip-text text-transparent"
+                    className="animate-shine text-sm  md:text-xl mb-8 tracking-wide bg-clip-text text-transparent"
                     style={{
                       backgroundImage: 'linear-gradient(120deg, #9CA3AF 30%, #FFFFFF 50%, #9CA3AF 70%)',
                       backgroundSize: '200% 100%',
                       WebkitBackgroundClip: 'text',
                     }}
                   >
-                   Tu punto de partida está aquí  
+                   Tu punto de partida está aquí, te guiamos con planes perersonalizados y sin presiones.
                   </div>
                   <Link to="/mi-plan" className="bg-[#379AA5] hover:bg-[#2A7A87] text-white px-8 py-3 rounded-md shadow-lg transition-colors">Comenzar Ahora!</Link>
               </div>
@@ -247,7 +247,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
               </a>
       
       {/* Imagen de la persona en el Hero */}
-      <img src={images.hero} alt="Persona entrenando" className="absolute top-0 right-0 h-full w-full object-cover z-5 opacity-30 md:opacity-40 md:w-2/5" />
+      <img src={images.hero} alt="Persona entrenando" className="absolute inset-0 h-full w-full object-cover z-5 opacity-30 md:opacity-40 hero-image-position"/>
   </div>
 
   {/* Sección de Ejercicios (Menú Principal) */}
@@ -338,7 +338,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
   </div>
 
   {/* Sección Sobre Nosotros */}
-  <section id="about" className="py-20 px-4 md:px-8 bg-slate-900">
+  <section id="about" className="py-20 px-4 md:px-8 bg-slate-950">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="relative rounded-xl overflow-hidden shadow-xl image-feather-edge">
               <img src={images.lugar_energy} alt="Grupo de personas en el gimnasio" className="w-full h-auto object-cover" />
@@ -346,7 +346,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
           <div className="text-gray-200">
               <h3 className="bebas-font text-5xl md:text-6xl text-[#379AA5] mb-5 tracking-wider">¿QUIÉNES SOMOS?</h3>
               <p className="text-lg leading-relaxed mb-6">
-                  Energy no es solo un gimnasio. Es una casa de transformación. Con más de 15 años forjando fierros y
+                  Energy no es solo un gimnasio. Es una casa de transformación. Con más de 20 años forjando fierros y
                   formando personas, nos dedicamos a algo más que dar rutinas. Aquí no hay excusas, hay resultados, no
                   creemos en atajos, creemos en constancia, disciplina y sudor del bueno.
               </p>
