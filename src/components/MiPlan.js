@@ -440,7 +440,7 @@ const MiPlan = ({
         {/* RECOMENDACION DE RUTINA */}
         <div className="bg-[#191919] border border-slate-700/80 rounded-xl shadow-2xl p-5 sm:p-6 mb-10">
           <h2 className="bebas-font text-3xl sm:text-4xl text-center mb-5 tracking-wider">
-            RECOMENDACION DE RUTINA
+            RECOMENDACIÓN DE RUTINA
           </h2>
           {!isWizardActive ? (
             <div className="text-center">
@@ -531,7 +531,7 @@ const MiPlan = ({
                     Paso 3: ¡Aquí tienes tu plan!
                   </h3>
                   <p className="text-gray-300 text-base sm:text-lg mb-6 font-medium">
-                    Basado en los <span className="font-bold text-blue-400">{daysPerWeek} días</span> que seleccionaste, te recomendamos una rutina <span className="font-bold text-emerald-400 text-xl">{recommendation}</span>.
+                    Basado en los <span className="font-bold text-blue-500">{daysPerWeek} días</span> que seleccionaste, te recomendamos una rutina <span className="font-bold text-emerald-400">{recommendation}</span>.
                   </p>
                   
                   <div className="bg-[#252525] rounded-xl p-5 mb-6">
@@ -541,7 +541,7 @@ const MiPlan = ({
                     <ul className="space-y-2">
                       {selectedDays.map(day => (
                         <li key={day} className="text-gray-200 text-base sm:text-lg font-medium flex items-center gap-2">
-                          <span className="text-blue-400 text-xl">•</span>
+                          <span className="text-blue-500 text-xl">•</span>
                           <span className="font-bold">{day}:</span> {recommendation}
                         </li>
                       ))}
@@ -691,7 +691,7 @@ const MiPlan = ({
         <div className="flex gap-3 p-3">
           <button
             onClick={() => navigate('/seleccionar-ejercicios')}
-            className="flex-1 bebas-font text-lg tracking-wider px-4 py-2 rounded-lg text-white bg-black hover:bg-gray-900 transition-all shadow-lg border-2 border-blue-600 flex flex-col items-center justify-center gap-1"
+            className="flex-1 bebas-font text-lg tracking-wider px-4 py-2 rounded-lg text-white bg-gray-800 hover:bg-gray-900 transition-all shadow-lg border-2 border-blue-600 flex flex-col items-center justify-center gap-1"
             style={{ minHeight: '48px' }}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -716,14 +716,14 @@ const MiPlan = ({
       {/* Modal de Éxito - Plan Generado */}
       {showSuccessModal && (
         <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowSuccessModal(false)}>
-          <div className="bg-[#191919] border border-gray-700 rounded-lg shadow-xl p-6 w-full max-w-sm text-center" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-[#191919] rounded-lg shadow-xl p-6 w-full max-w-sm text-center" onClick={(e) => e.stopPropagation()}>
             <div className="mb-4">
               <div className="w-12 h-12 mx-auto bg-green-500/20 rounded-full flex items-center justify-center mb-3">
                 <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2 bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">Plan Generado</h3>
+              <h3 className="text-xl font-semibold mb-2">Plan Generado</h3>
               <p className="text-[#EAEBED] text-sm mb-3">
                 Tu rutina incluye ejercicios predefinidos listos para entrenar.
               </p>
@@ -758,13 +758,13 @@ const MiPlan = ({
                   setShowSuccessModal(false);
                   navigate('/', { state: { scrollToExercises: true } });
                 }}
-                className="flex-1 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition-all text-sm"
+                className="flex-1 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition-all text-sm"
               >
                 Personalización Avanzada
               </button>
               <button 
                 onClick={() => setShowSuccessModal(false)}
-                className="flex-1 bg-[#2B384B] text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition-all text-sm"
+                className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all text-sm"
               >
                 Entendido
               </button>
@@ -953,20 +953,20 @@ const MiPlan = ({
       {/* Modal de Advertencia de Sobrescritura */}
       {showOverwriteWarningModal && (
         <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowOverwriteWarningModal(false)}>
-          <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-[#191919] rounded-lg shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
             <div className="mb-4">
               <div className="w-12 h-12 mx-auto bg-orange-500/20 rounded-full flex items-center justify-center mb-3">
                 <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">¿Sobrescribir Rutina Actual?</h3>
+              <h3 className="text-xl font-semibold mb-2">¿Sobrescribir Rutina Actual?</h3>
               <p className="text-gray-400 text-sm mb-4">
                 Esto reemplazará completamente tu rutina <span className="text-white font-medium">"{currentRoutine?.name}"</span> con el plan generado.
               </p>
-              <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 mb-2">
-                <p className="text-cyan-300 text-xs">
-                  💡 <strong>Sugerencia:</strong> Si quieres conservar tu rutina actual, cancela y crea una nueva rutina desde el botón "Crear Nueva Rutina".
+              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 mb-2">
+                <p className="text-blue-300 text-xs">
+                <strong>Sugerencia:</strong> Si quieres conservar tu rutina actual, cancela y crea una nueva rutina desde el botón "Crear Nueva Rutina". Así podrás guardar el plan generado sin perder tu configuración previa.
                 </p>
               </div>
             </div>
@@ -977,7 +977,7 @@ const MiPlan = ({
                   setShowOverwriteWarningModal(false);
                   setPendingPlanData(null);
                 }}
-                className="flex-1 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all text-sm"
+                className="flex-1 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition-all text-sm"
               >
                 Cancelar
               </button>

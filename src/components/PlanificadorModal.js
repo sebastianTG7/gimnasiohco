@@ -44,7 +44,7 @@ const PlanificadorModal = ({ isOpen, onClose, schedule, onSave }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 z-40 flex justify-center items-center p-4">
+    <div className="fixed inset-0 bg-black bg-opacity-70 z-[60] flex justify-center items-center p-4">
       <div className="bg-[#191919] rounded-xl shadow-2xl p-6 md:p-8 w-full max-w-3xl max-h-[90vh] flex flex-col">
         <div className="flex justify-between items-center mb-6">
           <h2 className="bebas-font text-4xl text-[#EAEBED] tracking-wider">Planificar Semana</h2>
