@@ -5,7 +5,7 @@ import ImageLoader from './ImageLoader';
 import VideoPlayer from './VideoPlayer';
 import UserMenu from './UserMenu';
 
-// Objeto para mapear grupos musculares a colores
+// Objeto para mapear grupos musculares a colores no cambiar su color de estas etiquetas
 const groupColors = {
   pecho: 'bg-red-500/20 border-red-500/30 text-red-300',
   espalda: 'bg-blue-500/20 border-blue-500/30 text-blue-300',
@@ -14,17 +14,6 @@ const groupColors = {
   triceps: 'bg-indigo-500/20 border-indigo-500/30 text-indigo-300',
   piernas: 'bg-orange-500/20 border-orange-500/30 text-orange-300',
   abdominales: 'bg-green-500/20 border-green-500/30 text-green-300',
-};
-
-// Emojis para cada grupo
-const groupEmojis = {
-  pecho: '💪',
-  espalda: '🏋️',
-  hombros: '🦾',
-  biceps: '💪',
-  triceps: '💪',
-  piernas: '🦵',
-  abdominales: '🔥',
 };
 
 const SelectExercises = ({ 
@@ -203,18 +192,18 @@ const SelectExercises = ({
     if (filterMode === 'selected' && selectedCount === 0) return null;
 
     return (
-      <div key={grupo} id={`group-${grupo}`} className="border border-slate-700/80 rounded-xl overflow-hidden">
+      <div key={grupo} id={`group-${grupo}`} className="border-2 border-slate-700/50 rounded-xl overflow-hidden bg-[#191919]">
         {/* Header del acordeón */}
         <button
           onClick={() => toggleGroup(grupo)}
-          className="w-full p-4 sm:p-5 bg-gray-800/50 hover:bg-gray-800/70 transition-all flex items-center justify-between gap-3 group focus:outline-none focus-visible:ring-3 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+          className="w-full p-4 sm:p-5 hover:bg-slate-800/20 transition-all flex items-center justify-between gap-3 group focus:outline-none"
           aria-expanded={isExpanded}
           aria-controls={`panel-${grupo}`}
           id={`header-${grupo}`}
           style={{ minHeight: '64px' }}
         >
           <div className="flex items-center gap-3 flex-1">
-            <span className="text-3xl" aria-hidden="true">{groupEmojis[grupo]}</span>
+            
             <div className="text-left flex-1">
               <h3 className="bebas-font text-2xl sm:text-3xl text-white tracking-wider">
                 {data.titulo.replace('EJERCICIOS DE ', '')}
@@ -262,7 +251,7 @@ const SelectExercises = ({
             id={`panel-${grupo}`}
             role="region"
             aria-labelledby={`header-${grupo}`}
-            className="bg-gray-900/50 p-4"
+            className="bg-[#191919] p-4"
           >
             {data.subgrupos ? (
               // Renderizar subgrupos (piernas)
@@ -325,7 +314,7 @@ const SelectExercises = ({
   };
 
   return (
-    <div className="relative min-h-screen bg-gray-900 text-white pb-32">
+    <div className="relative min-h-screen bg-[#191919] text-white pb-32">
       <GridBackground />
       
       {/* Anuncios para lectores de pantalla */}
@@ -368,7 +357,7 @@ const SelectExercises = ({
         </div>
 
         {/* Contador simple de ejercicios seleccionados */}
-        <div className="bg-gray-800 rounded-xl p-4 mb-6 border border-gray-700">
+        <div className="bg-[#191919] rounded-xl p-4 mb-6 border-2 border-slate-700/50">
           <div className="flex items-center justify-center gap-3">
             <svg className="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -380,17 +369,17 @@ const SelectExercises = ({
         </div>
 
         {/* Controles de búsqueda y filtros */}
-        <div className="bg-gray-800 rounded-xl p-4 mb-6 border border-gray-700 space-y-4">
+        <div className="bg-[#252525] rounded-xl p-4 mb-6 border-2 border-slate-700/50 space-y-4">
           {/* Búsqueda */}
           <div className="relative">
             <label htmlFor="search-exercises" className="sr-only">Buscar ejercicios</label>
             <input
               id="search-exercises"
               type="text"
-              placeholder="Buscar ejercicios... (Ctrl/Cmd + K)"
+              placeholder="Buscar ejercicios..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 pl-11 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+              className="w-full bg-gray-900 border-2 border-slate-700/50 rounded-lg px-4 py-3 pl-11 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
             />
             <svg 
               className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500"
@@ -421,8 +410,8 @@ const SelectExercises = ({
                 onClick={() => setFilterMode('all')}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 ${
                   filterMode === 'all' 
-                    ? 'bg-cyan-600 text-white' 
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-[#1A2332] text-gray-300 hover:bg-[#1E293B]'
                 }`}
               >
                 Todos
@@ -431,8 +420,8 @@ const SelectExercises = ({
                 onClick={() => setFilterMode('selected')}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 ${
                   filterMode === 'selected' 
-                    ? 'bg-cyan-600 text-white' 
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-[#1A2332] text-gray-300 hover:bg-[#1E293B]'
                 }`}
               >
                 Solo seleccionados
@@ -442,14 +431,14 @@ const SelectExercises = ({
             <div className="flex gap-2">
               <button
                 onClick={expandAll}
-                className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+                className="px-4 py-2 rounded-lg text-sm font-medium bg-[#1A2332] text-gray-300 hover:bg-[#1E293B] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
                 aria-label="Expandir todos los grupos"
               >
                 Expandir todo
               </button>
               <button
                 onClick={collapseAll}
-                className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+                className="px-4 py-2 rounded-lg text-sm font-medium bg-[#1A2332] text-gray-300 hover:bg-[#1E293B] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
                 aria-label="Contraer todos los grupos"
               >
                 Contraer
@@ -488,16 +477,16 @@ const SelectExercises = ({
       {/* Desktop: Sidebar fijo a la derecha */}
       <div 
         ref={bottomBarRef}
-        className="fixed bottom-0 left-0 right-0 md:top-24 md:right-8 md:left-auto md:bottom-auto md:w-80 bg-gray-800/95 backdrop-blur-md border-t md:border border-gray-700 md:rounded-xl shadow-2xl z-50 md:max-h-[calc(100vh-7rem)] md:overflow-y-auto"
+        className="fixed bottom-0 left-0 right-0 md:top-24 md:right-8 md:left-auto md:bottom-auto md:w-80 bg-[#252525] backdrop-blur-md md:rounded-xl shadow-2xl z-50 md:max-h-[calc(100vh-7rem)] md:overflow-y-auto"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       >
         <div className="p-4">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <span className="text-2xl" aria-hidden="true">💪</span>
-              Resumen
+              
+              Seleccionados
             </h3>
-            <span className="text-2xl font-bold text-cyan-400">{totalSelected}</span>
+            <span className="text-2xl font-bold text-white">{totalSelected}</span>
           </div>
           
           {/* Lista de ejercicios por grupo */}
@@ -522,18 +511,18 @@ const SelectExercises = ({
             </p>
           )}
 
-          {/* Botones de acción */}
+          {/* Botones de acción Fijo de plan de entreno */}
           <div className="flex gap-2">
             <button
               onClick={() => navigate('/mi-plan')}
-              className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 flex items-center justify-center gap-2"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 flex items-center justify-center gap-2"
               style={{ minHeight: '48px', touchAction: 'manipulation' }}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
-              <span className="hidden sm:inline">Ir a Mi Rutina</span>
-              <span className="sm:hidden">Mi Rutina</span>
+              <span className="hidden sm:inline">Ir a mi plan de entreno</span>
+              <span className="sm:hidden">Plan de entreno</span>
             </button>
           </div>
         </div>
@@ -587,7 +576,7 @@ const ExerciseItem = ({
   };
 
   return (
-    <div className="bg-gray-800/50 rounded-lg overflow-hidden border border-gray-700/50 hover:border-gray-600 transition-all">
+    <div className="bg-[#252525] rounded-lg overflow-hidden border-2 border-slate-700/50 hover:border-blue-500/30 transition-all">
       {/* Checkbox y nombre */}
       <label 
         htmlFor={`ex-${grupo}-${ejercicio.nombre.replace(/\s+/g, '-')}`}
@@ -625,27 +614,27 @@ const ExerciseItem = ({
 
       {/* Botones de acción */}
       {isSelected && (
-        <div className="border-t border-gray-700/50 p-2 flex gap-2 flex-wrap">
+        <div className="border-t border-slate-700/50 p-2 flex gap-2 flex-wrap">
           {ejercicio.videoUrl && (
             <button
               onClick={() => onShowVideo(ejercicio.videoUrl, ejercicio.nombre)}
-              className="text-xs px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+              className="text-xs px-3 py-1.5 bg-[#1A2332] hover:bg-[#1E293B] text-gray-300 rounded transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
             >
-              📹 Ver video
+              Ver video
             </button>
           )}
           <button
             onClick={() => setShowDetails(!showDetails)}
-            className="text-xs px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+            className="text-xs px-3 py-1.5 bg-[#1A2332] hover:bg-[#1E293B] text-gray-300 rounded transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
           >
-            {showDetails ? '▲ Ocultar' : '▼ Detalles'}
+            {showDetails ? 'Ocultar' : 'Detalles'}
           </button>
         </div>
       )}
 
       {/* Panel de detalles expandible */}
       {showDetails && isSelected && (
-        <div className="border-t border-gray-700/50 p-4 bg-gray-900/50 space-y-3">
+        <div className="border-t border-slate-700/50 p-4 bg-gray-900 space-y-3">
           {ejercicio.descripcion && (
             <p className="text-sm text-gray-300">{ejercicio.descripcion}</p>
           )}
@@ -660,7 +649,7 @@ const ExerciseItem = ({
                 max="10"
                 value={customDetails?.series || 3}
                 onChange={(e) => onDetailsChange(grupo, ejercicio.nombre, 'series', parseInt(e.target.value) || 3)}
-                className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                className="w-full bg-gray-800 border-2 border-slate-700/50 rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
               />
             </div>
             <div>
@@ -671,7 +660,7 @@ const ExerciseItem = ({
                 max="50"
                 value={customDetails?.repeticiones || 10}
                 onChange={(e) => onDetailsChange(grupo, ejercicio.nombre, 'repeticiones', parseInt(e.target.value) || 10)}
-                className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                className="w-full bg-gray-800 border-2 border-slate-700/50 rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
               />
             </div>
             <div>
@@ -682,7 +671,7 @@ const ExerciseItem = ({
                 step="2.5"
                 value={customDetails?.peso || ''}
                 onChange={(e) => onDetailsChange(grupo, ejercicio.nombre, 'peso', parseFloat(e.target.value) || 0)}
-                className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                className="w-full bg-gray-800 border-2 border-slate-700/50 rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                 placeholder="0"
               />
             </div>

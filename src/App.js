@@ -114,7 +114,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
             <a 
               href={link.href} 
               onClick={() => setIsMenuOpen(false)} 
-              className="bebas-font text-2xl text-gray-300 hover:text-white tracking-widest transition-colors"
+              className="bebas-font text-2xl text-white hover:text-gray-900 tracking-widest transition-colors"
             >
               {link.text}
             </a>
@@ -124,7 +124,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
           <Link 
             to="/seleccionar-ejercicios"
             onClick={() => setIsMenuOpen(false)} 
-            className="bebas-font text-2xl text-cyan-400 hover:text-cyan-300 tracking-widest transition-colors"
+            className="bebas-font text-2xl text-white hover:text-gray-900 tracking-widest transition-colors"
           >
             SELECCIONAR EJERCICIOS
           </Link>
@@ -133,7 +133,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
           <Link 
             to="/login"
             onClick={() => setIsMenuOpen(false)} 
-            className="text-2xl text-[#61DBEC] hover:text-[#4ac9de] tracking-widest transition-colors"
+            className="bebas-font text-2xl text-white hover:text-gray-900 tracking-widest transition-colors"
           >
             INICIAR SESIÓN
           </Link>
@@ -179,7 +179,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
         </div>
       </button>
 
-      {/* Navegación */}
+      {/* Navegación superior nav */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ${
         showNav ? 'translate-y-0' : '-translate-y-full'
       } ${lastScrollY > 50 ? 'bg-black/80 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}>
@@ -187,11 +187,11 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
           <div className="flex justify-between items-center gap-4">
            <div className="flex items-center space-x-3 flex-shrink-0">
               <img src={images.logo_gym} alt="Logo de Energy" className="h-10 opacity-70 ml-2" />
-              <h1 className="bebas-font text-3x2 md:text-4x2 text-white tracking-widest">ENERGY</h1>
+              <h1 className="bebas-font text-lg md:text-2xl text-white tracking-widest">ENERGY</h1>
           </div>
-          <div className="bebas-font hidden md:flex space-x-14 md:space-x-8 lg:space-x-20 text-2xl md:text-xl lg:text-2xl items-center flex-grow justify-center">
+          <div className="bebas-font tracking-wider hidden md:flex space-x-14 md:space-x-8 lg:space-x-20 text-2xl md:text-xl lg:text-2xl items-center flex-grow justify-center">
             {navLinks.map(link => (
-              <a key={link.href} href={link.href} className="hover:text-[#2A7A87] transition-colors whitespace-nowrap">{link.text}</a>
+              <a key={link.href} href={link.href} className="hover:text-blue-600 transition-colors whitespace-nowrap">{link.text}</a>
             ))}
           </div>
           
@@ -202,7 +202,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
             ) : currentUser ? (
               <UserMenu />
             ) : (
-              <Link to="/login" className="bebas-font bg-[#379AA5] hover:bg-[#2A7A87] rounded-md shadow-lg text-white px-6 py-2 tracking-wider whitespace-nowrap inline-block">
+              <Link to="/login" className="bebas-font bg-blue-600 hover:bg-blue-700 rounded-md shadow-lg text-white px-6 py-2 tracking-wider whitespace-nowrap inline-block">
                 INICIAR SESIÓN 
               </Link>
             )}
@@ -215,12 +215,12 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
       <div className="relative z-10 text-center md:text-left md:w-[70%] md:p-20 p-4">
         {/* Letras efecto maquina de escribir */}
           <h2 className="bebas-font text-5xl md:text-7xl lg:text-8xl text-white leading-tight mb-4 tracking-wider">
-              BIENVENIDO A <span style={{ color: '#379AA5' }}>ENERGY</span>
+              BIENVENIDO A <span style={{ color: '#2563EB' }}>ENERGY</span>
               {
                 (loopNum % toRotate.length === 1 && typewriterText.indexOf('HOY') !== -1)
                 ? <>
                     {` ${typewriterText.substring(0, typewriterText.indexOf('HOY'))}`}
-                    <span style={{color: '#379AA5'}}>{typewriterText.substring(typewriterText.indexOf('HOY'))}</span>
+                    <span style={{color: '#2563EB'}}>{typewriterText.substring(typewriterText.indexOf('HOY'))}</span>
                   </>
                 : ` ${typewriterText}`
               }
@@ -236,7 +236,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
                   >
                    Tu punto de partida está aquí, te guiamos con planes perersonalizados y sin presiones.
                   </div>
-                  <Link to="/mi-plan" className="bg-[#379AA5] hover:bg-[#2A7A87] text-white px-8 py-3 rounded-md shadow-lg transition-colors">Comenzar Ahora!</Link>
+                  <Link to="/mi-plan" className="bebas-font tracking-widest bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md shadow-lg transition-colors">Comenzar Ahora</Link>
               </div>
 
               {/* Animated Scroll Down Indicator */}
@@ -261,12 +261,12 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
           <div className="flex justify-center mb-8">
             <Link
               to="/seleccionar-ejercicios"
-              className="bebas-font bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white px-8 py-4 rounded-xl shadow-2xl transition-all transform hover:scale-105 text-xl tracking-wider flex items-center gap-3"
+              className="bebas-font bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl shadow-2xl transition-all transform hover:scale-105 text-xl tracking-wider flex items-center gap-3"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
               </svg>
-              SELECCIONAR EJERCICIOS (VISTA RÁPIDA)
+              SELECCIÓN AVANZADA DE EJERCICIOS
             </Link>
           </div>
 
@@ -334,17 +334,17 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
 
   {/* Separador de línea con gradiente */}
   <div className="px-4 md:px-8">
-    <div className="h-px w-full bg-gradient-to-r from-transparent via-[#379AA5] to-transparent"></div>
+    <div className="h-px w-full bg-gradient-to-r from-transparent via-[#252525] to-transparent"></div>
   </div>
 
   {/* Sección Sobre Nosotros */}
-  <section id="about" className="py-20 px-4 md:px-8 bg-slate-950">
+  <section id="about" className="py-20 px-4 md:px-8 bg-[#191919]">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="relative rounded-xl overflow-hidden shadow-xl image-feather-edge">
               <img src={images.lugar_energy} alt="Grupo de personas en el gimnasio" className="w-full h-auto object-cover" />
           </div>
           <div className="text-gray-200">
-              <h3 className="bebas-font text-5xl md:text-6xl text-[#379AA5] mb-5 tracking-wider">¿QUIÉNES SOMOS?</h3>
+              <h3 className="bebas-font text-5xl md:text-6xl text-white mb-5 tracking-wider">¿QUIÉNES SOMOS?</h3>
               <p className="text-lg leading-relaxed mb-6">
                   Energy no es solo un gimnasio. Es una casa de transformación. Con más de 20 años forjando fierros y
                   formando personas, nos dedicamos a algo más que dar rutinas. Aquí no hay excusas, hay resultados, no
@@ -354,20 +354,16 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
       </div>
   </section>
 
-  {/* Separador de línea con gradiente */}
-  <div className="px-4 md:px-8">
-    <div className="h-px w-full bg-gradient-to-r from-transparent via-[#379AA5] to-transparent"></div>
-  </div>
 
   {/* Pie de Página */}
   <footer id="contacto" className="bg-black py-16 px-4 md:px-8">
       <div className="max-w-7xl mx-auto text-center">
           <h3 className="bebas-font text-5xl md:text-6xl text-white mb-8 tracking-wider">CONTACTOS</h3>
           <div className="flex flex-col md:flex-row justify-between items-center mb-12 border-b-2 border-gray-800 pb-8">
-              <div className="text-center md:text-left mb-8 md:mb-0">
-                  <p className="text-lg mb-2">📞 981 326 184</p>
-                  <p className="text-lg mb-2">📧 energyhuanuco@gmail.com</p>
-                  <p className="text-lg">📍 Jr. Aguilar 771-Piso 2, Huánuco</p>
+              <div className="text-left  md:text-left mb-8 md:mb-0">
+                  <p className="text-lg mb-2">Tel: 981 326 184</p>
+                  <p className="text-lg mb-2">Correo: energyhuanuco@gmail.com</p>
+                  <p className="text-lg">Jr. Aguilar 771-Piso 2, Huánuco</p>
               </div>
              
               <div className="flex space-x-6 text-2xl">
@@ -383,7 +379,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
                 <img src={images.logo_gym} alt="Logo de Energy" className="h-16 opacity-70" /> 
                 <h1  className="bebas-font text-3xl md:text-4xl text-white tracking-widest opacity-70">ENERGY</h1> 
               </div>
-              <p className="mt-4 text-gray-500 max-w-md">⚠️ Energy está en versión beta!</p>
+              <p className="mt-4 text-gray-500 max-w-md">Energy está en versión beta!</p>
             <p className="text-gray-500 mt-4">&copy; {new Date().getFullYear()} Energy.</p>
            </div>
       </div>
