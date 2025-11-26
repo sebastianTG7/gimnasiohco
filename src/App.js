@@ -215,7 +215,7 @@ const HomePage = ({ typewriterText, loopNum, toRotate }) => {
       <div className="relative z-10 text-center md:text-left md:w-[70%] md:p-20 p-4">
         {/* Letras efecto maquina de escribir */}
           <h2 className="bebas-font text-5xl md:text-7xl lg:text-8xl text-white leading-tight mb-4 tracking-wider">
-              BIENVENIDO A <span style={{ color: '#2563EB' }}>ENERGY</span>
+              BIENVENIDO A <span className='text-orange-500'>ENERGY</span>
               {
                 (loopNum % toRotate.length === 1 && typewriterText.indexOf('HOY') !== -1)
                 ? <>

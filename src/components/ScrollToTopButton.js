@@ -48,7 +48,7 @@ const ScrollToTopButton = () => {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className={`bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 ${
+          className={`bg-[#fe5d00ff] hover:bg-[#e65500ff] text-white p-4 rounded-full shadow-lg transition-all duration-300 ${
             isActive ? 'opacity-80 translate-x-0' : 'opacity-0 translate-x-20'
           }`}
           aria-label="Volver arriba"

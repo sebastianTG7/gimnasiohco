@@ -45,12 +45,12 @@ const ResumenSemanal = ({ schedule, daysOfWeek }) => {
         {daysOfWeek.map(day => {
           const groupsForDay = scheduleByDay[day];
           const isToday = day === todayName;
-
+          // Resaltar el día actual
           return (
             <li 
               key={day} 
               className={`flex flex-col sm:flex-row sm:items-center p-4 sm:p-5 transition-colors ${
-                isToday ? 'bg-blue-500/20 border-l-4 border-blue-500' : 'hover:bg-slate-800/20'
+                isToday ? 'bg-blue-600/10 border-l-4 border-blue-600' : 'hover:bg-slate-800/20'
               }`}
             >
               <div className="w-full sm:w-40 font-bold text-white text-lg sm:text-xl mb-3 sm:mb-0 flex-shrink-0 flex items-center gap-3">
@@ -429,7 +429,7 @@ const MiPlan = ({
           <UserMenu />
         </div>
         <div className="text-center mb-10">
-          <h1 className="bebas-font text-5xl sm:text-6xl md:text-7xl text-center my-8 tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+          <h1 className="bebas-font text-5xl sm:text-6xl md:text-7xl text-center my-8 mt-14 tracking-wider">
           PLAN DE ENTRENAMIENTO
           </h1>
           <p className="text-center text-gray-400 text-lg max-w-3xl mx-auto">
@@ -449,7 +449,7 @@ const MiPlan = ({
               </p>
               <button 
                 onClick={handleStartWizard}
-                className="bebas-font text-2xl tracking-wider px-8 py-4 rounded-lg text-white bg-black hover:bg-gray-900 transition-all shadow-lg"
+                className="bebas-font text-2xl tracking-wider px-8 py-4 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-all shadow-lg"
                 style={{ minHeight: '60px' }}
               >
                 GENERAR UNA RUTINA
@@ -579,7 +579,7 @@ const MiPlan = ({
             </h2>
             <button 
               onClick={onOpenPlanner}
-              className="bebas-font text-xl tracking-wider px-6 py-3 rounded-lg text-white bg-black hover:bg-gray-900 transition-all shadow-lg"
+              className="bebas-font text-xl tracking-wider px-6 py-3 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-all shadow-lg"
               style={{ minHeight: '56px' }}
             >
               EDITAR HORARIO
@@ -635,11 +635,11 @@ const MiPlan = ({
           </div>
 
           {/* Botones de Acción - Mejorados para móvil */}
-          <div className="grid grid-cols-2 sm:flex gap-3">
+          <div className="grid grid-cols-2 sm:flex gap-4 mt-6">
             <button
               onClick={handleSaveRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-black border-2 border-blue-500 text-white px-4 py-3 sm:py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg tracking-wider text-base sm:text-lg col-span-2 sm:col-span-1"
-              style={{ minHeight: '56px' }}
+              className="bebas-font flex items-center justify-center gap-2 bg-black border-2 border-blue-600 text-white px-4 py-2 sm:py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg tracking-wider text-base sm:text-lg col-span-2 sm:col-span-1"
+              style={{ minHeight: '48px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
@@ -649,8 +649,8 @@ const MiPlan = ({
             
             <button
               onClick={handleCreateRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-black border-2 border-emerald-500 text-white px-4 py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg tracking-wider text-base sm:text-lg"
-              style={{ minHeight: '56px' }}
+              className="bebas-font flex items-center justify-center gap-2 bg-black border-2 border-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg tracking-wider text-base sm:text-lg"
+              style={{ minHeight: '48px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -661,8 +661,8 @@ const MiPlan = ({
             <button
               onClick={handleRenameRoutine}
               disabled={!currentRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-black border-2 border-amber-500 text-white px-4 py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
-              style={{ minHeight: '56px' }}
+              className="bebas-font flex items-center justify-center gap-2 bg-black border-2 border-amber-500 text-white px-4 py-2 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
+              style={{ minHeight: '48px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -673,8 +673,8 @@ const MiPlan = ({
             <button
               onClick={handleDeleteRoutine}
               disabled={!currentRoutine}
-              className="bebas-font flex items-center justify-center gap-2 bg-black border-2 border-rose-500 text-white px-4 py-3 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
-              style={{ minHeight: '56px' }}
+              className="bebas-font flex items-center justify-center gap-2 bg-black border-2 border-rose-500 text-white px-4 py-2 rounded-lg hover:bg-[#1f2937] transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed tracking-wider text-base sm:text-lg"
+              style={{ minHeight: '48px' }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -691,8 +691,8 @@ const MiPlan = ({
         <div className="flex gap-3 p-3">
           <button
             onClick={() => navigate('/seleccionar-ejercicios')}
-            className="flex-1 bebas-font text-lg tracking-wider px-4 py-4 rounded-lg text-white bg-black hover:bg-gray-900 transition-all shadow-lg border-2 border-blue-500 flex flex-col items-center justify-center gap-1"
-            style={{ minHeight: '64px' }}
+            className="flex-1 bebas-font text-lg tracking-wider px-4 py-2 rounded-lg text-white bg-black hover:bg-gray-900 transition-all shadow-lg border-2 border-blue-600 flex flex-col items-center justify-center gap-1"
+            style={{ minHeight: '48px' }}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />

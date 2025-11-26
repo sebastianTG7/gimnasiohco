@@ -127,14 +127,14 @@ const WorkoutHistory = () => {
 
   if (!currentUser) {
     return (
-      <div className="relative text-white min-h-screen p-8 bg-gray-900">
+      <div className="relative text-white min-h-screen p-8 bg-[#191919]">
         <GridBackground />
         <div className="relative z-10 max-w-4xl mx-auto text-center py-16">
           <h1 className="bebas-font text-5xl mb-6">Historial de Entrenamientos</h1>
           <p className="text-gray-400 text-xl mb-8">Debes iniciar sesión para ver tu historial</p>
           <Link 
             to="/login"
-            className="bebas-font text-xl tracking-wider px-8 py-4 rounded-lg text-white bg-cyan-600 hover:bg-cyan-700 transition-all shadow-lg inline-block"
+            className="bebas-font text-xl tracking-wider px-8 py-4 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-all shadow-lg inline-block"
           >
             Iniciar Sesión
           </Link>
@@ -144,28 +144,28 @@ const WorkoutHistory = () => {
   }
 
   return (
-    <div className="relative text-white min-h-screen p-4 sm:p-8 bg-gray-900">
+    <div className="relative text-white min-h-screen p-4 sm:p-8 bg-[#191919]">
       <GridBackground />
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-6">
-          <Link to="/entrenamiento" className="bebas-font text-2xl text-cyan-400 hover:text-cyan-300 transition-colors tracking-widest inline-block">
+          <Link to="/entrenamiento" className="bebas-font text-2xl transition-colors tracking-widest inline-block bg-gradient-to-r from-cyan-500 to-cyan-400 bg-clip-text text-transparent">
             &larr; VOLVER
           </Link>
           
           <UserMenu />
         </div>
         
-        <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+        <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider my-8 mt-14">
           HISTORIAL DE ENTRENAMIENTOS
         </h1>
 
         {loading ? (
           <div className="text-center py-16">
-            <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-cyan-500"></div>
+            <div className="inline-block animate-spin rounded-full h-16 w-16"></div>
             <p className="text-gray-400 mt-4 text-xl">Cargando historial...</p>
           </div>
         ) : workouts.length === 0 ? (
-          <div className="text-center py-16 bg-gray-800 rounded-xl border-2 border-gray-700">
+          <div className="text-center py-16 bg-[#252525] rounded-xl border-2 border-slate-700/50">
             <svg className="w-24 h-24 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
@@ -183,11 +183,11 @@ const WorkoutHistory = () => {
                   : 0;
 
                 return (
-                  <div key={monthKey} className="bg-gray-800 border-2 border-gray-700 rounded-xl overflow-hidden">
+                  <div key={monthKey} className="bg-[#191919] border-2 border-slate-700/50 rounded-xl overflow-hidden">
                     {/* Header del Mes */}
                     <button
                       onClick={() => toggleMonth(monthKey)}
-                      className="w-full p-5 sm:p-6 bg-gray-800 hover:bg-gray-750 transition-all flex items-center justify-between gap-4"
+                      className="w-full p-5 sm:p-6 bg-[#191919] hover:bg-slate-800/20 transition-all flex items-center justify-between gap-4"
                     >
                       <div className="flex items-center gap-4 flex-1">
                         <div className="text-left flex-1">
@@ -195,7 +195,7 @@ const WorkoutHistory = () => {
                             {monthData.monthName} {monthData.year}
                           </h2>
                           <div className="flex flex-wrap gap-3 mt-2">
-                            <span className="text-sm bg-cyan-500/20 text-cyan-300 px-3 py-1 rounded-full border border-cyan-500/30">
+                            <span className="text-sm bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full">
                               {monthData.stats.total} entrenamientos
                             </span>
                             <span className="text-sm bg-green-500/20 text-green-300 px-3 py-1 rounded-full border border-green-500/30">
@@ -236,13 +236,13 @@ const WorkoutHistory = () => {
 
                     {/* Lista de entrenamientos del mes */}
                     {isExpanded && (
-                      <div className="p-4 sm:p-6 bg-gray-900/50 border-t-2 border-gray-700">
+                      <div className="p-4 sm:p-6 bg-[#191919] border-t-2 border-slate-700/50">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                           {monthData.workouts.map((workout) => (
                             <div 
                               key={workout.id}
                               onClick={() => setSelectedWorkout(workout)}
-                              className="bg-gray-800 border-2 border-gray-700 rounded-lg p-4 hover:border-cyan-500 transition-all cursor-pointer shadow-lg"
+                              className="bg-[#252525] border-2 border-slate-700/50 rounded-lg p-4 transition-all cursor-pointer shadow-lg"
                             >
                               <div className="flex justify-between items-start mb-3">
                                 <div>
@@ -292,8 +292,8 @@ const WorkoutHistory = () => {
       {/* Modal de Detalles del Entrenamiento */}
       {selectedWorkout && (
         <div className="fixed inset-0 bg-black/80 z-[200] flex justify-center items-center p-4 overflow-y-auto" onClick={() => setSelectedWorkout(null)}>
-          <div className="bg-gray-900 border-2 border-cyan-500 rounded-xl shadow-2xl w-full max-w-4xl my-8" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6 border-b-2 border-gray-700 flex justify-between items-start">
+          <div className="bg-[#191919] rounded-xl shadow-2xl w-full max-w-4xl my-8" onClick={(e) => e.stopPropagation()}>
+            <div className="p-6 border-b-2 border-slate-700/50 flex justify-between items-start">
               <div>
                 <h2 className="text-3xl font-bold text-white mb-2">{selectedWorkout.dayName}</h2>
                 <p className="text-gray-400">{formatDate(selectedWorkout.date)}</p>
@@ -310,7 +310,7 @@ const WorkoutHistory = () => {
               <div className="mb-6">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-gray-400">Progreso:</span>
-                  <span className={`font-bold ${selectedWorkout.status === 'completado' ? 'text-green-400' : 'text-orange-400'}`}>
+                  <span className={`font-bold ${selectedWorkout.status === 'completado' ? 'text-green-400' : 'text-green-500'}`}>
                     {selectedWorkout.completedCount} / {selectedWorkout.totalExercises} ({selectedWorkout.progressPercentage}%)
                   </span>
                 </div>

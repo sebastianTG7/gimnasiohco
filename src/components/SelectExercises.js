@@ -347,8 +347,8 @@ const SelectExercises = ({
             <UserMenu />
           </div>
           
-          <h1 className="bebas-font text-4xl sm:text-5xl md:text-6xl text-center tracking-wider mb-4">
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">SELECCIONA TUS EJERCICIOS</span>
+          <h1 className="bebas-font text-4xl sm:text-5xl md:text-6xl text-center tracking-wider mb-4 my-8 mt-14">
+            <span>SELECCIONA TUS EJERCICIOS</span>
           </h1>
           
           <p className="text-center text-gray-400 text-lg max-w-3xl mx-auto">

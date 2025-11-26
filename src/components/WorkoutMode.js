@@ -13,7 +13,7 @@ const VideoModal = ({ videoUrl, title, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-80 z-[100] flex justify-center items-center p-4" onClick={onClose}>
-      <div className="bg-gray-900 rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col p-4" onClick={(e) => e.stopPropagation()}>
+      <div className="bg-[#191919] rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col p-4 border-2 border-slate-700/50" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-bold text-white">{title}</h3>
           <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors text-3xl">&times;</button>
@@ -251,7 +251,7 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
   };
 
   return (
-    <div className="relative text-white min-h-screen p-8 bg-gray-900 pb-32">
+    <div className="relative text-white min-h-screen p-8 bg-[#191919] pb-32">
       <GridBackground />
       <div className="relative z-10 max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-6">
@@ -259,13 +259,13 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
           <UserMenu />
         </div>
         
-        <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+        <h1 className="bebas-font text-5xl md:text-7xl text-center my-8 tracking-wider my-8 mt-14">
           Entrenamiento de Hoy: {todayName}
         </h1>
 
         {/* Barra de progreso del entrenamiento */}
         {totalExercises > 0 && (
-          <div className="bg-gray-800 rounded-xl p-5 sm:p-6 mb-8 border-2 border-gray-700 shadow-xl">
+          <div className="bg-[#252525] rounded-xl p-5 sm:p-6 mb-8 border-2 border-slate-700/50 shadow-xl">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-xl sm:text-2xl font-bold text-white">Progreso del Entrenamiento</h2>
               <span className="text-3xl sm:text-4xl font-bold text-cyan-400">{progressPercentage}%</span>
@@ -340,10 +340,10 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
                             return (
                               <div 
                                 key={index} 
-                                className={`bg-gray-800 p-3 md:p-4 rounded-lg shadow-lg flex items-center gap-3 md:gap-4 cursor-pointer transition-all duration-200 border-2 ${
+                                className={`bg-[#252525] p-3 md:p-4 rounded-lg shadow-lg flex items-center gap-3 md:gap-4 cursor-pointer transition-all duration-200 border-2 ${
                                   isCompleted 
                                     ? 'border-green-500 bg-green-900/20' 
-                                    : 'border-transparent hover:bg-gray-700'
+                                    : 'border-slate-700/50 hover:bg-slate-800/20 hover:border-blue-500/30'
                                 }`}
                                 onClick={() => {
                                   setSelectedVideoUrl(ejercicio.videoUrl);
@@ -410,10 +410,10 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
                       return (
                         <div 
                           key={index} 
-                          className={`bg-gray-800 p-3 md:p-4 rounded-lg shadow-lg flex items-center gap-3 md:gap-4 cursor-pointer transition-all duration-200 border-2 ${
+                          className={`bg-[#252525] p-3 md:p-4 rounded-lg shadow-lg flex items-center gap-3 md:gap-4 cursor-pointer transition-all duration-200 border-2 ${
                             isCompleted 
                               ? 'border-green-500 bg-green-900/20' 
-                              : 'border-transparent hover:bg-gray-700'
+                              : 'border-slate-700/50 hover:bg-slate-800/20 hover:border-blue-500/30'
                           }`}
                           onClick={() => {
                             setSelectedVideoUrl(ejercicio.videoUrl);
@@ -459,7 +459,7 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
             ))}
           </div>
         ) : (
-          <div className="text-center py-16">
+          <div className="bg-[#252525] rounded-xl p-8 my-8 border-2 border-slate-700/50 text-center">
             <h2 className="text-3xl font-bold text-gray-400">No hay nada planificado para hoy.</h2>
             <p className="text-lg text-gray-500 mt-4">Usa el planificador para añadir una rutina.</p>
           </div>
@@ -467,12 +467,12 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
 
         {/* Botón Guardar Progreso - Sticky en la parte inferior */}
         {todaysRoutine.length > 0 && (
-          <div className="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-md border-t-2 border-cyan-500 p-4 z-50">
+          <div className="fixed bottom-0 left-0 right-0 bg-gray-800 p-4 z-50">
             <div className="max-w-4xl mx-auto flex gap-3">
               <button
                 onClick={handleSaveProgress}
                 disabled={isSaving}
-                className="bebas-font flex-1 text-xl tracking-wider px-6 py-4 rounded-lg text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                className="bebas-font flex-1 text-xl tracking-wider px-6 py-4 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
               >
                 {isSaving ? (
                   <>
@@ -506,10 +506,10 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
       {/* Modal de Confirmación de Guardado */}
       {showSaveModal && (
         <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowSaveModal(false)}>
-          <div className="bg-gray-900 border-2 border-cyan-500 rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-[#191919] rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
             <div className="mb-4">
-              <div className="w-16 h-16 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 mx-auto bg-blue-500/20 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                 </svg>
               </div>
@@ -517,8 +517,8 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
               <p className="text-gray-300 text-base mb-2">
                 Se guardará tu entrenamiento de hoy con:
               </p>
-              <div className="bg-gray-800 rounded-lg p-4 mb-4">
-                <p className="text-cyan-400 font-bold text-lg">{completedExercises.size} de {totalExercises} ejercicios completados</p>
+              <div className="bg-[#252525] rounded-lg p-4 mb-4 border-2 border-slate-700/50">
+                <p className="text-blue-500 font-bold text-lg">{completedExercises.size} de {totalExercises} ejercicios completados</p>
                 <p className="text-sm text-gray-400 mt-2">
                   Estado: <span className={progressPercentage === 100 ? 'text-green-400 font-bold' : 'text-orange-400 font-bold'}>
                     {progressPercentage === 100 ? 'COMPLETADO' : 'INCOMPLETO'}
@@ -530,13 +530,13 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
             <div className="flex gap-3">
               <button 
                 onClick={() => setShowSaveModal(false)}
-                className="flex-1 bg-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-600 transition-all font-medium"
+                className="flex-1 bg-gray-800 text-white px-4 py-3 rounded-lg hover:bg-gray-900 transition-all font-medium"
               >
                 Cancelar
               </button>
               <button 
                 onClick={confirmSaveProgress}
-                className="flex-1 bg-cyan-600 text-white px-4 py-3 rounded-lg hover:bg-cyan-700 transition-all font-bold"
+                className="flex-1 bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-all font-bold"
               >
                 Confirmar
               </button>
@@ -545,10 +545,10 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
         </div>
       )}
 
-      {/* Modal de Éxito */}
+      {/* Modal de Éxito Progreso guardado */}
       {showSuccessModal && (
         <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowSuccessModal(false)}>
-          <div className="bg-gray-900 border-2 border-green-500 rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-[#191919] rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
             <div className="mb-4">
               <div className="w-16 h-16 mx-auto bg-green-500/20 rounded-full flex items-center justify-center mb-4">
                 <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -567,13 +567,13 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
                   setShowSuccessModal(false);
                   navigate('/historial-entrenamiento');
                 }}
-                className="bg-cyan-600 text-white px-4 py-3 rounded-lg hover:bg-cyan-700 transition-all font-bold"
+                className="bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-all font-bold"
               >
                 Ver Historial
               </button>
               <button 
                 onClick={() => setShowSuccessModal(false)}
-                className="bg-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-600 transition-all font-medium"
+                className="bg-gray-800 text-white px-4 py-3 rounded-lg hover:bg-gray-900 transition-all font-medium"
               >
                 Cerrar
               </button>
@@ -585,7 +585,7 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
       {/* Modal de Ya Guardó Hoy */}
       {showAlreadySavedModal && (
         <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowAlreadySavedModal(false)}>
-          <div className="bg-gray-900 border-2 border-orange-500 rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-[#191919] rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
             <div className="mb-4">
               <div className="w-16 h-16 mx-auto bg-orange-500/20 rounded-full flex items-center justify-center mb-4">
                 <svg className="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -601,7 +601,7 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
             <div className="flex gap-3">
               <button 
                 onClick={() => setShowAlreadySavedModal(false)}
-                className="flex-1 bg-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-600 transition-all font-medium"
+                className="flex-1 bg-gray-800 text-white px-4 py-3 rounded-lg hover:bg-gray-900 transition-all font-medium"
               >
                 Cancelar
               </button>
@@ -619,7 +619,7 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
       {/* Modal de Login Requerido */}
       {showLoginRequiredModal && (
         <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowLoginRequiredModal(false)}>
-          <div className="bg-gray-900 border-2 border-cyan-500 rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-[#191919] border-2 border-cyan-500 rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
             <div className="mb-4">
               <div className="w-16 h-16 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center mb-4">
                 <svg className="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -656,7 +656,7 @@ const WorkoutMode = ({ schedule, selectedExercises, customDetails, datosEjercici
       {/* Modal de Error */}
       {showErrorModal && (
         <div className="fixed inset-0 bg-black/70 z-[200] flex justify-center items-center p-4" onClick={() => setShowErrorModal(false)}>
-          <div className="bg-gray-900 border-2 border-red-500 rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-[#191919] border-2 border-red-500 rounded-xl shadow-xl p-6 w-full max-w-md text-center" onClick={(e) => e.stopPropagation()}>
             <div className="mb-4">
               <div className="w-16 h-16 mx-auto bg-red-500/20 rounded-full flex items-center justify-center mb-4">
                 <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
